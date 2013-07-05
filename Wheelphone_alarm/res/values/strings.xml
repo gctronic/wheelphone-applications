@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Wheelphone Alarm</string>
+    <string name="wakeup_msg">STOP ALARM!!</string>
+    
+    <string name="weblink">www.wheelphone.com</string>
+    
+    <string name="error_default">An unknown error has occurred.  Please contact androidsupport@microchip.com so that we can determine the source of the issue and attempt to fix it.</string>
+    <string name="error_missing_open_accessory_framework">The Android OS version that you are running is missing the com.android.future.usb library that is required to run this demo.  The OS version that you are running should contain these libraries.  Please contact androidsupport@microchip.com so that we can work to correct this issue for this device. </string>
+    <string name="error_firmware_protocol">The firmware version on the attached device requires a protocol that is not supported by this version of the application.  Please check the Android Marketplace to see if there is an update available for this application.  If you are using the source version, please check www.microchip.com/mal for the latest application source code.</string>
+    
+    <string name="action_preview">Alarm screen</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="app_desc"><b>This is an alarm application that interfaces with the wheelphone to provide a playful experience</b>\nSimply set an alarm (for the next 24 hours). Alternatively, you can quickly set an alarm 5 seconds from the current time by pressing the \"Quick alarm\" button. \n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
+    
+    <string name="quick_alarm">Quick alarm</string>
+    <string name="cancel_alarm">Cancel alarm</string>
+
+    <string name="settings_desc">Escape speed and alarm</string>
+    <string name="pref_set_running_speed">Robot escape speed</string>
+    <string name="pref_set_alarmtime">Alarm time</string>
+    <string name="not_set">not set</string>
+    
+
+</resources>

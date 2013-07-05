@@ -1,0 +1,57 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/fragment_preferences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <!--
+         <fragment
+        android:id="@+id/fragment_preferences"
+        android:name="com.gctronic.android.wheelphone.FragmentSettings$WakeUpConfiguration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        -->
+
+        <Button
+            android:id="@+id/quick_alarm"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="setQuickAlarm"
+            android:text="@string/quick_alarm" />
+
+        <Button
+            android:id="@+id/cancel_alarm"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="cancelAlarm"
+            android:text="@string/cancel_alarm" />
+
+        <FrameLayout
+            android:id="@+id/filler"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/app_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:drawableLeft="@drawable/wheelphone_logo"
+            android:text="@string/app_desc"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</ScrollView>

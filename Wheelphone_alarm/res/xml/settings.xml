@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <PreferenceCategory android:title="@string/settings_desc" >
+        <EditTextPreference
+            android:defaultValue="20"
+            android:inputType="number"
+            android:key="prefRunningSpeed"
+            android:title="@string/pref_set_running_speed" />
+
+        <Preference
+            android:key="prefAlarmTime"
+            android:summary="@string/not_set"
+            android:title="@string/pref_set_alarmtime" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
