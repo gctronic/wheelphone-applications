@@ -22,18 +22,18 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 
 	private static String TAG = FragmentFaceme.class.getName();
 
-	private Camera camera;
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
+	private Camera mCamera;
+	private SurfaceView mSurfaceView;
+	private SurfaceHolder mCaptureSurfaceHolder;
 	private boolean previewing = false;
-	private int leftSpeed = 0;
-	private int rightSpeed = 0;
+	private int mLeftSpeed = 0;
+	private int mRightSpeed = 0;
 	private int currDesiredHeight = 0;
 	private int mDirection = 1;
 
-	private TextView output;
+	private TextView mOutput;
 
-	private WheelphoneRobot wheelphone;
+	private WheelphoneRobot mWheelphone;
 	
 	
 	@Override
@@ -41,42 +41,42 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_faceme,
 				container, false);
-		output = (TextView)rootView.findViewById(R.id.output);
+		mOutput = (TextView)rootView.findViewById(R.id.output);
 
-		surfaceView = (SurfaceView)rootView.findViewById(R.id.camerapreview);
-		surfaceHolder = surfaceView.getHolder();
-		surfaceHolder.addCallback(this);
+		mSurfaceView = (SurfaceView)rootView.findViewById(R.id.camerapreview);
+		mCaptureSurfaceHolder = mSurfaceView.getHolder();
+		mCaptureSurfaceHolder.addCallback(this);
 
 		//Start robot control:
-		wheelphone = new WheelphoneRobot(getActivity(), getActivity());
-		wheelphone.startUSBCommunication();
-		wheelphone.enableSoftAcceleration();
-		wheelphone.enableSpeedControl();
+		mWheelphone = new WheelphoneRobot(getActivity(), getActivity());
+		mWheelphone.startUSBCommunication();
+		mWheelphone.enableSoftAcceleration();
+		mWheelphone.enableSpeedControl();
 		return rootView;
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		wheelphone.resumeUSBCommunication();
+		mWheelphone.resumeUSBCommunication();
 	}
 
 	@Override
 	public void onPause() {		
 		//Stop robot before disconnecting:
-		leftSpeed = 0;
-		rightSpeed = 0;
+		mLeftSpeed = 0;
+		mRightSpeed = 0;
 		currDesiredHeight = 0;
-		wheelphone.setSpeed(leftSpeed, rightSpeed);
+		mWheelphone.setSpeed(mLeftSpeed, mRightSpeed);
 
-		wheelphone.pauseUSBCommunication();
+		mWheelphone.pauseUSBCommunication();
 		super.onPause();
 	}
 
 	public void updateOutput() {
-		if (output != null){
-			String status = wheelphone.isUSBConnected() ? "Connected" : "Disconnected";
-			output.setText(status + ". L: " + leftSpeed + ", R: " + rightSpeed);
+		if (mOutput != null){
+			String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
+			mOutput.setText(status + ". L: " + mLeftSpeed + ", R: " + mRightSpeed);
 		}
 	}
 
@@ -85,21 +85,21 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
 		if(previewing){
-			camera.stopFaceDetection();
-			camera.stopPreview();
+			mCamera.stopFaceDetection();
+			mCamera.stopPreview();
 			previewing = false;
 		}
 
-		if (camera != null){
+		if (mCamera != null){
 			try {			    
-				camera.setPreviewDisplay(surfaceHolder);
-				camera.startPreview();
+				mCamera.setPreviewDisplay(mCaptureSurfaceHolder);
+				mCamera.startPreview();
 
-				camera.setDisplayOrientation(90);
+				mCamera.setDisplayOrientation(90);
 
 				//TODO: Pick dynamically the best preview size.
 
-				camera.startFaceDetection();
+				mCamera.startFaceDetection();
 				previewing = true;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -112,7 +112,9 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 	public void surfaceCreated(SurfaceHolder holder) {
 	    
 		if (setCamera()){
-			camera.setFaceDetectionListener(faceDetectionListener);
+			mCamera.setFaceDetectionListener(faceDetectionListener);
+		} else {
+			mCaptureSurfaceHolder.removeCallback(this);
 		}
 
 		//		Camera.Parameters param = camera.getParameters();
@@ -146,15 +148,15 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 	    for (int i = 0 ; i < Camera.getNumberOfCameras(); i++) {
 	        Camera.getCameraInfo(i, ci);
 	        if (ci.facing == CameraInfo.CAMERA_FACING_FRONT) {
-	        	camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+	        	mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
 				break;
 	        } 
 	    }
-	    if (camera == null){
+	    if (mCamera == null){
 	    	for (int i = 0 ; i < Camera.getNumberOfCameras(); i++) {
 	    		Camera.getCameraInfo(i, ci);
 	    		if (ci.facing == CameraInfo.CAMERA_FACING_BACK) {
-	    			camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+	    			mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
 	    			//device is inverted, so invert the spinning direction of the wheels:
 	    			mDirection = -1;
 	    			break;
@@ -162,16 +164,17 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 	    	}
 	    }
 	    //If couldn't find a camera show error
-	    if (camera == null){
-	    	output.setText(getString(R.string.error_no_camera));
+	    if (mCamera == null){
+	    	mOutput.setText(getString(R.string.error_no_camera));
 	    	Log.e(TAG, "No camera available!");
 	    	return false;
 	    }
 		//Camera does not support face detection, show error
-		if (camera.getParameters().getMaxNumDetectedFaces() < 1){
+		if (mCamera.getParameters().getMaxNumDetectedFaces() < 1){
 			Log.e(TAG, "No face detection available!");
-			output.setText(getString(R.string.error_no_facedetection));
-			camera = null;
+			mOutput.setText(getString(R.string.error_no_facedetection));
+			mCamera.release();
+			mCamera = null;
 			return false;
 		}
 	    return true;
@@ -180,10 +183,10 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		camera.stopFaceDetection();
-		camera.stopPreview();
-		camera.release();
-		camera = null;
+		mCamera.stopFaceDetection();
+		mCamera.stopPreview();
+		mCamera.release();
+		mCamera = null;
 		previewing = false;
 	}
 
@@ -210,16 +213,16 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 				int dampingDenominator = 1;
 
 
-				leftSpeed = leftSpeed 
+				mLeftSpeed = mLeftSpeed 
 						+   linearAcc * linearSpringConst
 						+	angularAcc * angularSpringConst
-						-	dampingNumerator * leftSpeed
+						-	dampingNumerator * mLeftSpeed
 						/ dampingDenominator;
 
-				rightSpeed = rightSpeed 
+				mRightSpeed = mRightSpeed 
 						+   linearAcc * linearSpringConst
 						-	angularAcc * angularSpringConst
-						-	dampingNumerator * rightSpeed
+						-	dampingNumerator * mRightSpeed
 						/ dampingDenominator;
 
 
@@ -242,12 +245,12 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 				//					Log.d(TAG, "Left=: " + faceYPos * 127 / 1000); 
 				//					Log.d(TAG, "Right=: " + (-faceYPos * 127 / 1000));
 			} else {
-				leftSpeed = 0;
-				rightSpeed = 0;
+				mLeftSpeed = 0;
+				mRightSpeed = 0;
 				currDesiredHeight = 0;
 			}
 
-			wheelphone.setSpeed(leftSpeed, rightSpeed);
+			mWheelphone.setSpeed(mLeftSpeed, mRightSpeed);
 			updateOutput();
 		}
 	};

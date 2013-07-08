@@ -49,16 +49,6 @@ ActionBar.OnNavigationListener {
 				WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
 				WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
 				WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-
-		try {
-			PackageManager manager = this.getPackageManager();
-			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-			Log.d(TAG, "Info:" + info.packageName + "\n" + info.versionCode + "\n" + info.versionName); 
-		} catch (NameNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 	}
 
 	@Override
