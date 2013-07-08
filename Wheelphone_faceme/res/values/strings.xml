@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Wheelphone Faceme</string>
+    <string name="action_settings">Settings</string>
+    <string name="faceme">FaceMe</string>
+    <string name="about">about</string>
+    <string name="app_desc"><b>This is an alarm application that makes the wheelphone to follow the face of a user.</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
+    
+    <string name="error_no_camera">Sorry, it seems the device does not have a camera, this application is useless without a camera.</string>
+    <string name="error_no_facedetection">Sorry, it seems the device not support face detection, this application is useless without face detection</string>
+
+</resources>
