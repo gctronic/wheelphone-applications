@@ -1,0 +1,375 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".WheelphoneActivity" >
+
+    <TextView
+        android:id="@+id/txtConnection"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="0.41"
+        android:background="@color/white"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/robotDisconnected"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- output -->
+
+    <TextView
+        android:id="@+id/outputText"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/txtConnection"
+        android:text="sadf" />
+
+    <!-- Flags control -->
+
+
+    <!-- Sensors status -->
+
+
+    <!-- Creation of proxs -->
+
+    <LinearLayout
+        android:id="@+id/front_prox_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ground_prox_container"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/prox_0" />
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barProx0"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/prox_1" />
+
+        <!--
+			   			<ProgressBar
+			   			    android:id="@+id/barProx3"
+			   			    style="?android:attr/progressBarStyleHorizontal"
+			   			    android:layout_width="wrap_content"
+			   			    android:layout_height="wrap_content"
+			   			    android:max="255"
+			   			    android:progress="0" 
+			   			/>
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barProx1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/prox_2" />
+
+        <!--
+			   			<ProgressBar
+			   			    android:id="@+id/barProx0"
+			   			    style="?android:attr/progressBarStyleHorizontal"
+			   			    android:layout_width="wrap_content"
+			   			    android:layout_height="wrap_content"
+			   			    android:max="255"
+			   			    android:progress="0" 
+			   			/>
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barProx2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/prox_3" />
+
+        <!--
+			   			<ProgressBar
+			   			    android:id="@+id/barProx2"
+			   			    style="?android:attr/progressBarStyleHorizontal"
+			   			    android:layout_width="wrap_content"
+			   			    android:layout_height="wrap_content"
+			   			    android:max="255"
+			   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barProx3"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+    </LinearLayout>
+
+    <!-- Creation of grounds -->
+
+    <LinearLayout
+        android:id="@id/ground_prox_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/battery_container"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_0" />
+
+        <!--
+					    <ProgressBar
+					        android:id="@+id/barGround0"
+					        style="?android:attr/progressBarStyleHorizontal"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:max="1023"
+					        android:progress="0" />
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barGround0"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_1" />
+
+        <!--
+			   			<ProgressBar
+			   			    android:id="@+id/barGround1"
+			   			    style="?android:attr/progressBarStyleHorizontal"
+			   			    android:layout_width="wrap_content"
+			   			    android:layout_height="wrap_content"
+			   			    android:max="1023"
+			   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barGround1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_2" />
+
+        <!--
+			   			<ProgressBar
+			   			    android:id="@+id/barGround3"
+			   			    style="?android:attr/progressBarStyleHorizontal"
+			   			    android:layout_width="wrap_content"
+			   			    android:layout_height="wrap_content"
+			   			    android:max="1023"
+			   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barGround2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_3" />
+
+        <!--
+			   			<ProgressBar
+			   			    android:id="@+id/barGround2"
+			   			    style="?android:attr/progressBarStyleHorizontal"
+			   			    android:layout_width="wrap_content"
+			   			    android:layout_height="wrap_content"
+			   			    android:max="1023"
+			   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.follow.TextProgressBar
+            android:id="@+id/barGround3"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+    </LinearLayout>
+
+    <!-- Creation of battery -->
+
+    <LinearLayout
+        android:id="@+id/battery_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/speeds_container"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="8sp"
+            android:text="@string/battery_level" />
+
+        <TextView
+            android:id="@+id/batteryLevel"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+
+        <TextView
+            android:id="@+id/txtRobotInCharge"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:text="@string/empty"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <!-- Creation of current desired speed -->
+
+    <LinearLayout
+        android:id="@+id/speeds_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnCalibrate"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="2sp"
+            android:text="@string/left_speed_txt" />
+
+        <TextView
+            android:id="@+id/leftSpeedTxt"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="2sp"
+            android:text="@string/right_speed_txt" />
+
+        <TextView
+            android:id="@+id/rightSpeedTxt"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="2sp"
+            android:text="@string/left_enc_txt" />
+
+        <TextView
+            android:id="@+id/leftEncTxt"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="2sp"
+            android:text="@string/right_enc_txt" />
+
+        <TextView
+            android:id="@+id/rightEncTxt"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCalibrate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentLeft="true"
+        android:layout_weight="0.41"
+        android:onClick="calibrateSensors"
+        android:text="@string/calibration" />
+
+    <!-- Logo and site -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="wheelphone"
+            android:maxWidth="200dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/weblink" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_view_sensors"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/front_prox_container"
+        android:background="@color/title_bar"
+        android:text="@string/sensors_header" />
+
+</RelativeLayout>

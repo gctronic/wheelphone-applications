@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wheelphone Follow</string>
+    <string name="sensors_header">Sensors Status</string>
+    <string name="flags_header">Flags</string>
+    
+    <string name="prox_0">P0:</string>
+    <string name="prox_1">P1:</string>
+    <string name="prox_2">P2:</string>
+    <string name="prox_3">P3:</string>
+    <string name="ground_0">G0:</string>
+    <string name="ground_1">G1:</string>
+    <string name="ground_2">G2:</string>
+    <string name="ground_3">G3:</string>
+    <string name="battery_level">Battery:</string>
+    
+    <string name="weblink">www.wheelphone.com</string>
+
+	<string name="left_inc">L+</string>
+	<string name="left_dec">L-</string>
+	<string name="right_inc">R+</string>
+	<string name="right_dec">R-</string>
+	<string name="stop_motors">Stop</string>
+	<string name="speed_controller_on">On</string>
+	<string name="speed_controller_off">Off</string>
+	<string name="start_comm">Start communication with robot</string>
+	<string name="left_speed_txt">L mm/s:</string>
+	<string name="right_speed_txt">R mm/s:</string>
+	<string name="init_value">0</string>
+	<string name="motors_header">Motors Control</string>
+	<string name="speed_control">Speed control</string>
+	<string name="obstacle_avoidance">Avoid obstacles</string>
+	<string name="cliff_avoidance">Avoid cliff</string>
+	<string name="soft_accel">Soft acceleration</string>
+	<string name="calibration">Calibrate sensors</string>
+	<string name="robotConnected">Connected</string>
+	<string name="robotDisconnected">Disconnected</string>
+	<string name="robotInCharge">Robot is charging</string>
+	<string name="empty"/>
+	<string name="robotCharged">Robot is charged</string>
+	<string name="right_enc_txt">EncR:</string>
+	<string name="left_enc_txt">EncL:</string>
+	<string name="menu_settings">Settings</string>
+	<string name="txtStartStayOnTable">Stay on table (start)</string>
+	<string name="txtStopStayOnTable">Stay on table (stop)</string>
+									
+</resources>
