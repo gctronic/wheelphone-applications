@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/output"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:ems="10" >
+    </TextView>
+
+    <com.wheelphone.pet.helpers.FaceExpressionsView
+        android:id="@+id/face"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0"
+        android:contentDescription="@+string/face_desc" />
+
+    <com.wheelphone.pet.helpers.FaceTracking
+        android:id="@+id/camerapreview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="-1" />
+
+</LinearLayout>
