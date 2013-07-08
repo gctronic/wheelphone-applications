@@ -1,16 +1,16 @@
 package com.wheelphone.pet;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.wheelphone.pet.util.SystemUiHider;
 
-public class ActivityMain extends FragmentActivity {
+public class ActivityMain extends Activity {
 
 //	private static String TAG = ActivityMain.class.getName();
 
@@ -54,7 +54,7 @@ public class ActivityMain extends FragmentActivity {
 
 		setContentView(R.layout.activity_main);
 
-		getSupportFragmentManager().beginTransaction().replace(R.id.fullscreenContainer, new FragmentPet()).commit();
+		getFragmentManager().beginTransaction().replace(R.id.fullscreenContainer, new FragmentPet()).commit();
 
 		final View contentView = findViewById(R.id.fullscreenContainer);
 

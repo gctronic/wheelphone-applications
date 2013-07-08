@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.wheelphone.pet.R;
 import com.wheelphone.pet.FragmentPet;
+import com.wheelphone.pet.R;
 
 public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback {
 	private static String TAG = FaceTracking.class.getName();
