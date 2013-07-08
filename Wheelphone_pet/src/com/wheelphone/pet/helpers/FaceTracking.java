@@ -92,10 +92,9 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback 
 
 		if (setCamera()){//If can set camera, furthermore set the face detection listener
 			mCamera.setFaceDetectionListener(faceDetectionListener);
-		} 
-//		else {
-//			mCaptureSurfaceHolder.removeCallback(this);
-//		}
+		} else {
+			mCaptureSurfaceHolder.removeCallback(this);
+		}
 		
 		//		Camera.Parameters param = camera.getParameters();
 
@@ -209,6 +208,7 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback 
 			Log.e(TAG, "No face detection!");
 			mError = mContext.getString(R.string.error_no_facedetection);
 			mController.showError(mError);
+			mCamera.release();
 			mCamera = null;
 			return false;
 		}
