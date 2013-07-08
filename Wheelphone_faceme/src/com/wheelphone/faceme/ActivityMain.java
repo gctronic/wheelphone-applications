@@ -1,20 +1,18 @@
 package com.wheelphone.faceme;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
-import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
-
-public class ActivityMain extends FragmentActivity implements
+public class ActivityMain extends Activity implements
 ActionBar.OnNavigationListener {
 
 	private static String TAG = ActivityMain.class.getName();
@@ -103,7 +101,7 @@ ActionBar.OnNavigationListener {
 			break;
 		}
 
-		getSupportFragmentManager().beginTransaction()
+		getFragmentManager().beginTransaction()
 		.replace(R.id.container, fragment).commit();
 		return true;
 	}

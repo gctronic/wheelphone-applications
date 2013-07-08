@@ -7,7 +7,7 @@ import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Face;
 import android.hardware.Camera.FaceDetectionListener;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
-public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
+public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback {
 
 	private static String TAG = FragmentFaceme.class.getName();
 
@@ -29,6 +29,7 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 	private int leftSpeed = 0;
 	private int rightSpeed = 0;
 	private int currDesiredHeight = 0;
+	private int mDirection = 1;
 
 	private TextView output;
 
@@ -42,11 +43,9 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 				container, false);
 		output = (TextView)rootView.findViewById(R.id.output);
 
-		if (setCamera()){
-			surfaceView = (SurfaceView)rootView.findViewById(R.id.camerapreview);
-			surfaceHolder = surfaceView.getHolder();
-			surfaceHolder.addCallback(this);
-		}
+		surfaceView = (SurfaceView)rootView.findViewById(R.id.camerapreview);
+		surfaceHolder = surfaceView.getHolder();
+		surfaceHolder.addCallback(this);
 
 		//Start robot control:
 		wheelphone = new WheelphoneRobot(getActivity(), getActivity());
@@ -111,9 +110,10 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-//	    getCamera(); already got camera when we checked for the required features
 	    
-		camera.setFaceDetectionListener(faceDetectionListener);
+		if (setCamera()){
+			camera.setFaceDetectionListener(faceDetectionListener);
+		}
 
 		//		Camera.Parameters param = camera.getParameters();
 
@@ -147,6 +147,7 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 	        Camera.getCameraInfo(i, ci);
 	        if (ci.facing == CameraInfo.CAMERA_FACING_FRONT) {
 	        	camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+				break;
 	        } 
 	    }
 	    if (camera == null){
@@ -154,6 +155,9 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 	    		Camera.getCameraInfo(i, ci);
 	    		if (ci.facing == CameraInfo.CAMERA_FACING_BACK) {
 	    			camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+	    			//device is inverted, so invert the spinning direction of the wheels:
+	    			mDirection = -1;
+	    			break;
 	    		}
 	    	}
 	    }
@@ -167,6 +171,7 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 		if (camera.getParameters().getMaxNumDetectedFaces() < 1){
 			Log.e(TAG, "No face detection available!");
 			output.setText(getString(R.string.error_no_facedetection));
+			camera = null;
 			return false;
 		}
 	    return true;
@@ -197,7 +202,7 @@ public class FragmentFaceme extends Fragment implements SurfaceHolder.Callback{
 				//Spring damping system
 				int linearAcc = 64 * (faces[0].rect.height() - currDesiredHeight) / currDesiredHeight;
 				int linearSpringConst = 1;
-				int angularSpringConst = 1;
+				int angularSpringConst = 1 * mDirection;
 				int angularAcc = faceYPos;
 
 
