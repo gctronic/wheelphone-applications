@@ -3,11 +3,7 @@ package com.wheelphone.faceme;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -15,7 +11,7 @@ import android.widget.ArrayAdapter;
 public class ActivityMain extends Activity implements
 ActionBar.OnNavigationListener {
 
-	private static String TAG = ActivityMain.class.getName();
+//	private static String TAG = ActivityMain.class.getName();
 
 	private FragmentFaceme fragmentFaceme;
 	

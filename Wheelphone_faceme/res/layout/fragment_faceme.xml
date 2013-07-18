@@ -11,10 +11,10 @@
         android:ems="10">
     </TextView>
 
-    <SurfaceView
+    <com.wheelphone.faceme.helpers.FaceTracking
         android:id="@+id/camerapreview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_weight="-1" />
-
+    
 </LinearLayout>
