@@ -230,27 +230,27 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 		//Spring damping system (scaled)
 		float linearAcc = (face.eyesDistance() - face.getDesiredEyesDist()) / face.getDesiredEyesDist();
 
-		int linearSpringConst = 7;//5
-		int angularSpringConst = 5;//5
+		int linearSpringConst = 12;//5
+		int angularSpringConst = 10;//5
 
 		int dampingNumerator = 1;
 		int dampingDenominator = 1;
 		
-		mLeftSpeed = 0;
-		mRightSpeed = 0;
+//		mLeftSpeed = 0;
+//		mRightSpeed = 0;
 
-		float angularSpeed = 0;
-		int angularSpeedConst = 2;
-		mNewPosTime = System.currentTimeMillis();
-		if (mOldPosTime != 0){
-			//change of position over change in time
-			angularSpeed =  (face.getDistanceToCenter().x - mOldPosX)/(mNewPosTime - mOldPosTime);
-			Log.d(TAG, "Sidespeed: " + (angularSpeed * angularSpeedConst));
-			Log.d(TAG, "angular: " + (angularAcc * angularSpringConst));
-		}
-		
-		mOldPosTime = mNewPosTime;
-		mOldPosX = face.getDistanceToCenter().x;
+//		float angularSpeed = 0;
+//		int angularSpeedConst = 2;
+//		mNewPosTime = System.currentTimeMillis();
+//		if (mOldPosTime != 0){
+//			//change of position over change in time
+//			angularSpeed =  (face.getDistanceToCenter().x - mOldPosX)/(mNewPosTime - mOldPosTime);
+//			Log.d(TAG, "Sidespeed: " + (angularSpeed * angularSpeedConst));
+//			Log.d(TAG, "angular: " + (angularAcc * angularSpringConst));
+//		}
+//		
+//		mOldPosTime = mNewPosTime;
+//		mOldPosX = face.getDistanceToCenter().x;
 		
 		// closer face = negative back/forward speed
 		// left right = negative X-axis speed
