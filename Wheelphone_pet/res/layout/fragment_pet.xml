@@ -8,14 +8,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+        android:background="#bcfffd"
         android:ems="10" >
     </TextView>
 
-    <com.wheelphone.pet.helpers.FaceExpressionsView
+    <com.wheelphone.pet.helpers.FaceExpressions
         android:id="@+id/face"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="0"
+        android:background="#bcfffd"
         android:contentDescription="@+string/face_desc" />
 
     <com.wheelphone.pet.helpers.FaceTracking

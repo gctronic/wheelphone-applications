@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wheelphone Pet</string>
-    <string name="action_settings">Settings</string>
     <string name="pet">Pet</string>
     <string name="about">about</string>
     <string name="face_desc">Where the robot expressions are drawn</string>
-    <string name="app_desc"><b>This is an alarm application that makes the wheelphone to follow the face of a user.</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
+    <string name="app_desc"><b>This is a PET application! It makes the wheelphone behave like a living organism! Similar to how a dog would behave.</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
 
-    <string name="error_no_camera">Sorry, it seems the device does not have a camera, this application is useless without a front facing camera.</string>
-    <string name="error_no_facedetection">Sorry, it seems the device not support face detection, this application is useless without face detection</string>
+    <string name="error_camera">Sorry, the application could not initialize the camera. It is required for this application to work.</string>
+    <string name="error_no_front_facing_camera">Sorry, the application could not initialize the camera. It is required for this application to work.</string>
+    
+    <string name="settings">Settings</string>
+    <string name="pref_camera">Face tracking camera</string>
+	<string name="pref_camera_resolution">Camera preview resolution</string>
+	<string name="pref_curious_speed">Curious speed</string>
+    <string name="pref_escape_speed">Escape speed</string>
+    <string name="pref_speech_lang">Speech language</string>
+    <string name="pref_speech_voice">Speech voice</string>
+    
 </resources>

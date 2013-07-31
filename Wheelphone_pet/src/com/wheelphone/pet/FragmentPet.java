@@ -10,46 +10,65 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wheelphone.pet.helpers.FaceExpressionsView;
+import com.wheelphone.pet.helpers.Behaviour;
+import com.wheelphone.pet.helpers.FaceExpressions;
 import com.wheelphone.pet.helpers.FaceTracking;
+import com.wheelphone.pet.helpers.LogcatStreamer;
+import com.wheelphone.pet.helpers.Talker;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
 public class FragmentPet extends Fragment {
 
-//	private static String TAG = FragmentPet.class.getName();
+	private static final String TAG = FragmentPet.class.getName();
 
-	private TextView output;
+	private TextView mOutput;
 
 	//Helpers:
 	private WheelphoneRobot mWheelphone;
-	private FaceExpressionsView mFaceExpression;
-	private FaceTracking mFaceTracking;
-//	private Intent speechIntent;
+	private FaceExpressions mFaceExpression;
+ 
+	private Talker mTalker;
 
+	private FaceTracking mFaceTracking;  
+//	private Intent speechIntent;
+	
+//	LogcatStreamer mLogcatStreamer;
+	
+	private Behaviour mBehaviour;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_pet,
 				container, false);
-		output = (TextView)rootView.findViewById(R.id.output);
+		mOutput = (TextView)rootView.findViewById(R.id.output);
+
+		//FaceExpressionsView
+		mFaceExpression = (FaceExpressions)rootView.findViewById(R.id.face);
 
 		//Start robot control:
-		mWheelphone = new WheelphoneRobot(getActivity(), getActivity());
+		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
 		mWheelphone.startUSBCommunication();
-		mWheelphone.enableSoftAcceleration();
+//		mWheelphone.enableSoftAcceleration();
 		mWheelphone.enableSpeedControl();
+		mWheelphone.disableSoftAcceleration();
+//		mWheelphone.disableSpeedControl();
 		
 		//Face tracking: 
-		mFaceTracking = (FaceTracking)rootView.findViewById(R.id.camerapreview);// TODO: Make sure that the image is not scaled, even for size of 1x1dp, it would be a waste of CPU
+		mFaceTracking = (FaceTracking)rootView.findViewById(R.id.camerapreview);
 		mFaceTracking.setController(this);
 
 		//Start speech server
 //		speechIntent = new Intent(getActivity(), SpeechService.class);
 		
-		//FaceExpressionsView
-		mFaceExpression = (FaceExpressionsView)rootView.findViewById(R.id.face);
-
+		//Start text to speech server:
+		mTalker = new Talker(getActivity());
+		
+		//Behaviour
+		//TODO: Move all this code to the Activity onCreate, so that we keep track of the last face and we can parallelize some initialization (now we are too slow to start the app) 
+		mBehaviour = new Behaviour(mFaceExpression, mWheelphone, mFaceTracking, mTalker, this);
+		
+		
 		return rootView;
 	}
 
@@ -57,54 +76,32 @@ public class FragmentPet extends Fragment {
 	public void onResume() {
 		super.onResume();
 		mWheelphone.resumeUSBCommunication();
+		mBehaviour.resume();
+		//Start logcat streamer
+//		mLogcatStreamer = new LogcatStreamer();
+//		Thread t = new Thread(new LogcatStreamer());
+//		t.start();
+		mTalker.resume();
 //		getActivity().startService(speechIntent);
 	}
 
 	@Override
-	public void onPause() {		
+	public void onPause() {
+//		Log.d(TAG, "onPause");
 		//Stop robot before disconnecting:
-		mWheelphone.setSpeed(0, 0);
-		mFaceTracking.stopTracking();
-
 		mWheelphone.pauseUSBCommunication();
 //		getActivity().stopService(speechIntent);
+		mBehaviour.pause();
+		//Stop logcat streamer
+//		mLogcatStreamer.stop();
+//		mTalker.pause();
 		super.onPause();
 	}
 	
-	/*
-	 * GLUE CODE:
-	 * To wheelphone control
-	 */
-
-	public void updateOutput(int leftSpeed, int rightSpeed) {
-		if (output != null){
-			String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
-			output.setText(status + ". L: " + leftSpeed + ", R: " + rightSpeed);
-		}
-	}
 	
-	public void showError(String error) {
-		if (output != null){
-			output.setText(error);
+	public void showText(String text) {
+		if (mOutput != null){
+			mOutput.setText(text);
 		}
 	}
-
-
-	public void setSpeed(int leftSpeed, int rightSpeed) {
-		mWheelphone.setSpeed(leftSpeed, rightSpeed);
-		updateOutput(leftSpeed, rightSpeed);
-	}
-
-	/*
-	 * GLUE CODE:
-	 * To faceExpression
-	 */
-	public void changeExpression(int expression) {
-		mFaceExpression.changeExpression(expression);
-	}
-
-	public void setEyesPosition(int x, int y) {
-		mFaceExpression.setPupilsPosition(x, y);
-	}
-
 }

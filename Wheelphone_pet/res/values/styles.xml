@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--
@@ -12,19 +13,14 @@
         -->
     </style>
 
-    <style name="FullscreenTheme" parent="android:Theme.Holo.Light">
+    <style name="FullscreenTheme" parent="AppBaseTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        
+        <item name="android:windowActionBarOverlay">true</item> <!-- actionbar (app title) as overlay on top of the app -->
+        <item name="android:windowFullscreen">true</item> <!-- Hide clock bar -->
     </style>
 
-    <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@color/black_overlay</item>
-    </style>
-
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/white_overlay</item>
     </style>
 
 </resources>
