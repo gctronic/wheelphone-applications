@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wheelphone.faceme.helpers.FaceTracking;
+import com.wheelphone.faceme.helpers.FaceTracker;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
 public class FragmentFaceme extends Fragment{
 	
 //	private static final String TAG = FragmentFaceme.class.getName();
 
-	private FaceTracking mFaceTracking;
+	private FaceTracker mFaceTracker;
 
 	private TextView mOutput;
 
@@ -27,13 +27,14 @@ public class FragmentFaceme extends Fragment{
 				container, false);
 		mOutput = (TextView)rootView.findViewById(R.id.output);
 
-		mFaceTracking = (FaceTracking)rootView.findViewById(R.id.camerapreview);
-		mFaceTracking.setController(this);
+		mFaceTracker = (FaceTracker)rootView.findViewById(R.id.camerapreview);
+		mFaceTracker.setController(this);
 
 		//Start robot control:
-		mWheelphone = new WheelphoneRobot(getActivity(), getActivity());
+		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
 		mWheelphone.startUSBCommunication();
-		mWheelphone.enableSoftAcceleration();
+//		mWheelphone.enableSoftAcceleration();
+		mWheelphone.disableSoftAcceleration();
 		mWheelphone.enableSpeedControl();
 		return rootView;
 	}
@@ -47,9 +48,8 @@ public class FragmentFaceme extends Fragment{
 	@Override
 	public void onPause() {		
 		super.onPause();
-
 		//Stop robot before disconnecting:
-		mFaceTracking.setDesiredDistance(0);
+		mFaceTracker.stopTracking();
 		mWheelphone.setSpeed(0, 0);
 
 		mWheelphone.pauseUSBCommunication();

@@ -7,7 +7,5 @@
     <string name="about">about</string>
     <string name="app_desc"><b>This is an alarm application that makes the wheelphone to follow the face of a user.</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
     
-    <string name="error_no_camera">Sorry, it seems the device does not have a camera, this application is useless without a camera.</string>
-    <string name="error_no_facedetection">Sorry, it seems the device not support face detection, this application is useless without face detection</string>
-
+    <string name="error_no_camera">Sorry, it seems the device does not have a front facing camera, this application is useless without it, :(.</string>
 </resources>

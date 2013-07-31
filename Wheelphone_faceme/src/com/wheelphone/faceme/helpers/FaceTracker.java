@@ -20,12 +20,12 @@ import com.wheelphone.faceme.FragmentFaceme;
 import com.wheelphone.faceme.R;
 import com.wheelphone.facetrack.FaceDetector;
 
-public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback, Camera.PreviewCallback {
+public class FaceTracker extends SurfaceView implements SurfaceHolder.Callback, Camera.PreviewCallback {
 	//TODO: Pick dynamically the best preview size.
 	//TODO: Set autofocus for preview
 	//TODO: give more weight to linear spring, as the image is not squared, but more taller (Eg: 480x640)
 
-	private static final String TAG = FaceTracking.class.getName();
+	private static final String TAG = FaceTracker.class.getName();
 
 	private static final int CAMERA_FRONT_DIRECTION = 0;
 	private static final int CAMERA_BACK_DIRECTION = 1;
@@ -61,17 +61,17 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 
 	private volatile boolean mCapture;
 
-	public FaceTracking(Context context) { 
+	public FaceTracker(Context context) { 
 		super(context);
 		init(context);
 	}
 
-	public FaceTracking(Context context, AttributeSet attrs) {
+	public FaceTracker(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
 	}
 
-	public FaceTracking(Context context, AttributeSet attrs, int defStyle){
+	public FaceTracker(Context context, AttributeSet attrs, int defStyle){
 		super(context, attrs, defStyle);
 		init(context);
 	}
@@ -91,18 +91,21 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 		Log.d(TAG, "surfaceCreated");
 		try {
 			setCamera();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			mController.showText(mContext.getString(R.string.error_no_camera));
+			mCaptureSurfaceHolder.removeCallback(this);
+			mCamera = null;
 			return;
 		}
-		Parameters cameraParameters = mCamera.getParameters();
-		List <Size> sizes = cameraParameters.getSupportedVideoSizes();
-		Log.d(TAG, "supported sizes: ");
-		for(Size size : sizes){
-			Log.d(TAG, size.width + "x" + size.height);
-		}
 
-		cameraParameters.setPreviewSize(384, 288);
+		Parameters cameraParameters = mCamera.getParameters();
+		//		List <Size> sizes = cameraParameters.getSupportedVideoSizes();
+		//		Log.d(TAG, "supported sizes: ");
+		//		for(Size size : sizes){
+		//			Log.d(TAG, size.width + "x" + size.height);
+		//		}
+
+		cameraParameters.setPreviewSize(352, 288);
 		mCamera.setParameters(cameraParameters);
 
 		mPreviewSize = cameraParameters.getPreviewSize();
@@ -125,7 +128,6 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 				return true;
 			}
 		});
-
 	}
 
 
@@ -172,8 +174,6 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 		mCamera = null;
 	}
 
-
-
 	@Override
 	public void onPreviewFrame(byte[] d, Camera camera) {
 		//		long start = System.currentTimeMillis();
@@ -201,27 +201,27 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 			mFaceDistToCenterX = ((2000*(mEyesMP.x)/mPreviewSize.height) - 1000);
 			mFaceDistToCenterY = -(2000*(mEyesMP.y)/mPreviewSize.width) + 1000;
 
-			//			Log.d(TAG, "Center: [" + mFaceDistToCenterX + ", " + mFaceDistToCenterY + "]");
-			Log.d(TAG, "Eyes dist: [" + mEyesDistance + "]");
+//			Log.d(TAG, "Center: [" + mFaceDistToCenterX + ", " + mFaceDistToCenterY + "]");
+//			Log.d(TAG, "Eyes dist: [" + mEyesDistance + "]");
 
 			// Face coordinates range from (-1000, 1000). Scale it to -64 to 64 (robot supports -127 to 127, but that is too fast and can easily overshoot):
-			float faceYPos = 32 * mFaceDistToCenterX / 1000;
+			float angularAcc = mFaceDistToCenterX / 1000;
 
-			//Spring damping system
-			float linearAcc = 64 * (mEyesDistance - mDesiredEyesDist) / mDesiredEyesDist;
-			int linearSpringConst = 1;
-			int angularSpringConst = 1;
-			float angularAcc = faceYPos;
+			//Spring damping system (scaled)
+			float linearAcc = (mEyesDistance - mDesiredEyesDist) / mDesiredEyesDist;
+
+			int linearSpringConst = 7;//7
+			int angularSpringConst = 5;//5
 
 			int dampingNumerator = 1;
 			int dampingDenominator = 1;
-
-			mLeftSpeed = (int)(mLeftSpeed 
+			
+			mLeftSpeed = (int)(mLeftSpeed
 					+   linearAcc * linearSpringConst
 					+	angularAcc * angularSpringConst
 					-	dampingNumerator * mLeftSpeed
 					/ dampingDenominator);
-
+			
 			mRightSpeed = (int)(mRightSpeed 
 					+   linearAcc * linearSpringConst
 					-	angularAcc * angularSpringConst
@@ -229,9 +229,7 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 					/ dampingDenominator);
 
 		} else { //No face, so stop:
-			mLeftSpeed = 0;
-			mRightSpeed = 0;
-			mDesiredEyesDist = 0;
+			stopTracking();
 		}
 		mController.setSpeed(mLeftSpeed, mRightSpeed);
 
@@ -293,7 +291,7 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 	}
 
 	//Try to set the camera
-	private void setCamera() throws IOException {
+	private void setCamera() throws IOException, RuntimeException{
 		PackageManager pm = mContext.getPackageManager();
 		if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
 			mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
@@ -306,7 +304,9 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 		mCamera.setPreviewDisplay(mCaptureSurfaceHolder);
 	}
 
-	public void setDesiredDistance(int desiredEyesDist) {
-		mDesiredEyesDist = desiredEyesDist;
+	public void stopTracking() {
+		mDesiredEyesDist = 0;
+		mLeftSpeed = 0;
+		mRightSpeed = 0;
 	}
 }
