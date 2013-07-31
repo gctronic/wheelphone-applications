@@ -48,7 +48,8 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 
 	private FaceTrackingListener mListener;
 
-	private long mLastDetected;
+	private long mTimestampLastDetected;
+	private long mTimestampLastNotDetected;
 
 	private boolean mStopThread = false;
 	private Thread mThread;
@@ -220,24 +221,28 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 
 				mFace = mFaces[0];
 				if (mFace != null){
-					mLastDetected = System.currentTimeMillis();
-					mEyesDistance = mFace.eyesDistance();
+					mTimestampLastDetected = System.currentTimeMillis();
+					if (System.currentTimeMillis() - mTimestampLastNotDetected > 200){ //Only process the face if it has been seen for some time (200ms)
+						
+						mEyesDistance = mFace.eyesDistance();
 
-					if (mDesiredEyesDist == 0){
-						mDesiredEyesDist = mEyesDistance;
+						if (mDesiredEyesDist == 0){
+							mDesiredEyesDist = mEyesDistance;
+						}
+
+						//Update the desired distance of the face
+						mFace.setDesiredEyesDist(mDesiredEyesDist);
+
+						//Notify interested parts!
+						if(mListener!=null) mListener.onFaceDetected(mFace);
 					}
-
-					//Update the desired distance of the face
-					mFace.setDesiredEyesDist(mDesiredEyesDist);
-
-					//Notify interested parts!
-					if(mListener!=null) mListener.onFaceDetected(mFace);
 				} else {
-//					if (System.currentTimeMillis() - mLastDetected > 500){ //Only forget the eyes distance if more than half a second has passed since we last saw the face
+					mTimestampLastNotDetected = System.currentTimeMillis();
+					if (System.currentTimeMillis() - mTimestampLastDetected > 500){ //Only forget the eyes distance if more than half a second has passed since we last saw the face
 						mDesiredEyesDist = 0;
 						//Notify interested parts!
 						if(mListener!=null) mListener.onFaceNotDetected();
-//					}
+					}
 				}
 
 				if (mCamera != null)

@@ -30,7 +30,7 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	private static final int MSG_UPDATE_TEXT = 1;
 	private static final int MSG_UPDATE_PUPILS_POSITION = 2;
 	
-	private static final int SPEED_EXPLORE = 20;
+	private static final int SPEED_EXPLORE = 10;
 	private static final int SPEED_ESCAPE = 50;
 
 	
@@ -104,7 +104,8 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 
 	public void resume(){
 		mCurrentState = STATE_NORMAL;
-		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+//		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+		mFaceExpression.setExpression(mCurrentState);
 
 		mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
 		mFaceTracking.setFaceTrackingListener(this);
@@ -175,8 +176,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	private static PointF mFaceDistanceToCenter;
 
 	private class StateTransitionTask extends TimerTask {
-
-
 		@Override        
 		public void run() {
 			//Roulette type selection
@@ -190,7 +189,8 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 				if (randomNumber <= sum){//Found the lucky winner!
 					mCurrentState = nextState;
 //					Log.d(TAG, "NextState: " + nextState);
-					mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+//					mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+					mFaceExpression.setExpression(mCurrentState);
 					mLeftSpeed = 0;
 					mRightSpeed = 0;
 
@@ -284,12 +284,14 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 		if (mCurrentState != STATE_HAPPY){
 			mTalker.say("hello!");
 			mCurrentState = STATE_HAPPY;
-			mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+//			mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+			mFaceExpression.setExpression(mCurrentState);
 		}
 
 		//change the position of the face eyes according to the face position
 		mFaceDistanceToCenter = face.getDistanceToCenter();
-		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_PUPILS_POSITION);
+//		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_PUPILS_POSITION);
+		mFaceExpression.setPupilsPosition(mFaceDistanceToCenter.x, mFaceDistanceToCenter.y);
 
 		changeSpeed();
 	}
@@ -306,7 +308,8 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 		mLeftSpeed = 0;
 		changeSpeed();
 		mCurrentState = STATE_NORMAL;
-		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+//		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+		mFaceExpression.setExpression(mCurrentState);
 		startBehaviourTransitions();
 	}
 
@@ -328,7 +331,8 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 				stopBehaviourTransitions(); //basic state transitions
 //				Log.d(TAG, "Scared: Trying to escape!!!");
 				mCurrentState = STATE_SURPRISE;
-				mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+//				mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+				mFaceExpression.setExpression(mCurrentState);
 				mLeftSpeed = SPEED_ESCAPE;
 				mRightSpeed = SPEED_ESCAPE;
 				changeSpeed();
@@ -361,7 +365,8 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 			stopBehaviourTransitions(); //basic state transitions
 			
 			mCurrentState = STATE_SCARED;
-			mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+//			mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
+			mFaceExpression.setExpression(mCurrentState);
 		} else if(min>=50 & mCurrentState == STATE_SCARED) { //Back in the ground...act normal
 			Log.d(TAG, "Min: " + min + ". So not scared anymore. Stop");
 			resume();
@@ -379,19 +384,19 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what){
-			case MSG_UPDATE_EXPRESSION:
+//			case MSG_UPDATE_EXPRESSION:
 //				Log.d(TAG, "MSG_UPDATE_EXPRESSION");
-				mFragmentPet.showText(getStatus());
-				mFaceExpression.setExpression(mCurrentState);
-				break;
+//				mFragmentPet.showText(getStatus());
+//				mFaceExpression.setExpression(mCurrentState);
+//				break;
 			case MSG_UPDATE_TEXT:
 //				Log.d(TAG, "MSG_UPDATE_TEXT");
 				mFragmentPet.showText(getStatus());
 				break;
-			case MSG_UPDATE_PUPILS_POSITION:
+//			case MSG_UPDATE_PUPILS_POSITION:
 //				Log.d(TAG, "MSG_UPDATE_TEXT");
-				mFaceExpression.setPupilsPosition(mFaceDistanceToCenter.x, mFaceDistanceToCenter.y);
-				break;
+//				mFaceExpression.setPupilsPosition(mFaceDistanceToCenter.x, mFaceDistanceToCenter.y);
+//				break;
 			}
 		}
 	};

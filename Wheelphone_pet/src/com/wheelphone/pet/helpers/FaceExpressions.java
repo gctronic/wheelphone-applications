@@ -101,7 +101,7 @@ public class FaceExpressions extends View {
 		centerDrawable(mFace);
 		mShowPupilsMoving = false;
 		//TODO: invalidate only the face area
-		invalidate();
+		postInvalidate();
 	}
 
 	/*
@@ -121,7 +121,7 @@ public class FaceExpressions extends View {
 		mShowPupilsMoving = true;
 
 		//TODO: Invalidate the smallest area possible instead of the whole view
-		invalidate();
+		postInvalidate();
 	}
 
 	@Override 
