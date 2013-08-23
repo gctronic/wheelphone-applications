@@ -242,6 +242,8 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 			} 
 			
 		} else if (System.currentTimeMillis() - mTimestampLastSeen > 10000) {//If more than 10 seconds have happend since obstacle was last seen, explore
+			Log.d(TAG, "LOOOOOST!!! exploring");
+			mIsExploring = true;
 			//rotate in place to find the direction to go:
 			mDesiredRotation = 1;
 			mDesiredAcceleration = 0;
