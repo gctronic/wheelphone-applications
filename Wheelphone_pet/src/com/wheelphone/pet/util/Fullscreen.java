@@ -2,7 +2,6 @@ package com.wheelphone.pet.util;
 
 import android.app.ActionBar;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
 public class Fullscreen {

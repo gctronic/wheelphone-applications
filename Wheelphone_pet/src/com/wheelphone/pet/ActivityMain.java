@@ -83,7 +83,8 @@ public class ActivityMain extends Activity {
 		mFullscreen.resume();
 	}
 	
-	private  OnBackStackChangedListener mOnBackStackChangedListener = new OnBackStackChangedListener() {    
+	private  OnBackStackChangedListener mOnBackStackChangedListener = new OnBackStackChangedListener() {
+		@Override
         public void onBackStackChanged() {
         	Log.d(TAG, "getFragmentManager().getBackStackEntryCount(): " + getFragmentManager().getBackStackEntryCount());
             if (getFragmentManager().getBackStackEntryCount() == 0) {

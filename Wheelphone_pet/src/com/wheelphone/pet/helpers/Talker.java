@@ -5,8 +5,6 @@ import java.util.Locale;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
 
 public class Talker implements TextToSpeech.OnInitListener{
     private TextToSpeech tts;

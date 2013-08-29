@@ -352,7 +352,6 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:contentDescription="wheelphone"
             android:maxWidth="200dp"
             android:src="@drawable/ic_launcher" />
 

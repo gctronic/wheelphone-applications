@@ -1,9 +1,7 @@
 package com.wheelphone.faceme;
 
 import android.app.Activity;
-import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -42,14 +40,4 @@ public class ActivityMain extends Activity {
 		super.onResume();
 		mFullscreen.resume();
 	}
-	
-	private  OnBackStackChangedListener mOnBackStackChangedListener = new OnBackStackChangedListener() {    
-        public void onBackStackChanged() {
-        	Log.d(TAG, "getFragmentManager().getBackStackEntryCount(): " + getFragmentManager().getBackStackEntryCount());
-            if (getFragmentManager().getBackStackEntryCount() == 0) {
-            	Log.d(TAG, "back to petfragment");
-            	mFullscreen.show();
-            }
-        }
-    };
 }
