@@ -51,7 +51,7 @@ import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
 public class ActivityMain extends Activity implements SensorEventListener, ActionBar.OnNavigationListener {
 
-	private static String TAG = ActivityMain.class.getName();
+	private static final String TAG = ActivityMain.class.getName();
 
 	private Sensor mProximity;
 	private SensorManager mSensorManager;
@@ -102,7 +102,8 @@ public class ActivityMain extends Activity implements SensorEventListener, Actio
 		super.onCreate(savedInstanceState);
 
 		// Init bot:
-		wheelphone = new WheelphoneRobot(this, this);
+		wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
+
 //		wheelphone.enableSpeedControl();
 		wheelphone.startUSBCommunication();
 		wheelphone.enableSoftAcceleration();
