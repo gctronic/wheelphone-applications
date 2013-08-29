@@ -1,4 +1,5 @@
 #include "opticalFlow_FB.hpp"
+#include <vector>
 
 void MotionTrackerFB::drawOptFlowMap(cv::Mat& cflowmap, int step, double, const cv::Scalar& color) {
     for(int y = step/2; y < cflowmap.rows; y += step)

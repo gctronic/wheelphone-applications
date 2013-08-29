@@ -1,9 +1,5 @@
 
 #include <opencv2/opencv.hpp>
-#include <algorithm>
-#include <iostream>
-// #include <fstream>
-
 
 class MotionTrackerFB {
 private:

@@ -1,7 +1,5 @@
 package com.wheelphone.navigator;
 
-import java.util.Map;
-
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -11,6 +9,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,9 +24,9 @@ import android.widget.Toast;
 import com.wheelphone.R;
 import com.wheelphone.helpers.CameraHandler;
 import com.wheelphone.helpers.CameraViewOverlay;
-import com.wheelphone.navigator.helpers.MotionTracker;
-import com.wheelphone.navigator.helpers.MotionTracker.MotionTrackerColorListener;
-import com.wheelphone.navigator.helpers.MotionTracker.MotionTrackerListener;
+import com.wheelphone.navigator.helpers.TrackerAvoider;
+import com.wheelphone.navigator.helpers.TrackerAvoider.MotionTrackerColorListener;
+import com.wheelphone.navigator.helpers.TrackerAvoider.MotionTrackerListener;
 import com.wheelphone.util.RangeSeekBar;
 import com.wheelphone.util.RangeSeekBar.OnRangeSeekBarChangeListener;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
@@ -51,38 +50,58 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 	private CameraHandler mCameraHandler;
 	private CameraViewOverlay mCameraViewOverlay;
 
-	private MotionTracker mFrameProcessor;
+	private TrackerAvoider mFrameProcessor;
 
 	private boolean mIsUpdatingTarget;
 
 	private boolean mIsGoing = false;
 	
 	private double mObstacleDesiredRotation;
+	private double mObstacleDesiredAcceleration;
 
 	private long mObstacleLastSeenTimestamp;
 
 	// Scaling factor for each spring. Since the spring values come between -1 and 1, this value defines the maximum contribution by each spring
-	private int mLinearSpringConst = 100;//12
-
-	private int mAngularSpringConst = 30;//10
+	private static final int LINEAR_SPRING_CONST = 50;//100
+	private static final int ANGULAR_SPRING_CONST = 30;//30
+	private static final double DUMPING_FACTOR = 1;
 
 //	private LogcatStreamer mLogcatStreamer;
 
 	private Button mButtonNext, mButtonStart, mButtonDel, mButtonAdd, mButtonStop;
-	protected RangeSeekBar<Double> mRangeSeekBarH,  mRangeSeekBarS, mRangeSeekBarV;
+	private RangeSeekBar<Double> mRangeSeekBarH,  mRangeSeekBarS, mRangeSeekBarV;
+
+	private boolean mUseProximity;
+
+	private boolean mUseOpticalflow;
+
+	private boolean mMenuState = true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_navigator,
 				container, false);
+		//Read the stored preferences:
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		mUseProximity = sharedPref.getBoolean("pref_proximity", false);
+		mUseOpticalflow = sharedPref.getBoolean("pref_opticalflow", false);
+		boolean useSpeedControl = sharedPref.getBoolean("pref_speedcontrol", false);
+		
 		mOutput = (TextView)rootView.findViewById(R.id.output);
 
 		//Start robot control:
 		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
 		mWheelphone.startUSBCommunication();
 		//		mWheelphone.enableSoftAcceleration();
-		mWheelphone.enableSpeedControl();
+		if (useSpeedControl) {
+			mWheelphone.enableSpeedControl();
+			Toast.makeText(getActivity(), "Speed control ENABLED", Toast.LENGTH_SHORT).show();
+		} else {
+			mWheelphone.disableSpeedControl();
+			Toast.makeText(getActivity(), "Speed control DISABLED", Toast.LENGTH_SHORT).show();
+		}
+		
 		mWheelphone.disableSoftAcceleration();
 		//		mWheelphone.enableObstacleAvoidance();
 		//		mWheelphone.disableSpeedControl();
@@ -96,7 +115,6 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 				//				Log.d(TAG, "touched: " + event.getAction());
 
 				if (mIsUpdatingTarget && event.getAction() == MotionEvent.ACTION_DOWN){
-					Log.d(TAG, "re-touched");
 					Scalar HSVcolor = mCameraViewOverlay.getPixel(mFrameProcessor.getRgba(), (int)event.getX(), (int)event.getY());
 					
 					//Add picked color to the processor and the overlay
@@ -110,6 +128,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 					mIsUpdatingTarget = false;
 
 					checkEnableStatus();
+					
 					return true;
 				}
 
@@ -117,12 +136,11 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 			}
 
 		});
-
+		
 		//		mOpenCvCameraView = (CameraBridgeViewBase) rootView.findViewById(R.id.camerapreview);
 		mCameraSurfaceView = (SurfaceView) rootView.findViewById(R.id.camera_preview);
 		mCameraHandler = new CameraHandler(getActivity(), mCameraSurfaceView.getHolder());
-		mFrameProcessor = new MotionTracker(mCameraViewOverlay);
-
+		mFrameProcessor = new TrackerAvoider(mCameraViewOverlay, mUseOpticalflow);
 
 		mButtonAdd = (Button) getActivity().findViewById(R.id.button_add);
 		mButtonAdd.setOnClickListener(mButtonsListener);
@@ -142,7 +160,6 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.frame_edit);
 
 		if (layout.getChildCount() == 0) {
-			// create RangeSeekBar as double for H (0-360):
 			mRangeSeekBarH = new RangeSeekBar<Double>(0., 255., getActivity());
 			mRangeSeekBarH.setOnRangeSeekBarChangeListener(mSeekBarListener);
 			layout.addView(mRangeSeekBarH);
@@ -159,10 +176,11 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		return rootView;
 	}
 
+	
+	
 	private OnRangeSeekBarChangeListener<Double> mSeekBarListener = new OnRangeSeekBarChangeListener<Double>() {
 		@Override
 		public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Double minValue, Double maxValue) {
-
 			mFrameProcessor.setTargetHSV(mRangeSeekBarH.getSelectedMinValue(), mRangeSeekBarH.getSelectedMaxValue(), 
 					mRangeSeekBarS.getSelectedMinValue(), mRangeSeekBarS.getSelectedMaxValue(),
 					mRangeSeekBarV.getSelectedMinValue(), mRangeSeekBarV.getSelectedMaxValue());
@@ -179,35 +197,37 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 				Log.d(TAG, "add");
 				Toast.makeText(getActivity(), "Tap on the screen to add select the target color", Toast.LENGTH_SHORT).show();
 				mIsUpdatingTarget = true;
-				checkEnableStatus();
 				break;
 			case R.id.button_del:
 				Log.d(TAG, "del");
 				mCameraViewOverlay.deleteCurrent();
 				mFrameProcessor.deleteCurrent();
-				checkEnableStatus();
 				break;
 			case R.id.button_start:
 				mIsGoing = true;
+				mWheelphone.calibrateSensors();
 				mFrameProcessor.setMotionTrackerListener(FragmentNavigator.this);
 				Log.d(TAG, "start");
-				checkEnableStatus();
 				break;
 			case R.id.button_stop:
 				mIsGoing = false;
 				setSpeed(0, 0);
 				mFrameProcessor.setMotionTrackerListener(null);
 				Log.d(TAG, "stop");
-				checkEnableStatus();
 				break;
 			case R.id.button_next:
 				mFrameProcessor.nextTarget();
 				Log.d(TAG, "next");
 				break;
 			}
+			checkEnableStatus();
+			
 		}
-
 	};
+	
+	public boolean getMenuState(){
+		return mMenuState;
+	}
 	
 	private void checkEnableStatus() {
 		mButtonNext.setEnabled(false);
@@ -220,6 +240,8 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		mRangeSeekBarS.setEnabled(false);
 		mRangeSeekBarV.setEnabled(false);
 		
+		mMenuState = false; //disabled
+		
 		if (mIsUpdatingTarget)
 			return;
 
@@ -228,6 +250,8 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 			mButtonNext.setEnabled(true);
 			return;
 		}
+
+		mMenuState = true; //enabled
 		
 		mButtonAdd.setEnabled(true);
 		
@@ -250,8 +274,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		@Override
 		public void onManagerConnected(int status) {
 			switch (status) {
-			case LoaderCallbackInterface.SUCCESS:
-			{
+			case LoaderCallbackInterface.SUCCESS: {
 				Log.i(TAG, "OpenCV loaded successfully");
 
 				// Load native library after(!) OpenCV initialization
@@ -262,9 +285,6 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 				
 				insertColors();
 
-				//				mOpenCvCameraView.setCvCameraViewListener(new MotionTrackerOpenCV(getController()));
-				//				mOpenCvCameraView.enableView();
-
 			} break;
 			default:
 			{
@@ -274,6 +294,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		}
 
 	};
+
 	
 	private void insertColors() {
 		getActivity();
@@ -340,9 +361,14 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 
 	@Override
 	public void onResume() {
-		OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_6, getActivity(), mLoaderCallback);
+	    Log.i(TAG, "Trying to load OpenCV library");
+	    if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_6, getActivity(), mLoaderCallback)) {
+	        Log.e(TAG, "Cannot connect to OpenCV Manager");
+	    }
+		
 		mWheelphone.resumeUSBCommunication();
-		mWheelphone.setWheelPhoneRobotListener(this);
+		if(mUseProximity)
+			mWheelphone.setWheelPhoneRobotListener(this);
 		
 //		mLogcatStreamer = new LogcatStreamer();
 		super.onResume();
@@ -361,6 +387,11 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		mWheelphone.pauseUSBCommunication();
 
 		// Store current colors:
+		storeCurrentColors();
+	}
+
+
+	private void storeCurrentColors() {
 		SharedPreferences settings = getActivity().getSharedPreferences(TAG, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = settings.edit();
 
@@ -403,9 +434,9 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		super.onDestroy();
 	}
 
-	private static String getStatus(){
+	private String getStatus(){
 		String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
-		return status + ". L: " + mLeftSpeed + ", R: " + mRightSpeed;
+		return status + ". L: " + mLeftSpeed + ", R: " + mRightSpeed + ". " + mFrameProcessor.getTargetYDisplacement();
 	}
 
 	public static boolean isMoving(){
@@ -428,6 +459,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 	public void onWheelphoneUpdate() {
 		if (mFrameProcessor.isExploring() || !mIsGoing){
 			mObstacleDesiredRotation = 0;
+			mObstacleDesiredAcceleration = 0;
 			return;
 		}
 
@@ -444,17 +476,19 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		}
 
 		//Rotate away from the closest sensed object (scaling: uses sensor idx to :
-		if (max > 30){
+		if (max > 10){
 			mObstacleLastSeenTimestamp = System.currentTimeMillis();
-			//			int importance = (maxIdx < 2) ? maxIdx - 2 : maxIdx - 1; 
-			//			mObstacleDesiredRotation = - frontProx[maxIdx]/(importance * 255.);
 
-			//if there is an obstacle, slow down proportional to the distance to the object (scaled to range 0 to 1 by dividing by the largest value it can take)
-			//			mObstacleDesiredLinearAcc = 1/mObstacleDesiredRotation/510.; 
-
-			//obstacle is present, rotation points away from the sensor that feels the obstacle the closest
-			mObstacleDesiredRotation = (maxIdx < 2) ? 1 : -1;
-			//			mObstacleDesiredLinearAcc = 0.1; 
+			//obstacle is present, rotation points away from the sensor that feels the obstacle the closest. Range [-2, 2]. (turn faster than the target seeker) 
+			mObstacleDesiredRotation = - (double)2 / (double)((maxIdx <= 1) ? maxIdx-2 : maxIdx-1);
+			//the higher the value of the sensor, the closest the obstacle. So the closer the slower we should go. Range [0, 1]
+			mObstacleDesiredAcceleration = Math.abs(frontProx[maxIdx] / 255. - 1);
+			
+			Log.d(TAG, "seen: [" + mObstacleDesiredRotation + ", " + mObstacleDesiredAcceleration + "]");
+		} else {
+			//Obstacle is on one side of the robot, so go parallel to it:
+			mObstacleDesiredRotation = 0;
+			mObstacleDesiredAcceleration = 1;
 		}
 
 		calculateSpeeds();			
@@ -468,43 +502,22 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		double linearAcc = mFrameProcessor.getDesiredLinearAcc();
 
 		if (!mFrameProcessor.isExploring()){
-			if (System.currentTimeMillis() - mObstacleLastSeenTimestamp < 200) {
-				//seeing or recently saw an obstacle: rotate in place (slightly forward) away from the obstacle 
+			if (System.currentTimeMillis() - mObstacleLastSeenTimestamp < 300) {
+				//seeing or recently saw an obstacle: use obstacle avoidance rotation and acceleration values 
 				angularAcc = mObstacleDesiredRotation;
-				linearAcc = 0.1;
-				Log.d(TAG, "obstacle rotate away");
-			} else if (System.currentTimeMillis() - mObstacleLastSeenTimestamp < 800) {
-				//it has been some time since the obstacle was last seen...forward is clear so go forward
-				angularAcc = 0;
-				linearAcc = 0.5;
-				Log.d(TAG, "obstacle parallel to obstacle forward");
-			} else if (System.currentTimeMillis() - mObstacleLastSeenTimestamp < 2000 && !mFrameProcessor.isTargetVisible()) {
-				//after we think the obstacle was cleared, rotate in the opposite direction which was used to go away of the obstacle:
-				angularAcc = - mObstacleDesiredRotation;
-				linearAcc = 0.3;
-				Log.d(TAG, "obstacle back to target");
-			} 
-			else {
-				//At this point, the path is clear and the target is visible again, so reset.
-				mObstacleDesiredRotation = 0;
-				Log.d(TAG, "reset");
+				linearAcc = mObstacleDesiredAcceleration;
 			}
 		} 
 
-		int dampingNumerator = 1;
-		int dampingDenominator = 1;
-
 		mLeftSpeed = (int)(mLeftSpeed
-				+   linearAcc * mLinearSpringConst
-				+	angularAcc * mAngularSpringConst
-				-	dampingNumerator * mLeftSpeed
-				/ dampingDenominator);
+				+   linearAcc * LINEAR_SPRING_CONST
+				+	angularAcc * ANGULAR_SPRING_CONST
+				-	DUMPING_FACTOR * mLeftSpeed);
 
 		mRightSpeed = (int)(mRightSpeed 
-				+   linearAcc * mLinearSpringConst
-				-	angularAcc * mAngularSpringConst
-				-	dampingNumerator * mRightSpeed
-				/ dampingDenominator);
+				+   linearAcc * LINEAR_SPRING_CONST
+				-	angularAcc * ANGULAR_SPRING_CONST
+				-	DUMPING_FACTOR * mRightSpeed);
 		showText("");
 		mWheelphone.setSpeed(mLeftSpeed, mRightSpeed);
 	}

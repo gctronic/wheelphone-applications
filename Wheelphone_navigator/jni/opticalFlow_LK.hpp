@@ -1,4 +1,6 @@
 #include <opencv2/opencv.hpp>
+#include <math.h>       /* sin */
+
 
 class MotionTrackerLK {
 private:
@@ -10,6 +12,16 @@ private:
     std::vector<cv::Point2f> pointsPrevReverse;
     std::vector<cv::Point2f> pointsCurrent;
 
+    cv::Point leftRepulsivePoint;
+    cv::Point rightRepulsivePoint;
+    double repulsiveRange;
+
+    double mTimestampObstacleLastSeen;
+
+    double distanceLeft;
+    double distanceRight;
+    float rotation;
+    double objectAvgIntensity;
 
     std::vector<float> displacement;
     std::vector<float> magnitude;
@@ -29,12 +41,18 @@ private:
     int colorIntensity;
     int pointSize;
 
+    std::vector<std::vector<cv::Point> >hulls;
+    std::vector<cv::Point> hull;
+
+
     bool acceptTrackedPoint(int i);
     
 public:
     MotionTrackerLK();
 
-    void process(cv::Mat &input, cv::Mat &output);
+    void process(cv::Mat &input, cv::Mat &output, double minDisplace);
+
+    float getRotation();
 
     void release();
 };

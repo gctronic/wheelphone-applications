@@ -5,34 +5,21 @@
     android:paddingTop="?android:attr/actionBarSize" >
 
     <PreferenceCategory android:title="@string/settings" >
-        <EditTextPreference
-            android:defaultValue="20"
-            android:inputType="number"
-            android:key="pref_escape_speed"
-            android:title="@string/pref_escape_speed" />
-        <EditTextPreference
-            android:defaultValue="20"
-            android:inputType="number"
-            android:key="pref_curious_speed"
-            android:title="@string/pref_curious_speed" />
-
-        <ListPreference
-            android:dialogTitle="@string/pref_camera"
-            android:key="pref_camera"
-            android:title="@string/pref_camera" />
-
-        <ListPreference
-            android:dialogTitle="@string/pref_camera_resolution"
-            android:key="pref_camera_resolution"
-            android:title="@string/pref_camera_resolution" />
-        <ListPreference
-            android:dialogTitle="@string/pref_speech_lang"
-            android:key="pref_speech_lang"
-            android:title="@string/pref_speech_lang" />
-        <ListPreference
-            android:dialogTitle="@string/pref_speech_voice"
-            android:key="pref_speech_voice"
-            android:title="@string/pref_speech_voice" />
-    </PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_proximity"
+            android:summary="@string/summary_prox"
+            android:title="@string/title_prox" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_opticalflow"
+            android:summary="@string/summary_opticalflow"
+            android:title="@string/title_opticalflow" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_speedcontrol"
+            android:summary="@string/summary_speedcontrol"
+            android:title="@string/title_speedcontrol" />
+        </PreferenceCategory>
 
 </PreferenceScreen>

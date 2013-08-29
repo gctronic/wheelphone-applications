@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Wheelphone Navigator</string>
+    <string name="app_name">WP Navigator</string>
     <string name="navigator">Navigator</string>
     <string name="app_desc"><b>This is an application that makes the robot navigate an environment avoiding obstacles using only the camera</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
  
@@ -13,15 +13,15 @@
     <string name="error_no_camera">Sorry, it seems the device does not have a camera, this application is useless without it, :(.</string>
     
     
-    <string name="pref_camera">Face tracking camera</string>
-	<string name="pref_camera_resolution">Camera preview resolution</string>
-	<string name="pref_curious_speed">Curious speed</string>
-    <string name="pref_escape_speed">Escape speed</string>
-    <string name="pref_speech_lang">Speech language</string>
-    <string name="pref_speech_voice">Speech voice</string>
+    <string name="summary_prox">Use proximity sensors for obstacle avoidance</string>
+	<string name="summary_opticalflow">Optical Flow for obstacle avoidance</string>
+	<string name="summary_speedcontrol">Enable/disable firmware speed control</string>
+    <string name="title_prox">Prox. sensors</string>
+	<string name="title_opticalflow">Optical Flow</string>
+    <string name="title_speedcontrol">Speed control</string>
     
-    <string name="add">+ target</string>
-    <string name="del">- target</string>
+    <string name="add">Add</string>
+    <string name="del">Del</string>
     <string name="next">Next</string>
     <string name="start">Go!</string>
     <string name="stop">Stop</string>

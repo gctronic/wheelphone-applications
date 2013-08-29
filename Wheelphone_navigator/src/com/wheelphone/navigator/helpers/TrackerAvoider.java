@@ -18,11 +18,11 @@ import android.util.Log;
 import com.wheelphone.helpers.CameraHandler;
 import com.wheelphone.helpers.CameraViewOverlay;
 
-public class MotionTracker implements CameraHandler.FrameProcessor {
-	private static final String TAG = MotionTracker.class.getName();
+public class TrackerAvoider implements CameraHandler.FrameProcessor {
+	private static final String TAG = TrackerAvoider.class.getName();
 	private Mat mYuv, mRgba, mGray, mOutput;
 
-//	private MotionTrackerNativeWrapper mNativeMotionTrackerWrapper;
+	private TrackerAvoiderNativeWrapper mNativeMotionTrackerWrapper;
 	private CameraViewOverlay mCameraViewOverlay;
 	private Scalar mEmptyPixel = new Scalar(0);
 
@@ -45,11 +45,17 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 	private volatile boolean mIsExploring;
 	private volatile boolean mIsTargetVisible;
 	private long mTimestampLastSeen;
+	private Rect mTargetBoundingRect;
+
+	private double mTargetYDisplacement;
+	private double mTargetLastY;
+	private boolean mUseOpticalFlow;
 
 
-	public MotionTracker(CameraViewOverlay cameraViewOverlay) {
+	public TrackerAvoider(CameraViewOverlay cameraViewOverlay, boolean useOpticalflow) {
 		mCameraViewOverlay = cameraViewOverlay;
-//		mNativeMotionTrackerWrapper = new MotionTrackerNativeWrapper();
+		mNativeMotionTrackerWrapper = new TrackerAvoiderNativeWrapper();
+		mUseOpticalFlow = useOpticalflow;
 	}
 
 	/*
@@ -108,16 +114,21 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 		setGray(frameSize);
 
 
-		//        Log.d(TAG, "before: " + mOutput.cols() + "x" + mOutput.rows());
-		//        mNativeMotionTrackerWrapper.process(mRgba, mGray, mOutput);
-
-
 		getTargetLocation();
+		
+		mOutput = mRgba.clone();
+		
+		//If not exploring
+		if (!mIsExploring && mUseOpticalFlow && mTargetYDisplacement > 0)
+			mNativeMotionTrackerWrapper.process(mRgba, mGray, mOutput, mTargetYDisplacement);
+		
+		if (mMotionTrackerListener != null)
+			mMotionTrackerListener.onDesiredRotationChange();
 
 		//        Log.d(TAG, "rotation: " + mNativeMotionTrackerWrapper.getDesiredRotation() + ". target visible: " + mNativeMotionTrackerWrapper.isFollowingTarget());
 
-		//	    mCameraViewOverlay.setImage(mOutput);
-		mCameraViewOverlay.setImage(mRgba, mContours);
+//		mCameraViewOverlay.setImage(mRgba, mContours);
+		mCameraViewOverlay.setImage(mOutput, mContours);
 		mCameraViewOverlay.postInvalidate();
 	}
 
@@ -132,7 +143,7 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 			Log.d(TAG, "Allocating mRgba");
 		}
 		Imgproc.cvtColor(mYuv, mRgba, Imgproc.COLOR_YUV2BGR_NV12, 4);
-		return mRgba; 
+		return mRgba;
 	}
 
 	private synchronized void setGray(Size frameSize){
@@ -160,7 +171,6 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 		bounds[1].val[3] = 255;
 
 		return bounds;
-		
 	}
 
 	private synchronized void getTargetLocation(){
@@ -168,11 +178,11 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 			return;
 		Mat pyrDownMat = new Mat();
 
-		Imgproc.pyrDown(mRgba, pyrDownMat);
-		Imgproc.pyrDown(pyrDownMat, pyrDownMat);
+//		Imgproc.pyrDown(mRgba, pyrDownMat);
+//		Imgproc.pyrDown(pyrDownMat, pyrDownMat);
 
 		Mat hsvMat = new Mat();
-		Imgproc.cvtColor(pyrDownMat, hsvMat, Imgproc.COLOR_RGB2HSV_FULL);
+		Imgproc.cvtColor(mRgba, hsvMat, Imgproc.COLOR_RGB2HSV_FULL);
 
 		Mat Mask = new Mat();
 		Core.inRange(hsvMat, mBounds.get(mTargetIdx)[0], mBounds.get(mTargetIdx)[1], Mask);
@@ -183,12 +193,14 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 		Mat hierarchy = new Mat();
 
 		Imgproc.findContours(dilatedMask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
-
+		
 		mBlobCenter = new Point();
 
 		mContours.clear();
 		
 		mIsTargetVisible = false;
+		
+		mTargetYDisplacement = 0;
 
 		if(contours.size() > 0) {
 
@@ -206,19 +218,24 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 				index++;
 			}
 
-			Rect boundingRect = Imgproc.boundingRect(contours.get(contourIndex));
-			
-//			Log.d(TAG, "X: " + boundingRect.x + ". TL: " + boundingRect.tl());
-			mBlobCenter.x = boundingRect.x + boundingRect.width/2;
-			mBlobCenter.y = boundingRect.y + boundingRect.height/2;
+			//scale up the retrieved contour:
+//			Core.multiply(contours.get(contourIndex), new Scalar(4,4), contours.get(contourIndex));
 
-			int boundingRectPercentualWidth = 100 * boundingRect.width / pyrDownMat.width();
-			int boundingRectPercentualHeight = 100 * boundingRect.height / pyrDownMat.height();
+			mTargetBoundingRect = Imgproc.boundingRect(contours.get(contourIndex));
 			
-//			Log.d(TAG, "Width %: " + 100 * boundingRect.width / pyrDownMat.width());
-//			Log.d(TAG, "diff: " + Math.abs(boundingRect.width - boundingRect.height));
-//			Log.d(TAG, "%: " + boundingRect.width/20);
+			//Assuming that the screen is inclinated, the lower part of the target is the fastest moving part of the target, so use it as lower bound...anything moving slower than it is ignored (obstacles are closer than the target, thus they should displace faster than this point of reference)
+			mTargetYDisplacement = mTargetBoundingRect.br().y - mTargetLastY;
+			mTargetLastY = mTargetBoundingRect.br().y;
+			
+//			Log.d(TAG, "displacement Y: " + mTargetYDisplacement);
+			mBlobCenter.x = mTargetBoundingRect.x + mTargetBoundingRect.width/2;
+			mBlobCenter.y = mTargetBoundingRect.y + mTargetBoundingRect.height/2;
 
+			int boundingRectPercentualWidth = 100 * mTargetBoundingRect.width / mRgba.width();
+			int boundingRectPercentualHeight = 100 * mTargetBoundingRect.height / mRgba.height();
+			
+//			Log.d(TAG, "Width %: " + boundingRectPercentualWidth);
+//			Log.d(TAG, "Height %: " + boundingRectPercentualHeight);
 			
 			//Only notify/draw if the tracked object is large enough (enclosing rectangle is at least 13% of the width).
 			if (boundingRectPercentualWidth > 13){
@@ -226,10 +243,9 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 				mIsTargetVisible = true;
 				mTimestampLastSeen = System.currentTimeMillis();
 				
-				followTarget(pyrDownMat);
+				followTarget();
 				
 				// Make sure that we draw the largest contour on the screen:
-				Core.multiply(contours.get(contourIndex), new Scalar(4,4), contours.get(contourIndex));
 				mContours.add(contours.get(contourIndex));
 
 				//if enclosing rectangle's width is larger than 80% of the screen or height 60%. Notify listener that target has been reached (probably the listener would make this class iterate to the next target)
@@ -237,19 +253,14 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 					if (mMotionTrackerListener != null)
 						mMotionTrackerListener.onTargedReached();
 				}
-				if (mMotionTrackerListener != null)
-					mMotionTrackerListener.onDesiredRotationChange();
 			} 
 			
 		} else if (System.currentTimeMillis() - mTimestampLastSeen > 10000) {//If more than 10 seconds have happend since obstacle was last seen, explore
-			Log.d(TAG, "LOOOOOST!!! exploring");
+//			Log.d(TAG, "LOOOOOST!!! exploring");
 			mIsExploring = true;
 			//rotate in place to find the direction to go:
 			mDesiredRotation = 1;
 			mDesiredAcceleration = 0;
-			
-			if (mMotionTrackerListener != null)
-				mMotionTrackerListener.onDesiredRotationChange();
 		}
 	}
 
@@ -257,10 +268,11 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 		return mContours;
 	}
 
-	private synchronized void followTarget(Mat pyrDownMat) {
+	private synchronized void followTarget() {
 		mIsExploring = false;
 		// Target is/was visible, advance while trying to reach it:
-		mDesiredRotation = ((2 * mBlobCenter.x) / pyrDownMat.width()) - 1;
+		//Set the rotation on a range between -1 and 1:
+		mDesiredRotation = (2 * (mBlobCenter.x / mRgba.width())) - 1;
 		mDesiredAcceleration = 1;
 
 	}
@@ -313,14 +325,17 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 	}
 
 	public double getDesiredRotation() {
-		return mDesiredRotation;
+		if (mUseOpticalFlow && mNativeMotionTrackerWrapper.getDesiredRotation() != 0)//if we see an obstacle, try to avoid it:
+			return 1.5*mNativeMotionTrackerWrapper.getDesiredRotation();
+		else
+			return mDesiredRotation;
 	}
 
 	public int getDesiredLinearAcc() {
 		return mDesiredAcceleration;
 	}
 
-	//Returns the range of the currently selected color. It is an Scalar array of size 2, position 0 is for lower bound and position 1 is for upper bound
+//	Returns the range of the currently selected color. It is an Scalar array of size 2, position 0 is for lower bound and position 1 is for upper bound
 	public Scalar[] getHsvRanges(int idx) {
 		if (idx < mBounds.size() && idx >= 0){
 			Log.i(TAG, "getHsvRanges. Returning HSV ranges for: " + idx + ", BoundsL: " + mBounds.get(idx)[0] + ". BoundsH: " + mBounds.get(idx)[1]);
@@ -371,5 +386,9 @@ public class MotionTracker implements CameraHandler.FrameProcessor {
 
 		if (mMotionTrackerListenerColor != null)
 			mMotionTrackerListenerColor.onTargetChange(mTargetIdx);
+	}
+	
+	public double getTargetYDisplacement(){
+		return mTargetYDisplacement;
 	}
 }

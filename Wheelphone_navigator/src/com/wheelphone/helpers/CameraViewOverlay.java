@@ -6,7 +6,6 @@ import java.util.List;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvException;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
@@ -22,8 +21,6 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
-import com.wheelphone.navigator.helpers.MotionTracker.MotionTrackerColorListener;
 
 public class CameraViewOverlay extends View{
 	private static final String TAG = CameraViewOverlay.class.getName();
@@ -41,7 +38,7 @@ public class CameraViewOverlay extends View{
 	private Rect mColorSquare = new Rect();
 
 
-	private static final Scalar CONTOUR_COLOR = new Scalar(255,0,0,255);
+	private static final Scalar CONTOUR_COLOR = new Scalar(0,255,0,255);
 
 
 	public CameraViewOverlay(Context context) {

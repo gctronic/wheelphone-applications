@@ -81,8 +81,8 @@ public class CameraHandler implements SurfaceHolder.Callback, Camera.PreviewCall
 		//					Log.d(TAG, size.width + "x" + size.height);
 		//				}
 
-		cameraParameters.setPreviewSize(320, 240);
-		//		cameraParameters.setPreviewSize(352, 288);
+//		cameraParameters.setPreviewSize(320, 240);
+		cameraParameters.setPreviewSize(352, 288);
 		//		cameraParameters.setPreviewSize(640, 480);
 		mCamera.setParameters(cameraParameters); 
 
@@ -205,6 +205,9 @@ public class CameraHandler implements SurfaceHolder.Callback, Camera.PreviewCall
 		}
 	}
 
+	/*
+	 * Rotate the image in the byte array that was filled with the latest frame
+	 */
 	private void rotate() {
 		// Rotate the Y luma
 		int i = 0;
@@ -241,13 +244,4 @@ public class CameraHandler implements SurfaceHolder.Callback, Camera.PreviewCall
 	public void setFrameProcessor(FrameProcessor processor) {
 		mFrameProcessor = processor;
 	}
-
-
-	//	public synchronized void disableProcessor() {
-	//		mIsEnabled = false;
-	//	}
-	//
-	//	public synchronized void enableProcessor() {
-	//		mIsEnabled = true;
-	//	}
 }
