@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 
 
 public class FragmentSettings extends Fragment {
-	private static String TAG = FragmentSettings.class.getName();
+	private static final String TAG = FragmentSettings.class.getName();
 	private static SharedPreferences sharedPrefs;
 
 

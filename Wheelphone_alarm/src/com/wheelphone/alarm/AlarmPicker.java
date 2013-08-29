@@ -14,7 +14,8 @@ import android.util.Log;
 import android.widget.TimePicker;
 
 public class AlarmPicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-	private static String TAG = AlarmPicker.class.getName();
+	private static final String TAG = AlarmPicker.class.getName();
+	
 	protected static SimpleDateFormat alarmTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 	
 	@Override

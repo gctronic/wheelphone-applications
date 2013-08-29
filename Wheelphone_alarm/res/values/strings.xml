@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Wheelphone Alarm</string>
+    <string name="app_name">WP Alarm</string>
     <string name="wakeup_msg">STOP ALARM!!</string>
     
     <string name="weblink">www.wheelphone.com</string>

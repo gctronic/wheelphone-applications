@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver 
 {    
-	private static String TAG = AlarmReceiver.class.getName();
+	private static final String TAG = AlarmReceiver.class.getName();
 
 	@Override
 	public void onReceive(Context context, Intent intent) 
