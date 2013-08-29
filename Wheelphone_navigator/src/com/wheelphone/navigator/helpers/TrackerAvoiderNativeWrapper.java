@@ -1,9 +1,6 @@
 package com.wheelphone.navigator.helpers;
 
 import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
-
-import android.util.Log;
 
 public class TrackerAvoiderNativeWrapper{
 	private static final String TAG = TrackerAvoiderNativeWrapper.class.getName();

@@ -7,10 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import android.R;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 public class LogcatStreamer{
 	private static final String TAG = LogcatStreamer.class.getName();

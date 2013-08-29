@@ -176,10 +176,6 @@ public class TrackerAvoider implements CameraHandler.FrameProcessor {
 	private synchronized void getTargetLocation(){
 		if (mBounds.size() < 1)
 			return;
-		Mat pyrDownMat = new Mat();
-
-//		Imgproc.pyrDown(mRgba, pyrDownMat);
-//		Imgproc.pyrDown(pyrDownMat, pyrDownMat);
 
 		Mat hsvMat = new Mat();
 		Imgproc.cvtColor(mRgba, hsvMat, Imgproc.COLOR_RGB2HSV_FULL);

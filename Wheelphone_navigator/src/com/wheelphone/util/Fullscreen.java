@@ -2,7 +2,6 @@ package com.wheelphone.util;
 
 import android.app.ActionBar;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
