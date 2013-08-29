@@ -21,7 +21,7 @@ import com.wheelphone.pet.FragmentPet;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
 public class Behaviour implements SensorEventListener, FaceTracking.FaceTrackingListener, WheelphoneRobot.WheelPhoneRobotListener{
-	private static String TAG = Behaviour.class.getName();
+	private static final String TAG = Behaviour.class.getName();
 
 	private static Random mRrandomGenerator = new Random();
 
@@ -63,7 +63,7 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	private FaceTracking mFaceTracking;
 	private static FragmentPet mFragmentPet;
 
-	private static boolean mInBehaviourTransition = false;//TODO: Instead of having a flag for the behaviour transition, register and unregister eventlisteners for the different functions
+	private static volatile boolean mInBehaviourTransition = false;//TODO: Instead of having a flag for the behaviour transition, register and unregister eventlisteners for the different functions
 
 	private static int mLeftSpeed = 0;
 	private static int mRightSpeed = 0;
@@ -142,7 +142,7 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	 *      N    C    A    M
 	 * N |0.25|0.70|0.03|0.02|
 	 * C |0.05|0.55|0.25|0.15|
-	 * A |0.02|0.10|0.60|0.28|
+	 * A |0.02|0.45|0.25|0.28|
 	 * M |0.01|0.05|0.10|0.84|
 	 * 
 	 * P(normal|normal)  = 0.25
@@ -188,8 +188,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 				sum = sum + mTransitionMatrix[mCurrentState][i];
 				if (randomNumber <= sum){//Found the lucky winner!
 					mCurrentState = nextState;
-//					Log.d(TAG, "NextState: " + nextState);
-//					mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
 					mFaceExpression.setExpression(mCurrentState);
 					mLeftSpeed = 0;
 					mRightSpeed = 0;
@@ -198,7 +196,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 						mLeftSpeed = SPEED_EXPLORE;
 						mRightSpeed = -SPEED_EXPLORE;
 					}
-//					mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_SPEED);
 					changeSpeed();
 					return;
 				}
@@ -298,8 +295,7 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 
 	@Override
 	public void onFaceNotDetected() {
-		if (mInBehaviourTransition)//Do nothing if we are in basic behaviour mode
-			return;
+		Log.d(TAG, "onFaceNotDetected()");
 		mOldPosTime = 0;
 		mOldPosX = 0;
 		
@@ -308,7 +304,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 		mLeftSpeed = 0;
 		changeSpeed();
 		mCurrentState = STATE_NORMAL;
-//		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
 		mFaceExpression.setExpression(mCurrentState);
 		startBehaviourTransitions();
 	}
@@ -329,6 +324,9 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 			if (mCurrentState != STATE_SURPRISE & eventValue == 0){//if not surprised already and hand approaches:
 				mFaceTracking.removeFaceTrackingListener(); //FaceTracking sensor
 				stopBehaviourTransitions(); //basic state transitions
+				mLeftSpeed = 0;
+				mRightSpeed = 0;
+				changeSpeed(); 
 //				Log.d(TAG, "Scared: Trying to escape!!!");
 				mCurrentState = STATE_SURPRISE;
 //				mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
@@ -350,6 +348,7 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	
 	/*
 	 * Nothing and scared:
+	 * Use the Wheelphone ground proximity sensor to see if the robot has been lifted:
 	 */
 	@Override
 	public void onWheelphoneUpdate() {
@@ -360,15 +359,17 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 				min = groundProx[i];
 		
 		if (mCurrentState != STATE_SCARED & min<50){ //Robot is not scared and it is lifted...thus it is scared!
-			Log.d(TAG, "Min: " + min + ". So I'm scared!");
 			mFaceTracking.removeFaceTrackingListener(); //FaceTracking sensor
 			stopBehaviourTransitions(); //basic state transitions
+			
+			mLeftSpeed=0;
+			mRightSpeed=0;
+			changeSpeed();
 			
 			mCurrentState = STATE_SCARED;
 //			mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_EXPRESSION);
 			mFaceExpression.setExpression(mCurrentState);
 		} else if(min>=50 & mCurrentState == STATE_SCARED) { //Back in the ground...act normal
-			Log.d(TAG, "Min: " + min + ". So not scared anymore. Stop");
 			resume();
 		}
 	}
@@ -384,19 +385,10 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what){
-//			case MSG_UPDATE_EXPRESSION:
-//				Log.d(TAG, "MSG_UPDATE_EXPRESSION");
-//				mFragmentPet.showText(getStatus());
-//				mFaceExpression.setExpression(mCurrentState);
-//				break;
 			case MSG_UPDATE_TEXT:
 //				Log.d(TAG, "MSG_UPDATE_TEXT");
 				mFragmentPet.showText(getStatus());
 				break;
-//			case MSG_UPDATE_PUPILS_POSITION:
-//				Log.d(TAG, "MSG_UPDATE_TEXT");
-//				mFaceExpression.setPupilsPosition(mFaceDistanceToCenter.x, mFaceDistanceToCenter.y);
-//				break;
 			}
 		}
 	};
@@ -408,7 +400,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	
 	private static void changeSpeed() {
 		mUIThreadWorker.sendEmptyMessage(MSG_UPDATE_TEXT);
-//		mWheelphone.setSpeed(mLeftSpeed, mRightSpeed);
 		mWheelphone.setRawSpeed(mLeftSpeed, mRightSpeed);
 	}
 

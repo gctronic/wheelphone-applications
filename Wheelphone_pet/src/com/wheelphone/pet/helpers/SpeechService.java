@@ -16,7 +16,7 @@ import android.util.Log;
 
 public class SpeechService extends Service
 {
-	private static String TAG = SpeechService.class.getName();
+	private static final String TAG = SpeechService.class.getName();
 
 	protected AudioManager mAudioManager; 
 	protected SpeechRecognizer mSpeechRecognizer;

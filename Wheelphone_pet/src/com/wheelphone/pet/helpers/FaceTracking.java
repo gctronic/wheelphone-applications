@@ -53,6 +53,9 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 
 	private boolean mStopThread = false;
 	private Thread mThread;
+	
+	private Object mLockObject = new Object();
+
 
 	public static final String INTENT_NOFACE = FaceTracking.class.getName() + ".FACE_NOT_DETECTED";
 	public static final String INTENT_FACEMOVES = FaceTracking.class.getName() + ".FACE_MOVED";
@@ -179,10 +182,10 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 		Log.d(TAG, "Disconnecting from camera");
 		try {
 			mStopThread = true;
-			synchronized (this) {
-				this.notify();
+			synchronized (mLockObject) {
+				Log.d(TAG, "Notify camera thread to close...waiting");
+				mLockObject.notify();
 			}
-			Log.d(TAG, "Wating for camera thread to close");
 			if (mThread != null)
 				mThread.join();
 		} catch (InterruptedException e) {
@@ -197,9 +200,9 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 
 	@Override
 	public void onPreviewFrame(byte[] d, Camera camera) {
-		synchronized (this) {
-//			Log.d(TAG, "Notify thread (frame arrived)");
-			this.notify();
+		synchronized (mLockObject) {
+			mLockObject.notifyAll();
+//			Log.d(TAG, "notify");
 		}
 	}
 
@@ -227,6 +230,8 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 						mEyesDistance = mFace.eyesDistance();
 
 						if (mDesiredEyesDist == 0){
+							Log.d(TAG, "Tracking new face, with eye distance: " + mEyesDistance);
+
 							mDesiredEyesDist = mEyesDistance;
 						}
 
@@ -238,23 +243,23 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 					}
 				} else {
 					mTimestampLastNotDetected = System.currentTimeMillis();
-					if (System.currentTimeMillis() - mTimestampLastDetected > 500){ //Only forget the eyes distance if more than half a second has passed since we last saw the face
+					if (mDesiredEyesDist != 0 && System.currentTimeMillis() - mTimestampLastDetected > 500){ //Only forget the eyes distance if more than half a second has passed since we last saw the face
 						mDesiredEyesDist = 0;
 						//Notify interested parts!
 						if(mListener!=null) mListener.onFaceNotDetected();
 					}
 				}
 
-				if (mCamera != null)
-					mCamera.addCallbackBuffer(mPreviewBuffer);
 				//		long end = System.currentTimeMillis();
 				//		Log.d(TAG, "Time: " + (end - start));
 
 				if (!mStopThread){
-					synchronized (FaceTracking.this) {
+					synchronized (mLockObject) {
+						if (mCamera != null)
+							mCamera.addCallbackBuffer(mPreviewBuffer);
 						try {
 //							Log.d(TAG, "waiting");
-							FaceTracking.this.wait();
+							mLockObject.wait();
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -310,10 +315,12 @@ public class FaceTracking extends SurfaceView implements SurfaceHolder.Callback,
 	 * Observer pattern glue code:
 	 */
 	public void setFaceTrackingListener(FaceTrackingListener eventListener) {
+		Log.d(TAG, "setFaceTrackingListener");
 		mListener = eventListener;
 	}
 
 	public void removeFaceTrackingListener() {
+		Log.d(TAG, "removeFaceTrackingListener");
 		mDesiredEyesDist = 0;
 		mListener = null;
 	}

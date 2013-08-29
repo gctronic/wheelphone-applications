@@ -17,7 +17,7 @@ import com.wheelphone.pet.R;
 
 //TODO: Migrate to libgdx to support animations: https://code.google.com/p/libgdx/wiki/SpriteAnimation
 public class FaceExpressions extends View {
-	private static String TAG = FaceExpressions.class.getName();
+	private static final String TAG = FaceExpressions.class.getName();
 
 	private static final Map<Integer, String> EXPRESSIONS_RESOURCES;
 	static
@@ -32,7 +32,6 @@ public class FaceExpressions extends View {
 		EXPRESSIONS_RESOURCES.put(Behaviour.STATE_SCARED, "expression_scared_001");
 		EXPRESSIONS_RESOURCES.put(Behaviour.STATE_SURPRISE, "expression_surprise_001");
 	}
-
 
 
 	private Drawable [] mFaces;
@@ -96,7 +95,7 @@ public class FaceExpressions extends View {
 	}
 
 	public void setExpression(int expressionId){
-//		Log.d(TAG, "setExpression: " + Behaviour.EXPRESSIONS_NAMES.get(expressionId));
+		Log.d(TAG, "setExpression: " + Behaviour.EXPRESSIONS_NAMES.get(expressionId));
 		mFace = mFaces[expressionId];
 		centerDrawable(mFace);
 		mShowPupilsMoving = false;
