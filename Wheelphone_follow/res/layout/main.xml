@@ -24,8 +24,7 @@
         android:id="@+id/outputText"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/txtConnection"
-        android:text="sadf" />
+        android:layout_below="@+id/txtConnection"/>
 
     <!-- Flags control -->
 

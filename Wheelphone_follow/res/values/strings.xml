@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Wheelphone Follow</string>
+    <string name="app_name">WP Follow</string>
     <string name="sensors_header">Sensors Status</string>
     <string name="flags_header">Flags</string>
     
