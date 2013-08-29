@@ -24,7 +24,7 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/wheelphone_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/FullscreenTheme" >
         <activity
             android:name="com.wheelphone.faceme.ActivityMain"
             android:label="@string/app_name"

@@ -1,20 +1,16 @@
 package com.wheelphone.faceme.helpers;
 
 import java.io.IOException;
-import java.util.List;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.hardware.Camera.Size;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import com.wheelphone.faceme.FragmentFaceme;
 import com.wheelphone.faceme.R;
@@ -38,6 +34,10 @@ public class FaceTracker extends SurfaceView implements SurfaceHolder.Callback, 
 	private int mRightSpeed = 0;
 	private float mDesiredEyesDist = 0;
 
+	private static final double DAMPING_FACTOR = 1;
+	private static final int LINEAR_SPRING_CONST = 60;//60
+	private static final int ANGULAR_SPRING_CONST = 25;//25
+
 	private android.hardware.Camera.Size mPreviewSize;
 
 	private FragmentFaceme mController;
@@ -55,11 +55,9 @@ public class FaceTracker extends SurfaceView implements SurfaceHolder.Callback, 
 	private FaceDetector.Face mFaces[];
 	private FaceDetector.Face mFace = null;
 	private PointF mEyesMP = new PointF();
-	private float  mEyesDistance;
+	private float mEyesDistance;
 
 	private int mCameraDirection = 0;
-
-	private volatile boolean mCapture;
 
 	public FaceTracker(Context context) { 
 		super(context);
@@ -118,16 +116,6 @@ public class FaceTracker extends SurfaceView implements SurfaceHolder.Callback, 
 
 		Log.d(TAG, "prev height: " + mPreviewSize.height); 
 		Log.d(TAG, "prev width: " + mPreviewSize.width); 
-
-		setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					mCapture = true;
-				}
-				return true;
-			}
-		});
 	}
 
 
@@ -198,66 +186,34 @@ public class FaceTracker extends SurfaceView implements SurfaceHolder.Callback, 
 
 			//calculate the face position (in range of -1000 to 1000) with respect to the center of the image, taking in consideration the preview resolution.
 			//Since we rotated the image, we also rotate the width and height here:
-			mFaceDistToCenterX = ((2000*(mEyesMP.x)/mPreviewSize.height) - 1000);
-			mFaceDistToCenterY = -(2000*(mEyesMP.y)/mPreviewSize.width) + 1000;
+			mFaceDistToCenterX = 2*(mEyesMP.x/mPreviewSize.height) - 1;
+			mFaceDistToCenterY = -2*(mEyesMP.y/mPreviewSize.width) + 1;
 
-//			Log.d(TAG, "Center: [" + mFaceDistToCenterX + ", " + mFaceDistToCenterY + "]");
+			Log.d(TAG, "Center: [" + mFaceDistToCenterX + ", " + mFaceDistToCenterY + "]");
 //			Log.d(TAG, "Eyes dist: [" + mEyesDistance + "]");
 
-			// Face coordinates range from (-1000, 1000). Scale it to -64 to 64 (robot supports -127 to 127, but that is too fast and can easily overshoot):
-			float angularAcc = mFaceDistToCenterX / 1000;
+			// Face coordinates range: [-1, 1]:
+			float angularAcc = mFaceDistToCenterX;
 
 			//Spring damping system (scaled)
 			float linearAcc = (mEyesDistance - mDesiredEyesDist) / mDesiredEyesDist;
 
-			int linearSpringConst = 7;//7
-			int angularSpringConst = 5;//5
-
-			int dampingNumerator = 1;
-			int dampingDenominator = 1;
+			Log.d(TAG, "angularAcc: " + angularAcc + ". linearAcc: " + linearAcc);
 			
 			mLeftSpeed = (int)(mLeftSpeed
-					+   linearAcc * linearSpringConst
-					+	angularAcc * angularSpringConst
-					-	dampingNumerator * mLeftSpeed
-					/ dampingDenominator);
+					+   linearAcc * LINEAR_SPRING_CONST
+					+	angularAcc * ANGULAR_SPRING_CONST
+					-	DAMPING_FACTOR * mLeftSpeed);
 			
 			mRightSpeed = (int)(mRightSpeed 
-					+   linearAcc * linearSpringConst
-					-	angularAcc * angularSpringConst
-					-	dampingNumerator * mRightSpeed
-					/ dampingDenominator);
+					+   linearAcc * LINEAR_SPRING_CONST
+					-	angularAcc * ANGULAR_SPRING_CONST
+					-	DAMPING_FACTOR * mRightSpeed);
 
 		} else { //No face, so stop:
 			stopTracking();
 		}
 		mController.setSpeed(mLeftSpeed, mRightSpeed);
-
-		//		if (mCapture){
-		//			try {
-		//				Camera.Parameters parameters = camera.getParameters();
-		//				Size size = parameters.getPreviewSize();
-		//				YuvImage image = new YuvImage(d, parameters.getPreviewFormat(),
-		//						size.width, size.height, null);
-		//				File file = new File("/sdcard/capture.jpg");
-		//				FileOutputStream filecon = new FileOutputStream(file);
-		//				image.compressToJpeg(
-		//						new Rect(0, 0, image.getWidth(), image.getHeight()), 90,
-		//						filecon);
-		//
-		//				String path = "/sdcard/capture.bin";				
-		//				RandomAccessFile ra = new RandomAccessFile(path, "rw");
-		//				byte byteArray[] = Arrays.copyOfRange(mRotatedPreviewBuffer, 0, mPreviewSize.width * mPreviewSize.height);
-		//				ra.write(byteArray);
-		//				Log.v(TAG,"width:" + mPreviewSize.width);
-		//				Log.v(TAG,"height:" + mPreviewSize.height);
-		//				ra.close();
-		//				mCapture = false;
-		//			} catch (IOException e) {
-		//				e.printStackTrace();
-		//			}
-		//		}
-
 		if (mCamera != null)
 			mCamera.addCallbackBuffer(mPreviewBuffer);
 		//		long end = System.currentTimeMillis();
