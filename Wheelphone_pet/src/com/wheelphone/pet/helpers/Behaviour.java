@@ -24,14 +24,15 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	private static final String TAG = Behaviour.class.getName();
 
 	private static Random mRrandomGenerator = new Random();
-
-
-	private static final int MSG_UPDATE_EXPRESSION = 0;
-	private static final int MSG_UPDATE_TEXT = 1;
-	private static final int MSG_UPDATE_PUPILS_POSITION = 2;
+	private static final int MSG_UPDATE_TEXT = 0;
 	
 	private static final int SPEED_EXPLORE = 10;
 	private static final int SPEED_ESCAPE = 50;
+
+	private static final int LINEAR_SPRING_CONST = 12;//5
+	private static final int ANGULAR_SPRING_CONST = 5;//5
+
+	private static final double DUMPING_FACTOR = 1;
 
 	
 	public static final Map<Integer, String> EXPRESSIONS_NAMES;
@@ -67,9 +68,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 
 	private static int mLeftSpeed = 0;
 	private static int mRightSpeed = 0;
-	private static float mOldPosX = 0;
-	private static long mOldPosTime = 0;
-	private static long mNewPosTime = 0;
 	
 	/* 
 	 * Initial state is only one: Normal
@@ -226,53 +224,16 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 
 		//Spring damping system (scaled)
 		float linearAcc = (face.eyesDistance() - face.getDesiredEyesDist()) / face.getDesiredEyesDist();
-
-		int linearSpringConst = 12;//5
-		int angularSpringConst = 10;//5
-
-		int dampingNumerator = 1;
-		int dampingDenominator = 1;
-		
-//		mLeftSpeed = 0;
-//		mRightSpeed = 0;
-
-//		float angularSpeed = 0;
-//		int angularSpeedConst = 2;
-//		mNewPosTime = System.currentTimeMillis();
-//		if (mOldPosTime != 0){
-//			//change of position over change in time
-//			angularSpeed =  (face.getDistanceToCenter().x - mOldPosX)/(mNewPosTime - mOldPosTime);
-//			Log.d(TAG, "Sidespeed: " + (angularSpeed * angularSpeedConst));
-//			Log.d(TAG, "angular: " + (angularAcc * angularSpringConst));
-//		}
-//		
-//		mOldPosTime = mNewPosTime;
-//		mOldPosX = face.getDistanceToCenter().x;
-		
-		// closer face = negative back/forward speed
-		// left right = negative X-axis speed
-		
-//		mLeftSpeed = (int)(
-////				+   linearAcc * linearSpringConst
-//				+	(angularAcc * angularSpringConst) + (angularSpeed * angularSpeedConst)
-//				);
-//		mRightSpeed = (int)( 
-////				+   (linearAcc * linearSpringConst)
-//				-	(angularAcc * angularSpringConst) - (angularSpeed * angularSpeedConst)
-//				);
-//		Log.d(TAG, "L: " + mLeftSpeed + ", R:" + mRightSpeed);
 		
 		mLeftSpeed = (int)(mLeftSpeed
-				+   linearAcc * linearSpringConst
-				+	angularAcc * angularSpringConst
-				-	dampingNumerator * mLeftSpeed
-				/ dampingDenominator);
+				+   linearAcc * LINEAR_SPRING_CONST
+				+	angularAcc * ANGULAR_SPRING_CONST
+				-	DUMPING_FACTOR * mLeftSpeed);
 		
 		mRightSpeed = (int)(mRightSpeed 
-				+   linearAcc * linearSpringConst
-				-	angularAcc * angularSpringConst
-				-	dampingNumerator * mRightSpeed
-				/ dampingDenominator);
+				+   linearAcc * LINEAR_SPRING_CONST
+				-	angularAcc * ANGULAR_SPRING_CONST
+				-	DUMPING_FACTOR * mRightSpeed);
 
 		//Stop behaviour transitions
 		stopBehaviourTransitions();
@@ -296,8 +257,6 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	@Override
 	public void onFaceNotDetected() {
 		Log.d(TAG, "onFaceNotDetected()");
-		mOldPosTime = 0;
-		mOldPosX = 0;
 		
 		mTalker.say("bye!");
 		mRightSpeed = 0;
