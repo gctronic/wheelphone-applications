@@ -3,7 +3,7 @@
 
     <string name="app_name">WP Navigator</string>
     <string name="navigator">Navigator</string>
-    <string name="app_desc"><b>This is an application that makes the robot navigate an environment avoiding obstacles using only the camera</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
+    <string name="app_desc"><b>This is a navigation application. It allows the robot to navigate an environment looking for targets while avoiding obstacles. It has two modules to avoid the obstacles: (1)the robot’s front proximity sensors and (2)the camera + Optical Flow.</b>\nAdd at least two targets and then tap on “start”. This makes the robot go between all the targets in its list, while avoiding the obstacles.\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
  
     <string name="settings">Settings</string>
     <string name="about">About</string>
