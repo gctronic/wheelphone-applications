@@ -2,10 +2,9 @@
 <resources>
 
     <string name="app_name">WP Faceme</string>
-    <string name="action_settings">Settings</string>
     <string name="faceme">FaceMe</string>
     <string name="about">about</string>
-    <string name="app_desc"><b>This is an alarm application that makes the wheelphone to follow the face of a user.</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
+    <string name="app_desc"><b>This is face-tracking application. It keeps track of the position of one face using the front facing camera, then controls the robot to try to face always the tracked face.</b>\nTry to stand where the phone can see your face.\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
     
     <string name="error_no_camera">Sorry, it seems the device does not have a front facing camera, this application is useless without it, :(.</string>
 </resources>
