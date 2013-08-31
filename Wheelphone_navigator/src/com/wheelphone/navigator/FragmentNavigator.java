@@ -205,7 +205,6 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 				break;
 			case R.id.button_start:
 				mIsGoing = true;
-				mWheelphone.calibrateSensors();
 				mFrameProcessor.setMotionTrackerListener(FragmentNavigator.this);
 				Log.d(TAG, "start");
 				break;
@@ -476,7 +475,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		}
 
 		//Rotate away from the closest sensed object (scaling: uses sensor idx to :
-		if (max > 10){
+		if (max > 40){
 			mObstacleLastSeenTimestamp = System.currentTimeMillis();
 
 			//obstacle is present, rotation points away from the sensor that feels the obstacle the closest. Range [-2, 2]. (turn faster than the target seeker) 
