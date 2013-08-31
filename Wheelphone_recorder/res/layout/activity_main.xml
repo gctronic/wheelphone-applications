@@ -1,7 +1,33 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".ActivityMain"
-    tools:ignore="MergeRootFrame" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityMain" >
+
+    <FrameLayout
+        android:id="@+id/frame_preview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:ignore="MergeRootFrame" />
+
+    <LinearLayout
+        android:id="@+id/frame_controls"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/white_overlay"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent" >
+
+        <Button
+            android:id="@+id/button_start_stop"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:text="@string/start" />
+    </LinearLayout>
+
+</FrameLayout>
