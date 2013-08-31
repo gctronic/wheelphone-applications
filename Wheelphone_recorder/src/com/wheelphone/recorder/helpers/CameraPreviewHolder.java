@@ -37,8 +37,6 @@ public class CameraPreviewHolder extends SurfaceView implements SurfaceHolder.Ca
 
 	private FragmentRecorder mController;
 
-	private volatile boolean mIsRecording;
-
 	public CameraPreviewHolder(Context context) { 
 		super(context);
 		init(context);
@@ -85,43 +83,27 @@ public class CameraPreviewHolder extends SurfaceView implements SurfaceHolder.Ca
 
 		cameraParameters.setPreviewSize(352, 288);
 		mCamera.setParameters(cameraParameters);
+	}
+	
+	public void stop(){
+        // stop recording and release camera
+        mMediaRecorder.stop();  // stop the recording
+        releaseMediaRecorder(); // release the MediaRecorder object
+        mCamera.lock();         // take camera access back from MediaRecorder
 
-		setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_UP) {
+        // inform the user that recording has stopped
+        Log.d(TAG, "stopped");
+	}
+	
+	public void start(){
+        // initialize video camera
+        prepareVideoRecorder();
+        // Camera is available and unlocked, MediaRecorder is prepared,
+        // now you can start recording
+        mMediaRecorder.start();
 
-		            if (mIsRecording) {
-		            	mController.setSpeed(0, 0);
-		                // stop recording and release camera
-		                mMediaRecorder.stop();  // stop the recording
-		                releaseMediaRecorder(); // release the MediaRecorder object
-		                mCamera.lock();         // take camera access back from MediaRecorder
-
-		                // inform the user that recording has stopped
-		                Log.d(TAG, "stopped");
-		                mIsRecording = false;
-		            } else {
-		                // initialize video camera
-		                if (prepareVideoRecorder()) {
-		                	mController.setSpeed(20, 20);
-		                    // Camera is available and unlocked, MediaRecorder is prepared,
-		                    // now you can start recording
-		                    mMediaRecorder.start();
-
-		                    // inform the user that recording has started
-		                    Log.d(TAG, "started");
-		                    mIsRecording = true;
-		                } else {
-		                    // prepare didn't work, release the camera
-		                    releaseMediaRecorder();
-		                    // inform user
-		                }
-		            }
-				}
-				return true;
-			}
-		});
+        // inform the user that recording has started
+        Log.d(TAG, "started");
 	}
 	
 	private boolean prepareVideoRecorder(){

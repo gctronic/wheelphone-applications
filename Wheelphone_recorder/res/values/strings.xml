@@ -2,10 +2,18 @@
 <resources>
 
     <string name="app_name">WP Recorder</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_about">about</string>
+    <string name="settings">Settings</string>
+    <string name="about">about</string>
     <string name="recorder">Recorder</string>
     <string name="app_desc"><b>This is a recording application. It makes the robot record while it moves, its purpose is to provide the perspective of the robot while it is moving. Tap on the screen to start and stop the recording/movement</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
-    
+    <string name="start">start</string>
+    <string name="stop">stop</string>
     <string name="error_no_camera">Sorry, it seems the device does not have a camera, this application is useless without it, :(.</string>
+    <string name="summary_speedcontrol">Enable/disable firmware speed control</string>
+    <string name="title_speedcontrol">Speed control</string>
+    <string name="summary_softaccel">Enable/disable Soft-acceleration</string>
+    <string name="title_speed">Speed</string>
+    <string name="summary_speed">Speed used while moving</string>
+    <string name="title_softaccel">Soft-acceleration</string>
+
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="?android:attr/actionBarSize" >
+
+    <PreferenceCategory android:title="@string/settings" >
+        <EditTextPreference
+            android:defaultValue="20"
+            android:inputType="number"
+            android:key="pref_speed"
+            android:title="@string/title_speed" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_softaccel"
+            android:summary="@string/summary_softaccel"
+            android:title="@string/title_softaccel" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_speedcontrol"
+            android:summary="@string/summary_speedcontrol"
+            android:title="@string/title_speedcontrol" />
+        </PreferenceCategory>
+
+</PreferenceScreen>
