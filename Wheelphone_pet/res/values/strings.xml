@@ -3,7 +3,7 @@
     <string name="app_name">WP Pet</string>
     <string name="pet">Pet</string>
     <string name="face_desc">Where the robot expressions are drawn</string>
-    <string name="app_desc"><b>This is a PET application! It makes the wheelphone behave like a living organism! Similar to how a dog would behave.</b>\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
+    <string name="app_desc"><b>This is a PET application. It makes the robot behave like a pet. A behavior module allows it to show expressions and behave accordingly. Additionally has a face-tracking and text-to-speech modules to be able to interact with the environment.</b>\nTry to stand where the phone camera can see you.\n<b><a href="http://www.wheelphone.com"></a>http://www.wheelphone.com</b></string>
 
     <string name="error_camera">Sorry, the application could not initialize the camera. It is required for this application to work.</string>
     <string name="error_no_front_facing_camera">Sorry, the application could not initialize the camera. It is required for this application to work.</string>
