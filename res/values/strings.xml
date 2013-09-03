@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Wheelphone ROS</string>
+    
+    <string name="weblink">www.wheelphone.com</string>
+	<string name="init_value">0</string>
+	<string name="robotDisconnected">Robot disconnected</string>
+	
+</resources>
