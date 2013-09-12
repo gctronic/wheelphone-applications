@@ -117,7 +117,7 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 		}	
 		
 		mReadLeftSpeed.setText(String.valueOf(mWheelphone.getLeftSpeed()));
-		mReadRightSpeed.setText(String.valueOf(mWheelphone.getLeftSpeed()));				
+		mReadRightSpeed.setText(String.valueOf(mWheelphone.getRightSpeed()));				
 		if(mWheelphone.isUSBConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
@@ -149,23 +149,25 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 		//Produce the angular acceleration value. Range: [-1, 1]:
 		double angularAcc = ((maxIdx <=1) ? maxIdx - 2 : maxIdx - 1 ) / 2.;
 		
-		lSpeed = lSpeed 
+		lSpeed = followSwitch * (
+				lSpeed 
 				+   linearAcc * LINEAR_SPRING_CONST
 				+	angularAcc * ANGULAR_SPRING_CONST
-				-	DAMPLING_FACTOR * lSpeed;
+				-	DAMPLING_FACTOR * lSpeed);
 
-		rSpeed = rSpeed 
+		rSpeed = followSwitch * (
+				rSpeed 
 				+   linearAcc * LINEAR_SPRING_CONST
 				-	angularAcc * ANGULAR_SPRING_CONST
-				-	DAMPLING_FACTOR * rSpeed;
+				-	DAMPLING_FACTOR * rSpeed);
 		
-		outputText.setText("Left: " + followSwitch * lSpeed + "\n" +
-				"Right: " + followSwitch * rSpeed + "\n" +
+		outputText.setText("Left: " + lSpeed + "\n" +
+				"Right: " + rSpeed + "\n" +
 				"linearAcc: " + linearAcc + "\n" +
 				"angularAcc: " + angularAcc + "\n" +
 				"followSwitch:" + followSwitch
 				);
-    	mWheelphone.setSpeed(followSwitch * (int)lSpeed, followSwitch * (int)rSpeed);
+    	mWheelphone.setSpeed((int)lSpeed, (int)rSpeed);
 	}
     
 }
