@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +24,8 @@ public class FragmentRecorder extends Fragment{
 
 	private WheelphoneRobot mWheelphone;
 	
-	private boolean mIsRecording = false;
-
 	private int mSpeed;
+	private Button mButton;
 
 
 	@Override
@@ -47,20 +45,20 @@ public class FragmentRecorder extends Fragment{
 		
 		readAndSetPreferences();
 		
-		Button button = (Button) getActivity().findViewById(R.id.button_start_stop);
-		button.setOnClickListener(new View.OnClickListener() {
+		mButton = (Button) getActivity().findViewById(R.id.button_start_stop);
+		mButton.setText(R.string.start);
+		mButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mIsRecording){
-					mIsRecording = false;
+				if (mCameraPreview.isRecording()){
 					mCameraPreview.stop();
-					((Button)v).setText(getString(R.string.start));
+					mButton.setText(getString(R.string.start));
 	            	setSpeed(0, 0);
 				} else {
-					mIsRecording = true;
-					mCameraPreview.start();
-					((Button)v).setText(getString(R.string.stop));
-	            	setSpeed(mSpeed, mSpeed);
+					if (mCameraPreview.start()) {
+						mButton.setText(getString(R.string.stop));
+	            		setSpeed(mSpeed, mSpeed);
+					}
 				}
 				
 			}

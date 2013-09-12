@@ -11,10 +11,9 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
+import android.widget.Toast;
 
 import com.wheelphone.recorder.FragmentRecorder;
 import com.wheelphone.recorder.R;
@@ -32,10 +31,12 @@ public class CameraPreviewHolder extends SurfaceView implements SurfaceHolder.Ca
 	MediaRecorder mMediaRecorder;
 	
 	private SurfaceHolder mCaptureSurfaceHolder;
-	private int mLeftSpeed = 0;
-	private int mRightSpeed = 0;
 
 	private FragmentRecorder mController;
+	private boolean mIsRecording = false;
+
+
+	private String mFilePath;
 
 	public CameraPreviewHolder(Context context) { 
 		super(context);
@@ -90,20 +91,30 @@ public class CameraPreviewHolder extends SurfaceView implements SurfaceHolder.Ca
         mMediaRecorder.stop();  // stop the recording
         releaseMediaRecorder(); // release the MediaRecorder object
         mCamera.lock();         // take camera access back from MediaRecorder
-
+        
         // inform the user that recording has stopped
+        Toast.makeText(getContext(), "Saved video to : " + mFilePath, Toast.LENGTH_LONG).show();
         Log.d(TAG, "stopped");
+        mIsRecording = false;
 	}
 	
-	public void start(){
+	public boolean start(){
         // initialize video camera
-        prepareVideoRecorder();
-        // Camera is available and unlocked, MediaRecorder is prepared,
-        // now you can start recording
-        mMediaRecorder.start();
+        if (prepareVideoRecorder()){
+	        // Camera is available and unlocked, MediaRecorder is prepared,
+	        // now you can start recording
+	        mMediaRecorder.start();
+	        mIsRecording = true;
+        } else {
+            // prepare didn't work, release the camera
+            releaseMediaRecorder();
+            // inform user
+            mIsRecording = false;
+        }
 
         // inform the user that recording has started
         Log.d(TAG, "started");
+        return mIsRecording;
 	}
 	
 	private boolean prepareVideoRecorder(){
@@ -126,7 +137,8 @@ public class CameraPreviewHolder extends SurfaceView implements SurfaceHolder.Ca
 	    mMediaRecorder.setOrientationHint(90);
 
 	    // Step 4: Set output file
-	    mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/DCIM/wheelphone_capture.mp4");
+	    mFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/wheelphone_capture.mp4";
+	    mMediaRecorder.setOutputFile(mFilePath);
 
 	    // Step 5: Set the preview output
 	    mMediaRecorder.setPreviewDisplay(mCaptureSurfaceHolder.getSurface());
@@ -205,8 +217,7 @@ public class CameraPreviewHolder extends SurfaceView implements SurfaceHolder.Ca
 		mCamera.setPreviewDisplay(mCaptureSurfaceHolder);
 	}
 
-	public void stopTracking() {
-		mLeftSpeed = 0;
-		mRightSpeed = 0;
+	public boolean isRecording() {
+		return mIsRecording;
 	}
 }
