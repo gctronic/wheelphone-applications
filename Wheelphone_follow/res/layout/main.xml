@@ -278,29 +278,6 @@
         android:layout_alignParentLeft="true"
         android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="2sp"
-            android:text="@string/left_speed_txt" />
-
-        <TextView
-            android:id="@+id/leftSpeedTxt"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:text="@string/init_value" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="2sp"
-            android:text="@string/right_speed_txt" />
-
-        <TextView
-            android:id="@+id/rightSpeedTxt"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:text="@string/init_value" />
 
         <TextView
             android:layout_width="wrap_content"

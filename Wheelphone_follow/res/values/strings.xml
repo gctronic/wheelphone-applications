@@ -38,8 +38,8 @@
 	<string name="robotInCharge">Robot is charging</string>
 	<string name="empty"/>
 	<string name="robotCharged">Robot is charged</string>
-	<string name="right_enc_txt">EncR:</string>
-	<string name="left_enc_txt">EncL:</string>
+	<string name="right_enc_txt">Measured Right Speed:</string>
+	<string name="left_enc_txt">Measured Left Speed:</string>
 	<string name="menu_settings">Settings</string>
 	<string name="txtStartStayOnTable">Stay on table (start)</string>
 	<string name="txtStopStayOnTable">Stay on table (stop)</string>
