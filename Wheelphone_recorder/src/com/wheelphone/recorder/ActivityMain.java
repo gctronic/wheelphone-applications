@@ -98,7 +98,7 @@ public class ActivityMain extends Activity {
         	Log.d(TAG, "getFragmentManager().getBackStackEntryCount(): " + getFragmentManager().getBackStackEntryCount());
             if (getFragmentManager().getBackStackEntryCount() == 0) {
             	Log.d(TAG, "back to initial fragment");
-            	mFullscreen.show();
+    			mControlsView.setVisibility(View.VISIBLE);
             }
         }
     };
