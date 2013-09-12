@@ -50,8 +50,8 @@ public class Fullscreen {
 		mIsHidden = true;
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mActionBar.hide();
-		mControlsView.setVisibility(View.GONE);
-		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//		mControlsView.setVisibility(View.GONE);
+//		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 //		Log.d(TAG, "hide: " + mIsHidden);
 	}
 
@@ -60,8 +60,8 @@ public class Fullscreen {
 			return;
 		mIsHidden = false;
 		mActionBar.show();
-		mControlsView.setVisibility(View.VISIBLE);
-		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//		mControlsView.setVisibility(View.VISIBLE);
+//		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 //		Log.d(TAG, "show: " + mIsHidden);
 	}
 
