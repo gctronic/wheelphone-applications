@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent">
+	
+	<FrameLayout
+	    android:id="@+id/video_container"
+	    android:layout_height="fill_parent" 
+   	    android:layout_width="fill_parent">
+	</FrameLayout>
+	
+	<RelativeLayout
+	    android:background="@drawable/background"
+	    android:id="@+id/control"
+	    android:layout_height="fill_parent" 
+        android:layout_width="fill_parent">
+
+	    <TextView
+	        android:padding="20dp"
+	        android:gravity="center"
+	        android:textSize="17dp"
+	        android:layout_centerHorizontal="true"
+	        android:layout_above="@+id/server_ip"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/client0" />
+
+	    <EditText
+	        android:singleLine="true"
+	        android:gravity="center"
+	        android:textColor="@android:color/black"
+	        android:layout_marginTop="10dp"
+	        android:layout_width="200dp"
+	        android:layout_height="wrap_content"
+	        android:imeOptions="actionDone"
+	        android:imeActionLabel="@string/client1"
+	        android:id="@+id/server_ip"
+			android:layout_centerVertical="true"
+	        android:layout_centerHorizontal="true" />
+	    	    
+	    <Button
+	        android:layout_marginTop="20dp"
+	        android:text="@string/client1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:layout_below="@+id/server_ip"
+	        android:id="@+id/button_connect"
+	        android:layout_centerHorizontal="true"
+	        
+	        />
+	    	    	    
+	</RelativeLayout>
+</FrameLayout>
