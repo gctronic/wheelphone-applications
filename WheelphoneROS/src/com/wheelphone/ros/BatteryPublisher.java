@@ -6,19 +6,19 @@ import org.ros.namespace.GraphName;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 
-public class FlagsPublisher extends AbstractNodeMain {
+public class BatteryPublisher extends AbstractNodeMain {
 
-	private short flagsValues [] = new short[2];
+	private byte batteryValue;
 	
 	  //@Override
 	  public GraphName getDefaultNodeName() {
-	    return new GraphName("pubsub/flags");
+	    return new GraphName("pubsub/battery");
 	  }
 
 	  @Override
 	  public void onStart(final ConnectedNode connectedNode) {
-	    final Publisher<std_msgs.Int16MultiArray> publisher =
-	        connectedNode.newPublisher("flags", std_msgs.Int16MultiArray._TYPE);
+	    final Publisher<std_msgs.UInt8> publisher =
+	        connectedNode.newPublisher("battery", std_msgs.UInt8._TYPE);
 	    // This CancellableLoop will be canceled automatically when the node shuts
 	    // down.
 	    connectedNode.executeCancellableLoop(new CancellableLoop() {
@@ -29,17 +29,16 @@ public class FlagsPublisher extends AbstractNodeMain {
 
 	      @Override
 	      protected void loop() throws InterruptedException {
-	        std_msgs.Int16MultiArray value = publisher.newMessage();
-	        value.setData(flagsValues);
+	        std_msgs.UInt8 value = publisher.newMessage();
+	        value.setData(batteryValue);
 	        publisher.publish(value);
-	        Thread.sleep(100);
+	        Thread.sleep(10000);
 	      }
 	    });
 	  }
 	  
-	  public void updateData(short v[]) {
-		  flagsValues[0] = v[0];
-		  flagsValues[1] = v[1];
+	  public void updateData(byte v) {
+		  batteryValue = v;
 	  }	
 	
 }

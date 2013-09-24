@@ -56,8 +56,7 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	private Camera backCam;
 	private GroundPublisher groundPub=null;
 	private ProximityPublisher proximityPub=null;
-	private MotorsPublisher motorsPub=null;
-	private FlagsPublisher flagsPub=null;
+	private BatteryPublisher batteryPub=null;
 	private PhoneListeners phoneLis=null;
 	private OdometryPublisher odometryPub=null;
 	private TransformBroadcaster odom_broadcaster=null;
@@ -68,10 +67,9 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	private int lSpeed=0, rSpeed=0;
 	public static final byte MIN_SPEED = -127;
 	public static final byte MAX_SPEED = 127;
-	private short groundValues[] = new short[4];
-	private short proxValues[] = new short[4];
-	private byte motorsVel [] = new byte[2];
-	private short flagsValues [] = new short[2];
+	private byte groundValues[] = new byte[4];
+	private byte proxValues[] = new byte[4];
+	private byte batteryValue;
 	private double xPos = 0.0;	// mm
 	private double yPos = 0.0;	// mm
 	private double theta = 0.0;	// radians
@@ -127,13 +125,10 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	    nodeMainExecutor.execute(groundPub, nodeConfiguration);
 	    
 	    proximityPub = new ProximityPublisher();
-	    nodeMainExecutor.execute(proximityPub, nodeConfiguration);    
-	    
-	    motorsPub = new MotorsPublisher();
-	    nodeMainExecutor.execute(motorsPub, nodeConfiguration);    
+	    nodeMainExecutor.execute(proximityPub, nodeConfiguration);     
 	   
-	    flagsPub = new FlagsPublisher();
-	    nodeMainExecutor.execute(flagsPub, nodeConfiguration);      
+	    batteryPub = new BatteryPublisher();
+	    nodeMainExecutor.execute(batteryPub, nodeConfiguration);      
 	    
 	    phoneLis = new PhoneListeners();
 	    phoneLis.setMainActivity(this);
@@ -206,7 +201,6 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	}
   
 	public void updateFlagStatus(byte f) {
-		flagsValues[1] = (short)f;
 		if((f&0x01)==0x01) {
 			wheelphone.enableSpeedControl();
 		} else {
@@ -233,7 +227,7 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 		}
 	}
 
-	public void updateMotorSpeed(byte[] vel) {
+	public void updateMotorSpeed(short[] vel) {
 		lSpeed = vel[0];
 		rSpeed = vel[1];
 		wheelphone.setLeftSpeed(lSpeed);
@@ -268,27 +262,22 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 			}
 		}
 		
-		groundValues[0] = (short)wheelphone.getGroundProx(0);
-		groundValues[1] = (short)wheelphone.getGroundProx(1);
-		groundValues[2] = (short)wheelphone.getGroundProx(2);
-		groundValues[3] = (short)wheelphone.getGroundProx(3);
+		groundValues[0] = (byte)wheelphone.getGroundProx(0);
+		groundValues[1] = (byte)wheelphone.getGroundProx(1);
+		groundValues[2] = (byte)wheelphone.getGroundProx(2);
+		groundValues[3] = (byte)wheelphone.getGroundProx(3);
 		if(groundPub != null) {
 			groundPub.updateData(groundValues);
 		}
 		
-		proxValues[0] = (short)wheelphone.getFrontProx(0);
-		proxValues[1] = (short)wheelphone.getFrontProx(1);
-		proxValues[2] = (short)wheelphone.getFrontProx(2);
-		proxValues[3] = (short)wheelphone.getFrontProx(3);
+		proxValues[0] = (byte)wheelphone.getFrontProx(0);
+		proxValues[1] = (byte)wheelphone.getFrontProx(1);
+		proxValues[2] = (byte)wheelphone.getFrontProx(2);
+		proxValues[3] = (byte)wheelphone.getFrontProx(3);
 		if(proximityPub != null) {
 			proximityPub.updateData(proxValues);
 		}
 									
-		motorsVel[0] = (byte)lSpeed;
-		motorsVel[1] = (byte)rSpeed;
-		if(motorsPub != null) {
-			motorsPub.updateData(motorsVel);
-		}
 		if(odometryPub != null) {
 			xPos = wheelphone.getOdometryX();
 			yPos = wheelphone.getOdometryY();
@@ -296,9 +285,9 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 			odometryPub.updateData(xPos, yPos, theta);
 		}
 		
-		flagsValues[0] = (short)wheelphone.getBatteryRaw(); //battery
-		if(flagsPub != null) {
-			flagsPub.updateData(flagsValues);
+		batteryValue = (byte)wheelphone.getBatteryCharge();
+		if(batteryPub != null) {
+			batteryPub.updateData(batteryValue);
 		}
 
 		if(!wheelphone.isUSBConnected()) {

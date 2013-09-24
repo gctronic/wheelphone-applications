@@ -35,7 +35,7 @@ public class OdometryPublisher extends AbstractNodeMain {
 	      
 	      @Override
 	      protected void loop() throws InterruptedException {
-
+	    	  
 	    	  // new message creation
 	    	  nav_msgs.Odometry value = publisher.newMessage();
 	    	
@@ -70,12 +70,12 @@ public class OdometryPublisher extends AbstractNodeMain {
 	    	  
 	    	  value.setPose(pose_cov);
 	    	  
-	    	  value.setChildFrameId("base_link");	 
-			 
+	    	  value.setChildFrameId("base_link");			 	    	  
+	    	  
 	    	  tf.sendTransform("odom", "base_link", h.getStamp().totalNsecs(), xPos, yPos, 0.0, odom_quat.getX(), odom_quat.getY(), odom_quat.getZ(), odom_quat.getW());	    	  
 	    	  
 			  publisher.publish(value);
-			  Thread.sleep(100);
+			  Thread.sleep(500);
 	      }
 	    });
 	  }

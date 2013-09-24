@@ -8,7 +8,7 @@ import org.ros.node.topic.Publisher;
 
 public class GroundPublisher extends AbstractNodeMain {
 	
-	private short groundValues [] = new short[4];
+	private byte groundValues [] = new byte[4];
 	
 	  //@Override
 	  public GraphName getDefaultNodeName() {
@@ -17,8 +17,8 @@ public class GroundPublisher extends AbstractNodeMain {
 
 	  @Override
 	  public void onStart(final ConnectedNode connectedNode) {
-	    final Publisher<std_msgs.Int16MultiArray> publisher =
-	        connectedNode.newPublisher("ground", std_msgs.Int16MultiArray._TYPE);
+	    final Publisher<std_msgs.UInt8MultiArray> publisher =
+	        connectedNode.newPublisher("ground", std_msgs.UInt8MultiArray._TYPE);
 	    // This CancellableLoop will be canceled automatically when the node shuts
 	    // down.
 	    connectedNode.executeCancellableLoop(new CancellableLoop() {
@@ -29,7 +29,7 @@ public class GroundPublisher extends AbstractNodeMain {
 
 	      @Override
 	      protected void loop() throws InterruptedException {
-	        std_msgs.Int16MultiArray value = publisher.newMessage();
+	        std_msgs.UInt8MultiArray value = publisher.newMessage();
 	        value.setData(groundValues);
 	        publisher.publish(value);
 	        Thread.sleep(100);
@@ -37,7 +37,7 @@ public class GroundPublisher extends AbstractNodeMain {
 	    });
 	  }
 	  
-	  public void updateData(short v[]) {
+	  public void updateData(byte v[]) {
 		  groundValues[0] = v[0];
 		  groundValues[1] = v[1];
 		  groundValues[2] = v[2];

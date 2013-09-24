@@ -9,7 +9,7 @@ import org.ros.node.topic.Subscriber;
 public class PhoneListeners extends AbstractNodeMain {
 	
 	public byte flagStatus=0;
-	private byte desiredVel [] = new byte[2];
+	private short desiredVel [] = new short[2];
 	WheelphoneROS mainAct;
 	
 	  public GraphName getDefaultNodeName() {
@@ -26,9 +26,9 @@ public class PhoneListeners extends AbstractNodeMain {
 	      }
 	    });
 	    
-	    Subscriber<std_msgs.Int8MultiArray> subscribMotorSpeed = connectedNode.newSubscriber("motorSpeed", std_msgs.Int8MultiArray._TYPE);
-	    subscribMotorSpeed.addMessageListener(new MessageListener<std_msgs.Int8MultiArray>() {
-	    	public void onNewMessage(std_msgs.Int8MultiArray message) {
+	    Subscriber<std_msgs.Int16MultiArray> subscribMotorSpeed = connectedNode.newSubscriber("motorSpeed", std_msgs.Int16MultiArray._TYPE);
+	    subscribMotorSpeed.addMessageListener(new MessageListener<std_msgs.Int16MultiArray>() {
+	    	public void onNewMessage(std_msgs.Int16MultiArray message) {
 	    		//desiredVel = message.getData();
 	    		desiredVel[0] = message.getData()[0];
 	    		desiredVel[1] = message.getData()[1];
