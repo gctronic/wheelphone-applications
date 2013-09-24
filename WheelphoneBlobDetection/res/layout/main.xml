@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    
+    <TabHost   xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tabHost"
+    >
+    <TabWidget
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@android:id/tabs"
+    />
+    
+
+
+    
+     <FrameLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@android:id/tabcontent"
+     >
+    
+
+             
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:id="@+id/tab1"
+	    >
+	    
+      	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="70dp"
+	    android:id="@+id/spacingLayout"
+	    >
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    >	
+		</LinearLayout>  
+		    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    >		
+		</LinearLayout>    
+	
+	    
+		<!-- Title bar for push buttons -->
+		
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/sensors_header"
+		    android:id="@+id/text_view"
+		    />
+	    </LinearLayout>
+	 
+	 	<!-- Creation of proxs -->
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/prox_0"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/prox0"
+			    />
+			</LinearLayout>
+			
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/prox_1"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/prox1"
+			    />
+			</LinearLayout>   
+			
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/prox_2"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="55dp" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/prox2"
+			    />
+			</LinearLayout>   		
+	   				
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/prox_3"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="55dp" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/prox3"
+			    />
+			</LinearLayout>      		
+	   		
+	    </LinearLayout>
+	    
+	    
+	    <!-- Creation of ground 0 -->
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/ground_0"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="55dp" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/ground0"
+			    />
+			</LinearLayout>
+	
+	   		
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/ground_1"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="55dp" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/ground1"
+			    />
+			</LinearLayout>
+	
+	   		
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/ground_2"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="55dp" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/ground2"
+			    />
+			</LinearLayout>
+	
+	   		
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/ground_3"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="55dp" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/ground3"
+			    />
+			</LinearLayout>
+	    </LinearLayout>    
+	
+	    <!-- Creation of battery -->
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/battery_level"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/batteryLevel"
+			    />
+			</LinearLayout>
+	    </LinearLayout>     
+	
+	    <!-- Creation of current desired speed -->    
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+	   				    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="50dp"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/left_speed_txt"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="50dp"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/leftSpeedTxt"
+			    />
+			</LinearLayout>
+	        
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="50dp"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/right_speed_txt"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="50dp"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/rightSpeedTxt"
+			    />
+			</LinearLayout>
+			
+
+			   		
+	    </LinearLayout>      
+	    
+	    <!-- Microchip Logo and link.  MUST BE LAST!!  This item fills the remaining of the vertical space -->
+	    
+	    <LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="center_horizontal|bottom"
+	    >
+	        
+	
+	    </LinearLayout>
+	</LinearLayout>
+	
+	<LinearLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tab2"
+    android:orientation="vertical"
+    android:paddingTop="60px"
+     >
+	    
+	    
+        <com.wheelphone.blobDetection.ColorBlobDetectionView
+        android:id="@+id/blobdetect"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/> 	    
+              
+              
+              <!-- 
+       			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/leftSpeedTxt"
+			    /> 
+			     -->
+        
+     </LinearLayout>
+
+     </FrameLayout>
+    
+    </TabHost>	
+
+	
