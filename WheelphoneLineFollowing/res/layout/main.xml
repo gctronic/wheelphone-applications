@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Communication status -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtConnection"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/robotDisconnected"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtEmpty1"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/empty"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- General status -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/text_view_flags"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/status_header" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtGeneralStatus"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/robotLineSearch"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtEmpty2"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/empty"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Sensors status -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/text_view_sensors"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sensors_header" />
+    </LinearLayout>
+
+    <!-- Creation of grounds -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_0" />
+
+        <!--
+		    <ProgressBar
+		        android:id="@+id/barGround0"
+		        style="?android:attr/progressBarStyleHorizontal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:max="1023"
+		        android:progress="0" />
+        -->
+
+        <com.wheelphone.lineFollowing.TextProgressBar
+            android:id="@+id/barGround0"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_1" />
+
+        <!--
+   			<ProgressBar
+   			    android:id="@+id/barGround1"
+   			    style="?android:attr/progressBarStyleHorizontal"
+   			    android:layout_width="wrap_content"
+   			    android:layout_height="wrap_content"
+   			    android:max="1023"
+   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.lineFollowing.TextProgressBar
+            android:id="@+id/barGround1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_2" />
+
+        <!--
+   			<ProgressBar
+   			    android:id="@+id/barGround3"
+   			    style="?android:attr/progressBarStyleHorizontal"
+   			    android:layout_width="wrap_content"
+   			    android:layout_height="wrap_content"
+   			    android:max="1023"
+   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.lineFollowing.TextProgressBar
+            android:id="@+id/barGround2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1sp"
+            android:text="@string/ground_3" />
+
+        <!--
+   			<ProgressBar
+   			    android:id="@+id/barGround2"
+   			    style="?android:attr/progressBarStyleHorizontal"
+   			    android:layout_width="wrap_content"
+   			    android:layout_height="wrap_content"
+   			    android:max="1023"
+   			    android:progress="0" />
+        -->
+
+        <com.wheelphone.lineFollowing.TextProgressBar
+            android:id="@+id/barGround3"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="0" />
+    </LinearLayout>
+
+    <!-- Calibration button -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnCalibrate"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.41"
+            android:onClick="calibrateSensors"
+            android:text="@string/calibration" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtEmpty3"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/empty"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Motors status -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/text_view_motors"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/motors_header" />
+    </LinearLayout>
+
+    <!-- Creation of current speeds -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="8sp"
+            android:text="@string/left_speed_txt" />
+
+        <TextView
+            android:id="@+id/leftSpeedTxt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="8sp"
+            android:text="@string/right_speed_txt" />
+
+        <TextView
+            android:id="@+id/rightSpeedTxt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/init_value" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtEmpty4"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/empty"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- setting title -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/text_view_motors"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_header" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20sp"
+            android:text="@string/groundThr" />
+
+        <EditText
+            android:id="@+id/txtGroundThr"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:imeOptions="actionDone|normal"
+            android:inputType="number"
+            android:text="125" >
+
+            <requestFocus />
+        </EditText>
+    	
+    	<CheckBox
+    	    android:id="@+id/chkInvert"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:onClick="invertLogic"
+    	    android:text="Invert logic" />
+            
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20sp"
+            android:text="@string/desiredSpeed" />
+        
+        <EditText
+            android:id="@+id/txtSpeed"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:imeOptions="actionDone|normal"
+            android:inputType="number"
+            android:text="20" >
+
+            <requestFocus />
+        </EditText>        
+        
+    </LinearLayout>
+    
+    <!-- Logo and site -->
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.60"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="wheelphone"
+            android:maxWidth="200dp"
+            android:src="@drawable/wheelphone_logo" />
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/weblink" />
+    </LinearLayout>
+
+</LinearLayout>

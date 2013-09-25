@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WP Line Follow</string>
+    <string name="sensors_header">Ground sensors</string>
+    <string name="status_header">Status</string>
+    <string name="ground_0">G0:</string>
+    <string name="ground_1">G1:</string>
+    <string name="ground_2">G2:</string>
+    <string name="ground_3">G3:</string>
+    
+    <string name="weblink">www.wheelphone.com</string>
+	<string name="left_speed_txt">Left:</string>
+	<string name="right_speed_txt">Right:</string>
+	<string name="init_value">0</string>
+	<string name="motors_header">Motors speed</string>
+	<string name="calibration">Calibrate sensors</string>
+	<string name="robotConnected">Connected</string>
+	<string name="robotDisconnected">Disconnected</string>
+	<string name="robotLineSearch">Robot is searching a line</string>
+	<string name="empty"/>
+	<string name="robotLineFollow">Robot is following the line</string>
+	<string name="setting_header">Settings</string>
+	<string name="groundThr">Threshold</string>
+	<string name="desiredSpeed">Speed</string>
+									
+</resources>
