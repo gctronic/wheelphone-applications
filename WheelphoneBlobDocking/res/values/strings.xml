@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- <string name="app_name">OCV Color Blob Detection</string>
+    -->
+    
+    <string name="app_name">Wheelphone blob docking</string>
+    <string name="sensors_header">Sensors Status</string>
+    
+    <string name="prox_0">P0:</string>
+    <string name="prox_1">P1:</string>
+    <string name="prox_2">P2:</string>
+    <string name="prox_3">P3:</string>
+    <string name="ground_0">G0:</string>
+    <string name="ground_1">G1:</string>
+    <string name="ground_2">G2:</string>
+    <string name="ground_3">G3:</string>
+    <string name="battery_level">Battery:</string>
+	<string name="left_speed_txt">Left:</string>
+	<string name="right_speed_txt">Right:</string>
+	<string name="init_value">0</string>
+	<string name="status_header">General Status</string>
+	<string name="robotDockingSearch">Robot is looking for docking station</string>
+	<string name="settings_header">Settings</string>
+	<string name="groundThr">Threshold</string>
+	<string name="http_header">HTTP status</string>
+	<string name="emptyString"/>
+	<string name="initialState">Waiting start...</string>
+	<string name="calibration">Calibrate sensors</string>
+	<string name="weblink">www.wheelphone.com</string>
+
+</resources>
