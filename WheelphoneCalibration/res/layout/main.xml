@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+			    <LinearLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center"
+			        android:orientation="horizontal"
+			        android:background="@color/white" >
+			        
+			        <TextView
+			            android:id="@+id/txtConnection"
+			            android:layout_width="0dp"
+			            android:layout_height="25dp"
+			            android:layout_weight="0.41"
+			            android:gravity="center_vertical|center_horizontal"
+			            android:text="@string/robotDisconnected"
+			            android:textColor="@color/red"
+			            android:textSize="18sp"
+			            android:textStyle="bold" />
+			        
+			    </LinearLayout>
+			    
+			    <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    >
+
+			
+			        <Button
+			            android:id="@+id/btnCalibration"
+			            android:layout_width="fill_parent"
+			            android:layout_height="65dp"
+			            android:onClick="startCalibration"
+			            android:text="@string/start_calibration" />	
+			            
+				</LinearLayout>
+				  
+ 				    <ProgressBar
+ 				        android:id="@+id/progressBar1"
+ 				        style="?android:attr/progressBarStyleLarge"
+ 				        android:layout_width="wrap_content"
+ 				        android:layout_height="wrap_content"
+ 				        android:layout_gravity="center" />
+ 				    
+			<!-- Logo and site -->
+			    
+			   <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:gravity="center_horizontal|bottom"
+			    >
+			        
+				    <ImageView
+				        android:layout_width="100dp"
+				        android:layout_height="wrap_content"
+				        android:adjustViewBounds="true"
+				        android:contentDescription="wheelphone"
+				        android:maxWidth="200dp"
+				        android:src="@drawable/ic_launcher" />
+
+
+			
+				    <TextView  
+				    android:layout_width="150dp" 
+				    android:layout_height="wrap_content" 
+				    android:text="@string/weblink"
+				    android:gravity="center"
+				    />
+			    </LinearLayout>
+			    
+
+</LinearLayout>
