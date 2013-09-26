@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="title_bar">#0000FF</color>
 	<color name="sub_title">@null</color>
@@ -6,4 +5,5 @@
 	<color name="green">#00FF00</color>
 	<color name="red">#FF0000</color>
 	<color name="white">#FFFFFF</color>
+	<color name="blue">#0000FF</color>
 </resources>

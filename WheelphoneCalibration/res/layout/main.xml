@@ -2,50 +2,1586 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
-			    <LinearLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:gravity="center"
-			        android:orientation="horizontal"
-			        android:background="@color/white" >
-			        
-			        <TextView
-			            android:id="@+id/txtConnection"
-			            android:layout_width="0dp"
-			            android:layout_height="25dp"
-			            android:layout_weight="0.41"
-			            android:gravity="center_vertical|center_horizontal"
-			            android:text="@string/robotDisconnected"
-			            android:textColor="@color/red"
-			            android:textSize="18sp"
-			            android:textStyle="bold" />
-			        
-			    </LinearLayout>
-			    
-			    <LinearLayout
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:gravity="center"
-			    >
 
+	<LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+		android:orientation="horizontal"
+		android:background="@color/white" >
+
+		<TextView android:id="@+id/txtConnection"
+			android:layout_width="0dp"
+			android:layout_height="25dp"
+			android:layout_weight="0.41"
+			android:gravity="center_vertical|center_horizontal"
+			android:text="@string/robotDisconnected"
+			android:textColor="@color/red"
+			android:textSize="18sp"
+			android:textStyle="bold" />
+		
+	</LinearLayout>
+			    
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center">
 			
-			        <Button
-			            android:id="@+id/btnCalibration"
-			            android:layout_width="fill_parent"
-			            android:layout_height="65dp"
-			            android:onClick="startCalibration"
-			            android:text="@string/start_calibration" />	
-			            
-				</LinearLayout>
-				  
- 				    <ProgressBar
- 				        android:id="@+id/progressBar1"
- 				        style="?android:attr/progressBarStyleLarge"
- 				        android:layout_width="wrap_content"
- 				        android:layout_height="wrap_content"
- 				        android:layout_gravity="center" />
+		<Button
+			android:id="@+id/btnCalibration"
+			android:layout_width="fill_parent"
+			android:layout_height="65dp"
+			android:onClick="startCalibration"
+			android:text="@string/start_calibration" />	
+
+		<ProgressBar
+			android:id="@+id/progressBar1"
+			style="?android:attr/progressBarStyleLarge"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center" />
+ 		
+ 		</LinearLayout>
+ 	
+	<LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+		android:orientation="horizontal">
+
+		<TextView android:id="@+id/txtCalibrationResult"
+			android:layout_width="0dp"
+			android:layout_height="20dp"
+			android:layout_weight="0.41"
+			android:gravity="center_vertical|center_horizontal"
+			android:text="Write result..."
+			android:textColor="@color/blue"
+			android:textSize="18sp"
+			android:textStyle="bold" />
+		
+	</LinearLayout>				
+	
+	<ScrollView 
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent" >
+
+		<TableLayout
+		    android:id="@+id/tableLayout1"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" >	    
+	    
+		    <!-- LEFT SPEED CONTROL -->
+		    <TableRow
+		        android:id="@+id/tableRow1"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwScLTitle"
+		            android:layout_gravity="center"
+		            android:layout_span="2"
+		            android:layout_weight="1.0"
+		            android:text="Left Speed Control (FW)"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow2"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdcTitle"
+		            android:text="ADC"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+	
+		        <TextView
+		            android:id="@+id/txtFwScLSpeedTitle"
+		            android:text="Speed (mm/s)"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow3"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		    
+    	    			    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow4"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow5"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow6"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow7"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow8"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow9"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow10"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow11"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow12"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScLAdc9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScLSpeed9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>			    		    		    		    		    		    		    		    		    	    
+		    
+		    
+		    <!-- RIGHT SPEED CONTROL -->
+		    <TableRow
+		        android:id="@+id/tableRow13"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwScRTitle"
+		            android:layout_gravity="center"
+		            android:layout_span="2"
+		            android:layout_weight="1.0"
+		            android:text="Right Speed Control (FW)"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow14"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdcTitle"
+		            android:text="ADC"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+	
+		        <TextView
+		            android:id="@+id/txtFwScRSpeedTitle"
+		            android:text="Speed (mm/s)"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow15"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		    
+    	    			    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow16"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow17"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow18"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow19"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow20"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow21"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow22"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow23"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow24"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwScRAdc9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwScRSpeed9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>			    
+		    
+		    
+		    <!-- LEFT FORWARD -->
+		    <TableRow
+		        android:id="@+id/tableRow25"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwLTitle"
+		            android:layout_gravity="center"
+		            android:layout_span="2"
+		            android:layout_weight="1.0"
+		            android:text="Left Forward"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow26"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwLAdcTitle"
+		            android:text="PWM"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+	
+		        <TextView
+		            android:id="@+id/txtFwLSpeedTitle"
+		            android:text="Speed (mm/s)"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow27"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		    
+    	    			    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow28"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow29"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow30"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow31"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow32"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow33"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow34"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow35"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow36"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwLAdc9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwLSpeed9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>			    		    		    		    		    		    		    		    		    	    
+		    		    
+		    
+		    <!-- RIGHT FORWARD -->
+		    <TableRow
+		        android:id="@+id/tableRow37"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwRTitle"
+		            android:layout_gravity="center"
+		            android:layout_span="2"
+		            android:layout_weight="1.0"
+		            android:text="Right Forward"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow38"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtFwRAdcTitle"
+		            android:text="PWM"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+	
+		        <TextView
+		            android:id="@+id/txtFwRSpeedTitle"
+		            android:text="Speed (mm/s)"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow39"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		    
+    	    			    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow40"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow41"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow42"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow43"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow44"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow45"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow46"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow47"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow48"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtFwRAdc9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtFwRSpeed9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>			    
+		    
+		    <!-- LEFT BACKWARD -->
+		    <TableRow
+		        android:id="@+id/tableRow49"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtBwLTitle"
+		            android:layout_gravity="center"
+		            android:layout_span="2"
+		            android:layout_weight="1.0"
+		            android:text="Left Backward"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow50"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtBwLAdcTitle"
+		            android:text="PWM"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+	
+		        <TextView
+		            android:id="@+id/txtBwLSpeedTitle"
+		            android:text="Speed (mm/s)"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow51"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		    
+    	    			    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow52"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow53"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow54"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow55"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow56"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow57"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow58"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow59"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow60"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwLAdc9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwLSpeed9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>			    
+		    
+		    <!-- RIGHT BACKWARD -->
+		    <TableRow
+		        android:id="@+id/tableRow61"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtBwRTitle"
+		            android:layout_gravity="center"
+		            android:layout_span="2"
+		            android:layout_weight="1.0"
+		            android:text="Right Backward"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow62"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		 
+		        <TextView
+		            android:id="@+id/txtBwRAdcTitle"
+		            android:text="PWM"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+	
+		        <TextView
+		            android:id="@+id/txtBwRSpeedTitle"
+		            android:text="Speed (mm/s)"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow63"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed0"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		    
+    	    			    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow64"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed1"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>		
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow65"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed2"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow66"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed3"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow67"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed4"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow68"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed5"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow69"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed6"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow70"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed7"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow71"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed8"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>	
+		    
+		    <!-- 2 columns -->
+		    <TableRow
+		        android:id="@+id/tableRow72"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="5dip" >
+		        		 
+		        <TextView
+		            android:id="@+id/txtBwRAdc9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		        
+		        <TextView
+		            android:id="@+id/txtBwRSpeed9"
+		            android:text="0"
+		            android:layout_weight=".5"
+		            android:layout_width="0dip"/>
+		 	        	 
+		    </TableRow>			    
+		    
+		</TableLayout>
+					
+	</ScrollView>        
+    				    
  				    
 			<!-- Logo and site -->
 			    

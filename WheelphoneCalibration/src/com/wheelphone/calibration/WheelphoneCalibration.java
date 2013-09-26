@@ -23,6 +23,9 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 	boolean getFirmwareFlag = true;
 	private int calibState = 0;
 	private boolean calibStarted = false;
+	private boolean getCalibrationData = false;
+	private int calibrationDataIndex = 0;
+	private final int CALIBRATION_SAMPLES = 10;
 	
 	// Robot state
 	WheelphoneRobot wheelphone;
@@ -32,10 +35,20 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 	private TextView txtConnected;
 	private Button btnStartCalib;
 	private ProgressBar mProgress;
-
+	private TextView txtFwScL[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private TextView txtFwScR[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private TextView txtFwL[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private TextView txtFwR[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private TextView txtBwL[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private TextView txtBwR[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private TextView txtCalibResult;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		int i=0;
+		String textID;
+		int resID;
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		getWindow().getDecorView().setBackgroundColor(Color.BLACK);
@@ -46,6 +59,52 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 		mProgress = (ProgressBar) findViewById(R.id.progressBar1);
 		mProgress.setIndeterminate(true);
 		mProgress.setVisibility(ProgressBar.INVISIBLE);
+		txtCalibResult = (TextView)findViewById(R.id.txtCalibrationResult);
+        for(i=0; i<CALIBRATION_SAMPLES; i++) {
+        	
+            textID = "txtFwScLAdc" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwScL[0][i] = ((TextView) findViewById(resID));                
+            textID = "txtFwScLSpeed" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwScL[1][i] = ((TextView) findViewById(resID));  
+            
+            textID = "txtFwScRAdc" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwScR[0][i] = ((TextView) findViewById(resID));                
+            textID = "txtFwScRSpeed" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwScR[1][i] = ((TextView) findViewById(resID));            
+            
+            textID = "txtFwLAdc" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwL[0][i] = ((TextView) findViewById(resID));                
+            textID = "txtFwLSpeed" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwL[1][i] = ((TextView) findViewById(resID)); 
+            
+            textID = "txtFwRAdc" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwR[0][i] = ((TextView) findViewById(resID));                
+            textID = "txtFwRSpeed" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtFwR[1][i] = ((TextView) findViewById(resID));   
+            
+            textID = "txtBwLAdc" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtBwL[0][i] = ((TextView) findViewById(resID));                
+            textID = "txtBwLSpeed" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtBwL[1][i] = ((TextView) findViewById(resID));          
+            
+            textID = "txtBwRAdc" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtBwR[0][i] = ((TextView) findViewById(resID));                
+            textID = "txtBwRSpeed" + i;
+            resID = getResources().getIdentifier(textID, "id", "com.wheelphone.calibration");
+            txtBwR[1][i] = ((TextView) findViewById(resID));  
+            
+        }		
 		
 		//Make sure that the app stays open:
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|
@@ -55,7 +114,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 		
         wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
         wheelphone.setUSBCommunicationTimeout(5000);
-                
+               
         msgbox("calibration", "Place the robot with the right wheel next to the black line and press the calibrate button. Wait until the process is terminated.");
 		
 	}
@@ -129,9 +188,43 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 				btnStartCalib.setText("Calibrate left wheel");
 				msgbox("calibratoin", "Calibration terminated!");
 				calibState = 0;
+				getCalibrationData = true;		
+				calibrationDataIndex = 0;
 			}
 		} else if(calibStarted && !wheelphone.odometryCalibrationTerminated()) {			
 			mProgress.setVisibility(ProgressBar.VISIBLE);
+		}
+		
+		if(getCalibrationData) {
+			
+			if(wheelphone.getBatteryRaw()==0) {
+				txtCalibResult.setText("Write OK ("+wheelphone.getBatteryRaw()+")");
+			} else {
+				txtCalibResult.setText("Write ERROR ("+wheelphone.getBatteryRaw()+")");				
+			}
+			
+			txtFwScL[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontProx(0)&0xFF)+(wheelphone.getFrontProx(1)*256)));
+			txtFwScL[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontProx(2)&0xFF)+(wheelphone.getFrontProx(3)*256)));
+			
+			txtFwScR[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontAmbient(0)&0xFF)+(wheelphone.getFrontAmbient(1)*256)));
+			txtFwScR[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontAmbient(2)&0xFF)+(wheelphone.getFrontAmbient(3)*256)));
+
+			txtFwL[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundProx(0)&0xFF)+(wheelphone.getGroundProx(1)*256)));
+			txtFwL[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundProx(2)&0xFF)+(wheelphone.getGroundProx(3)*256)));
+			
+			txtFwR[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundProx(0)&0xFF)+(wheelphone.getGroundProx(1)*256)));
+			txtFwR[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundAmbient(0)&0xFF)+(wheelphone.getGroundAmbient(1)*256)));			
+			
+			txtBwL[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundAmbient(2)&0xFF)+(wheelphone.getGroundAmbient(3)*256)));
+			txtBwL[1][calibrationDataIndex].setText(String.valueOf(wheelphone.getLeftSpeed()));
+			
+			txtBwR[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundAmbient(2)&0xFF)+(wheelphone.getGroundAmbient(3)*256)));
+			txtBwR[1][calibrationDataIndex].setText(String.valueOf(wheelphone.getRightSpeed()));			
+
+			calibrationDataIndex++;
+			if(calibrationDataIndex >= CALIBRATION_SAMPLES) {
+				getCalibrationData = false;
+			}
 		}
 		
 	}
