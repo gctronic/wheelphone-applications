@@ -1,5 +1,10 @@
 package com.wheelphone.calibration;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot.WheelPhoneRobotListener;
 
@@ -41,6 +46,13 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 	private TextView txtFwR[][] = new TextView[2][CALIBRATION_SAMPLES];
 	private TextView txtBwL[][] = new TextView[2][CALIBRATION_SAMPLES];
 	private TextView txtBwR[][] = new TextView[2][CALIBRATION_SAMPLES];
+	private int FwScL[][] = new int[2][CALIBRATION_SAMPLES];
+	private int FwScR[][] = new int[2][CALIBRATION_SAMPLES];
+	private int FwL[][] = new int[2][CALIBRATION_SAMPLES];
+	private int FwR[][] = new int[2][CALIBRATION_SAMPLES];
+	private int BwL[][] = new int[2][CALIBRATION_SAMPLES];
+	private int BwR[][] = new int[2][CALIBRATION_SAMPLES];
+	
 	private TextView txtCalibResult;
 	
 	@Override
@@ -116,7 +128,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
         wheelphone.setUSBCommunicationTimeout(5000);
                
         msgbox("calibration", "Place the robot with the right wheel next to the black line and press the calibrate button. Wait until the process is terminated.");
-		
+ 
 	}
 
 	@Override
@@ -186,7 +198,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 			} else if(calibState == 1) {
 				btnStartCalib.setEnabled(true);
 				btnStartCalib.setText("Calibrate left wheel");
-				msgbox("calibratoin", "Calibration terminated!");
+				msgbox("calibration", "Calibration terminated!");
 				calibState = 0;
 				getCalibrationData = true;		
 				calibrationDataIndex = 0;
@@ -198,32 +210,46 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 		if(getCalibrationData) {
 			
 			if(wheelphone.getBatteryRaw()==0) {
-				txtCalibResult.setText("Write OK ("+wheelphone.getBatteryRaw()+")");
+				txtCalibResult.setText("Flash write OK ("+wheelphone.getBatteryRaw()+")");
 			} else {
-				txtCalibResult.setText("Write ERROR ("+wheelphone.getBatteryRaw()+")");				
+				txtCalibResult.setText("Flash write ERROR ("+wheelphone.getBatteryRaw()+")");				
 			}
 			
-			txtFwScL[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontProx(0)&0xFF)+(wheelphone.getFrontProx(1)*256)));
-			txtFwScL[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontProx(2)&0xFF)+(wheelphone.getFrontProx(3)*256)));
+			FwScL[0][calibrationDataIndex] = (wheelphone.getFrontProx(0)&0xFF)+(wheelphone.getFrontProx(1)*256);
+			txtFwScL[0][calibrationDataIndex].setText(String.valueOf(FwScL[0][calibrationDataIndex]));
+			FwScL[1][calibrationDataIndex] = (wheelphone.getFrontProx(2)&0xFF)+(wheelphone.getFrontProx(3)*256);
+			txtFwScL[1][calibrationDataIndex].setText(String.valueOf(FwScL[1][calibrationDataIndex]));
 			
-			txtFwScR[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontAmbient(0)&0xFF)+(wheelphone.getFrontAmbient(1)*256)));
-			txtFwScR[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getFrontAmbient(2)&0xFF)+(wheelphone.getFrontAmbient(3)*256)));
+			FwScR[0][calibrationDataIndex] = (wheelphone.getFrontAmbient(0)&0xFF)+(wheelphone.getFrontAmbient(1)*256);
+			txtFwScR[0][calibrationDataIndex].setText(String.valueOf(FwScR[0][calibrationDataIndex]));
+			FwScR[1][calibrationDataIndex] = (wheelphone.getFrontAmbient(2)&0xFF)+(wheelphone.getFrontAmbient(3)*256);
+			txtFwScR[1][calibrationDataIndex].setText(String.valueOf(FwScR[1][calibrationDataIndex]));
 
-			txtFwL[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundProx(0)&0xFF)+(wheelphone.getGroundProx(1)*256)));
-			txtFwL[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundProx(2)&0xFF)+(wheelphone.getGroundProx(3)*256)));
+			FwL[0][calibrationDataIndex] = (wheelphone.getGroundProx(0)&0xFF)+(wheelphone.getGroundProx(1)*256);
+			txtFwL[0][calibrationDataIndex].setText(String.valueOf(FwL[0][calibrationDataIndex]));
+			FwL[1][calibrationDataIndex] = (wheelphone.getGroundProx(2)&0xFF)+(wheelphone.getGroundProx(3)*256);
+			txtFwL[1][calibrationDataIndex].setText(String.valueOf(FwL[1][calibrationDataIndex]));
 			
-			txtFwR[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundProx(0)&0xFF)+(wheelphone.getGroundProx(1)*256)));
-			txtFwR[1][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundAmbient(0)&0xFF)+(wheelphone.getGroundAmbient(1)*256)));			
+			FwR[0][calibrationDataIndex] = (wheelphone.getGroundProx(0)&0xFF)+(wheelphone.getGroundProx(1)*256);
+			txtFwR[0][calibrationDataIndex].setText(String.valueOf(FwR[0][calibrationDataIndex]));
+			FwR[1][calibrationDataIndex] = (wheelphone.getGroundAmbient(0)&0xFF)+(wheelphone.getGroundAmbient(1)*256);
+			txtFwR[1][calibrationDataIndex].setText(String.valueOf(FwR[1][calibrationDataIndex]));			
 			
-			txtBwL[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundAmbient(2)&0xFF)+(wheelphone.getGroundAmbient(3)*256)));
-			txtBwL[1][calibrationDataIndex].setText(String.valueOf(wheelphone.getLeftSpeed()));
+			BwL[0][calibrationDataIndex] = (wheelphone.getGroundAmbient(2)&0xFF)+(wheelphone.getGroundAmbient(3)*256);
+			txtBwL[0][calibrationDataIndex].setText(String.valueOf(BwL[0][calibrationDataIndex]));
+			BwL[1][calibrationDataIndex] = wheelphone.getLeftSpeed();
+			txtBwL[1][calibrationDataIndex].setText(String.valueOf(BwL[1][calibrationDataIndex]));
 			
-			txtBwR[0][calibrationDataIndex].setText(String.valueOf((wheelphone.getGroundAmbient(2)&0xFF)+(wheelphone.getGroundAmbient(3)*256)));
-			txtBwR[1][calibrationDataIndex].setText(String.valueOf(wheelphone.getRightSpeed()));			
+			BwR[0][calibrationDataIndex] = (wheelphone.getGroundAmbient(2)&0xFF)+(wheelphone.getGroundAmbient(3)*256);
+			txtBwR[0][calibrationDataIndex].setText(String.valueOf(BwR[0][calibrationDataIndex]));
+			BwR[1][calibrationDataIndex] = wheelphone.getRightSpeed();
+			txtBwR[1][calibrationDataIndex].setText(String.valueOf(BwR[1][calibrationDataIndex]));			
 
 			calibrationDataIndex++;
 			if(calibrationDataIndex >= CALIBRATION_SAMPLES) {
 				getCalibrationData = false;
+				writeCalibrationDataToFile();
+				msgbox("calibration", "Calibration data saved to sdcard/calibData.csv");
 			}
 		}
 		
@@ -241,5 +267,77 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }
+    
+	public void writeCalibrationDataToFile() {       
+		String text;
+		int i = 0;
+		
+		File logFile = new File("sdcard/calibData.csv");
+		try {
+			logFile.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			//BufferedWriter for performance, true to set append to file flag
+			BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+			text = "FW SC LEFT - ADC, FW SC LEFT - MM/S";
+			buf.append(text);
+			buf.newLine(); 
+			for(i=0; i<CALIBRATION_SAMPLES; i++) {
+				text = FwScL[0][i] + "," + FwScL[1][i];
+				buf.append(text);
+				buf.newLine(); 
+			}
+			text = "FW SC RIGHT - ADC, FW SC RIGHT - MM/S";
+			buf.append(text);
+			buf.newLine(); 
+			for(i=0; i<CALIBRATION_SAMPLES; i++) {
+				text = FwScR[0][i] + "," + FwScR[1][i];
+				buf.append(text);
+				buf.newLine(); 			
+			}
+			text = "FW LEFT - PWM, FW LEFT - MM/S";
+			buf.append(text);
+			buf.newLine(); 
+			for(i=0; i<CALIBRATION_SAMPLES; i++) {
+				text = FwL[0][i] + "," + FwL[1][i];
+				buf.append(text);
+				buf.newLine(); 			
+			}			
+			text = "FW RIGHT - PWM, FW RIGHT - MM/S";
+			buf.append(text);
+			buf.newLine(); 
+			for(i=0; i<CALIBRATION_SAMPLES; i++) {
+				text = FwR[0][i] + "," + FwR[1][i];
+				buf.append(text);
+				buf.newLine(); 			
+			}	
+			text = "BW LEFT - PWM, BW LEFT - MM/S";
+			buf.append(text);
+			buf.newLine(); 
+			for(i=0; i<CALIBRATION_SAMPLES; i++) {
+				text = BwL[0][i] + "," + BwL[1][i];
+				buf.append(text);
+				buf.newLine(); 			
+			}
+			text = "BW RIGHT - PWM, BW RIGHT - MM/S";
+			buf.append(text);
+			buf.newLine(); 
+			for(i=0; i<CALIBRATION_SAMPLES; i++) {
+				text = BwR[0][i] + "," + BwR[1][i];
+				buf.append(text);
+				buf.newLine(); 			
+			}
+
+			buf.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
     
 }
