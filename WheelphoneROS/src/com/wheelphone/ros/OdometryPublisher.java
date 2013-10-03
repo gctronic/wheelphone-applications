@@ -46,7 +46,12 @@ public class OdometryPublisher extends AbstractNodeMain {
 	    	  value.setHeader(h);
 
 	    	  // quaternion info => orientation
+	    	  // A quaternion is composed of four components: a vector with x, y, z coordinates and a w rotation.
 	    	  // refer to "btQuaternion.h" to know how the x,y,z,w values are computed having only the yaw angle ("setRPY" function)			
+	    	  // Basically there is this property:
+	    	  // [w, x, y, z] = [cos(a/2), sin(a/2) * nx, sin(a/2)* ny, sin(a/2) * nz]
+	    	  // Where a is the angle of rotation and {nx,ny,nz} is the axis of rotation.
+	    	  // In our case we rotate of theta around the z axis, thus nx=0, ny=0, nz=1 and [w,y,x,z]=[cos(theta/2), 0, 0, sin(theta/2)]
 	    	  geometry_msgs.Quaternion odom_quat = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Quaternion._TYPE);			
 	    	  odom_quat.setX(0);
 	    	  odom_quat.setY(0);
