@@ -16,13 +16,16 @@
 
 package com.wheelphone.ros;
 
+import java.util.List;
 import java.util.Timer;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Camera;
+import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,7 +101,7 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 		//rosCameraPreviewView = new RosCameraPreviewView(this); //(RosCameraPreviewView) findViewById(R.id.ros_camera_preview_view);
 		//rosCameraPreviewView.setMinimumHeight(320);
 		//rosCameraPreviewView.setMinimumWidth(480);
-	
+
 		// avoid screen suspending
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "wakelock");	
@@ -137,6 +140,7 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	    cameraId=0;
 	    backCam = Camera.open(cameraId);
 	    backCam.setDisplayOrientation(90);
+	    
 	    /*
 	    Camera.Parameters parameters = backCam.getParameters();
 	    List<Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
@@ -145,6 +149,15 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	    	Log.d("height=", Integer.toString(size.height));
 	 
 	    }
+	    List<int[]> supportedFpsRanges = parameters.getSupportedPreviewFpsRange();
+	    for (int[] range : supportedFpsRanges) {
+	    	Log.d("min=", Integer.toString(range[0]));
+	    	Log.d("max=", Integer.toString(range[1]));
+	 
+	    }
+	    parameters.setJpegQuality(50);
+	    parameters.setPreviewFpsRange(1000, 7000);
+	    backCam.setParameters(parameters);
 	    */
 	    rosCameraPreviewView.setCamera(backCam);
 	    nodeMainExecutor.execute(rosCameraPreviewView, nodeConfiguration);    

@@ -9,6 +9,7 @@ import org.ros.node.topic.Publisher;
 public class BatteryPublisher extends AbstractNodeMain {
 
 	private byte batteryValue;
+	private std_msgs.UInt8 value;
 	
 	  //@Override
 	  public GraphName getDefaultNodeName() {
@@ -25,11 +26,11 @@ public class BatteryPublisher extends AbstractNodeMain {
 	    	
 	      @Override
 	      protected void setup() {
+	    	  value = publisher.newMessage();
 	      }
 
 	      @Override
 	      protected void loop() throws InterruptedException {
-	        std_msgs.UInt8 value = publisher.newMessage();
 	        value.setData(batteryValue);
 	        publisher.publish(value);
 	        Thread.sleep(10000);

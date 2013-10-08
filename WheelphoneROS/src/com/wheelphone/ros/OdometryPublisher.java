@@ -14,6 +14,15 @@ public class OdometryPublisher extends AbstractNodeMain {
 	private double xPos=0, yPos=0;
 	private TransformBroadcaster tf;
 	
+	private nav_msgs.Odometry value;
+	private std_msgs.Header h;
+	private geometry_msgs.Quaternion odom_quat;
+	private geometry_msgs.Point odom_pos;
+	private geometry_msgs.Pose pose;
+	private geometry_msgs.PoseWithCovariance pose_cov;
+	
+	//private long startTime=0;
+	
 	  //@Override
 	  public GraphName getDefaultNodeName() {
 	    return new GraphName("pubsub/odom");
@@ -30,18 +39,38 @@ public class OdometryPublisher extends AbstractNodeMain {
 	    	
 	      @Override
 	      protected void setup() {
+	    	  
+	    	  // new message creation
+	    	  value = publisher.newMessage();
+	    	  
+	    	  // header info
+	    	  h = connectedNode.getTopicMessageFactory().newFromType(std_msgs.Header._TYPE);
+	    	  h.setFrameId("odom");
+	    	  
+	    	  // quaternion info => orientation
+	    	  odom_quat = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Quaternion._TYPE);			
+	    	  odom_quat.setX(0);
+	    	  odom_quat.setY(0);
+	    	  
+	    	  // position info
+	    	  odom_pos = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Point._TYPE);
+	    	  odom_pos.setZ(0);	// no vertical motion info
+	    	  
+	    	  // Pose message construction => quaternion + position
+	    	  pose = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Pose._TYPE);
+	    	  
+	    	  // PoseWithCovariance "level"
+	    	  pose_cov = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.PoseWithCovariance._TYPE);	    	  
+	    	  
 	      }
 
 	      
 	      @Override
 	      protected void loop() throws InterruptedException {
 	    	  
-	    	  // new message creation
-	    	  nav_msgs.Odometry value = publisher.newMessage();
+	    	  //startTime = System.currentTimeMillis();
 	    	
 	    	  // header info
-	    	  std_msgs.Header h = connectedNode.getTopicMessageFactory().newFromType(std_msgs.Header._TYPE);
-	    	  h.setFrameId("odom");
 	    	  h.setStamp(connectedNode.getCurrentTime());
 	    	  value.setHeader(h);
 
@@ -52,34 +81,30 @@ public class OdometryPublisher extends AbstractNodeMain {
 	    	  // [w, x, y, z] = [cos(a/2), sin(a/2) * nx, sin(a/2)* ny, sin(a/2) * nz]
 	    	  // Where a is the angle of rotation and {nx,ny,nz} is the axis of rotation.
 	    	  // In our case we rotate of theta around the z axis, thus nx=0, ny=0, nz=1 and [w,y,x,z]=[cos(theta/2), 0, 0, sin(theta/2)]
-	    	  geometry_msgs.Quaternion odom_quat = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Quaternion._TYPE);			
-	    	  odom_quat.setX(0);
-	    	  odom_quat.setY(0);
 	    	  odom_quat.setZ(Math.sin(theta/2.0));
 	    	  odom_quat.setW(Math.cos(theta/2.0));
 			
-	    	  // position info
-	    	  geometry_msgs.Point odom_pos = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Point._TYPE);
-	    	  odom_pos.setX(xPos);
+	    	  // position info	    	  
+	    	  odom_pos.setX(xPos);    	  
 	    	  odom_pos.setY(yPos);
-	    	  odom_pos.setZ(0);
 	    	  
 	    	  // Pose message construction => quaternion + position
-	    	  geometry_msgs.Pose pose = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.Pose._TYPE);
 	    	  pose.setOrientation(odom_quat);
 	    	  pose.setPosition(odom_pos);
 	    	  
 	    	  // PoseWithCovariance "level"
-	    	  geometry_msgs.PoseWithCovariance pose_cov = connectedNode.getTopicMessageFactory().newFromType(geometry_msgs.PoseWithCovariance._TYPE);	    	  
 	    	  pose_cov.setPose(pose);
 	    	  
-	    	  value.setPose(pose_cov);
-	    	  
+	    	  value.setPose(pose_cov);	    	  
 	    	  value.setChildFrameId("base_link");			 	    	  
 	    	  
-	    	  tf.sendTransform("odom", "base_link", h.getStamp().totalNsecs(), xPos, yPos, 0.0, odom_quat.getX(), odom_quat.getY(), odom_quat.getZ(), odom_quat.getW());	    	  
+	    	  tf.sendTransform("odom", "base_link", h.getStamp().totalNsecs(), xPos, yPos, 0.0, odom_quat.getX(), odom_quat.getY(), odom_quat.getZ(), odom_quat.getW());	    	  	    	  
+	    	  //tf.sendTransform("odom", "base_link", connectedNode.getCurrentTime().totalNsecs(), xPos, yPos, 0.0, 0, 0, Math.sin(theta/2.0), Math.cos(theta/2.0));	    	  
 	    	  
 			  publisher.publish(value);
+			  
+			  //xPos = System.currentTimeMillis() - startTime;
+			  
 			  Thread.sleep(500);
 	      }
 	    });

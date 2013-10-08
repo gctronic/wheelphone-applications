@@ -11,6 +11,7 @@ public class ProximityPublisher extends AbstractNodeMain {
 	private byte proxValues [] = new byte[4];
 	private byte refreshCounter=0;
 	private byte msgCounter=0;
+	private std_msgs.UInt8MultiArray value;
 	
 	  //@Override
 	  public GraphName getDefaultNodeName() {
@@ -27,11 +28,11 @@ public class ProximityPublisher extends AbstractNodeMain {
 	    	
 	      @Override
 	      protected void setup() {
+	    	  value = publisher.newMessage();
 	      }
 
 	      @Override
 	      protected void loop() throws InterruptedException {
-	        std_msgs.UInt8MultiArray value = publisher.newMessage();
 //	        proxValues[1] = msgCounter;
 //	        if(msgCounter < 255) {
 //	        	msgCounter++;

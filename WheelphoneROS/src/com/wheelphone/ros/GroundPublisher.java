@@ -9,6 +9,7 @@ import org.ros.node.topic.Publisher;
 public class GroundPublisher extends AbstractNodeMain {
 	
 	private byte groundValues [] = new byte[4];
+	private std_msgs.UInt8MultiArray value;
 	
 	  //@Override
 	  public GraphName getDefaultNodeName() {
@@ -25,11 +26,11 @@ public class GroundPublisher extends AbstractNodeMain {
 	    	
 	      @Override
 	      protected void setup() {
+	    	  value = publisher.newMessage();
 	      }
 
 	      @Override
-	      protected void loop() throws InterruptedException {
-	        std_msgs.UInt8MultiArray value = publisher.newMessage();
+	      protected void loop() throws InterruptedException {	        
 	        value.setData(groundValues);
 	        publisher.publish(value);
 	        Thread.sleep(100);
