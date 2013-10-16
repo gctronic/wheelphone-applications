@@ -112,9 +112,11 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
 //          printf("desc capacity = %ld\n", inBuffer->mPacketDescriptionCapacity);
 //      //}
         
-        printf("max signal value = %d\n", aqr->maxSigValue);
-        printf("min signal value = %d\n", aqr->minSigValue);
-        printf("starting processing data...\n");
+        if(DEBUG_ALGORITHM) {
+            printf("max signal value = %d\n", aqr->maxSigValue);
+            printf("min signal value = %d\n", aqr->minSigValue);
+            printf("starting processing data...\n");
+        }
        
         // every audio sample is 2 bytes
         for(i=0; i<inBuffer->mAudioDataByteSize/2; i++) {
@@ -158,10 +160,14 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
                     aqr->syncCounter = 0;
                 }
                 if(aqr->syncCounter > SYNC_SAMPLES) {
-                    printf("packet sync found!\n");
+                    if(DEBUG_ALGORITHM) {
+                        printf("packet sync found!\n");
+                    }
                     aqr->end = [NSDate date];
                     NSTimeInterval executionTime = [aqr->end timeIntervalSinceDate:aqr->start];
-                    printf("Packet sync to packet sync time: %f seconds (%f Hz)\n", executionTime, 1.0/executionTime);
+                    if(DEBUG_ALGORITHM) {
+                        printf("Packet sync to packet sync time: %f seconds (%f Hz)\n", executionTime, 1.0/executionTime);
+                    }
                     aqr->start = [NSDate date];
                     
                     aqr->audioDataIndex = 0;
@@ -221,83 +227,88 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
                         if(aqr->bitValue == 0) {
                             
                         } else {    // stop bit not well detected
-                            printf("Error in interpretation!!!\n");
+                            if(DEBUG_ALGORITHM) {
+                                printf("Error in interpretation!!!\n");
+                            }
                         }
                         
                         aqr->audioData[aqr->audioDataIndex] = aqr->currentByte;
-                        printf("%d) %d\n", aqr->audioDataIndex, aqr->currentByte);
+                        if(DEBUG_ALGORITHM) {
+                            printf("%d) %d\n", aqr->audioDataIndex, aqr->currentByte);
+                        }
                         
                         if(aqr->audioDataIndex == 0) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox0"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox0"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxValues[0] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 1) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox1"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                            //[sensorsDict setObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox1"];
-                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:sensorsDict];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox1"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxValues[1] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 2) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox2"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox2"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxValues[2] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 3) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox3"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"prox3"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxValues[3] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 4) {   // prox ambient 0
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb0"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb0"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxAmbValues[0] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 5) {   // prox ambient 1
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb1"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];                            
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb1"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxAmbValues[1] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 6) {   // prox ambient 2
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb2"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb2"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxAmbValues[2] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 7) {   // prox ambient 3
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb3"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];                            
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"proxAmb3"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robProxAmbValues[3] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 8) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground0"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground0"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robGroundValues[0] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 9) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground1"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground1"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                             aqr->robGroundValues[1] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 10) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground2"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground2"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robGroundValues[2] = aqr->currentByte;
                         } else if(aqr->audioDataIndex == 11) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground3"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                        } else if(aqr->audioDataIndex == 12) {   // ground ambient 0
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"groundAmb0"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                        } else if(aqr->audioDataIndex == 13) {   // ground ambient 1
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"groundAmb1"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];                            
-                        } else if(aqr->audioDataIndex == 14) {   // ground ambient 2
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"groundAmb2"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];                            
-                        } else if(aqr->audioDataIndex == 15) {   // ground ambient 3
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"groundAmb3"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                        } else if(aqr->audioDataIndex == 16) {
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"battery"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                        } else if(aqr->audioDataIndex == 17) {  // flag status robot to phone
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"flagsRobotToPhone"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                            
-                        } else if(aqr->audioDataIndex == 18) {  // speed left LSB
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"ground3"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robGroundValues[3] = aqr->currentByte;
+                        } else if(aqr->audioDataIndex == 12) {
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"battery"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robBattery = aqr->currentByte;
+                        } else if(aqr->audioDataIndex == 13) {  // flag status robot to phone
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->currentByte] forKey:@"flagsRobotToPhone"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robFlagsRobotToPhone = aqr->currentByte;
+                        } else if(aqr->audioDataIndex == 14) {  // speed left LSB
                             leftSpeedTemp = aqr->currentByte;
                             
-                        } else if(aqr->audioDataIndex == 19) {  // speed left MSB
+                        } else if(aqr->audioDataIndex == 15) {  // speed left MSB
                             leftSpeedTemp += aqr->currentByte*256;
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:leftSpeedTemp] forKey:@"leftSpeed"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
-                        } else if(aqr->audioDataIndex == 20) {  // speed right LSB
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:leftSpeedTemp] forKey:@"leftSpeed"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robLeftSpeed = leftSpeedTemp;
+                        } else if(aqr->audioDataIndex == 16) {  // speed right LSB
                             rightSpeedTemp = aqr->currentByte;
                             
-                        } else if(aqr->audioDataIndex == 21) {  // speed right MSB
+                        } else if(aqr->audioDataIndex == 17) {  // speed right MSB
                             rightSpeedTemp += aqr->currentByte*256;
-                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:rightSpeedTemp] forKey:@"rightSpeed"];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:rightSpeedTemp] forKey:@"rightSpeed"];
+                            //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            aqr->robRightSpeed = rightSpeedTemp;
                         }
                         
                         
@@ -336,6 +347,152 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
                         aqr->audioDataIndex++;
                         if(aqr->audioDataIndex == AUDIO_PACKET_SIZE) {
                             aqr->lookForPacketSync = true;
+                            
+                            if(aqr->isFollowing) {
+ 
+                                // ground sensors position:
+                                //      G1  G2
+                                // G0           G3
+                                
+                                if(aqr->globalState == LINE_SEARCH) {
+
+                                    aqr->lSpeed = aqr->desiredSpeed; // move around
+                                    aqr->rSpeed = aqr->desiredSpeed;
+                                    
+                                    if(aqr->robGroundValues[0]<aqr->groundThreshold || aqr->robGroundValues[1]<aqr->groundThreshold || aqr->robGroundValues[2]<aqr->groundThreshold || aqr->robGroundValues[3]<aqr->groundThreshold) {
+                                        aqr->lineFound++;
+                                        if(aqr->lineFound >= 2) {        // be sure to find a line to follow (avoid noise)
+                                            aqr->globalState = LINE_FOLLOW;
+                                        }
+                                    } else {
+                                        aqr->lineFound = 0;
+                                    }
+                                } else if(aqr->globalState == LINE_FOLLOW) {
+                                    
+                                    if(aqr->robGroundValues[1]>(aqr->groundThreshold+aqr->lineLostThr) && aqr->robGroundValues[2]>(aqr->groundThreshold+aqr->lineLostThr) && aqr->robGroundValues[0]>(aqr->groundThreshold+aqr->lineLostThr) && aqr->robGroundValues[3]>(aqr->groundThreshold+aqr->lineLostThr)) {        // i'm going to go out of the line
+                                        aqr->outOfLine++;
+                                        if(aqr->outOfLine >= 2) {
+                                            aqr->globalState = LINE_SEARCH;
+                                        }
+                                    } else {
+                                        aqr->outOfLine = 0;
+                                    }
+                                    
+                                    if(aqr->robGroundValues[0] < aqr->groundThreshold && aqr->robGroundValues[1]>aqr->groundThreshold && aqr->robGroundValues[2]>aqr->groundThreshold && aqr->robGroundValues[3]>aqr->groundThreshold) { // left ground inside line, turn left
+                                        aqr->lSpeed = 0;
+                                        aqr->rSpeed = aqr->desiredSpeed*4;
+                                        if(aqr->rSpeed > MAX_SPEED) {
+                                            aqr->rSpeed = MAX_SPEED;
+                                        }
+                                    } else if(aqr->robGroundValues[3]<aqr->groundThreshold && aqr->robGroundValues[0]>aqr->groundThreshold && aqr->robGroundValues[1]>aqr->groundThreshold && aqr->robGroundValues[2]>aqr->groundThreshold) {        // right ground inside line, turn right
+                                        aqr->lSpeed = aqr->desiredSpeed*4;
+                                        aqr->rSpeed = 0;
+                                        if(aqr->lSpeed > MAX_SPEED) {
+                                            aqr->lSpeed = MAX_SPEED;
+                                        }
+                                    } else if(aqr->robGroundValues[1]>aqr->groundThreshold) { // we are on the black line but pointing out to the left => turn right
+                                        aqr->tempSpeed = (aqr->robGroundValues[1]-aqr->groundThreshold);
+                                        if(aqr->tempSpeed > MAX_SPEED) {
+                                            aqr->tempSpeed = MAX_SPEED;
+                                        }
+                                        if(aqr->tempSpeed < aqr->minSpeedLineFollow) {
+                                            aqr->tempSpeed = aqr->minSpeedLineFollow;
+                                        }                                        
+                                        aqr->lSpeed = aqr->tempSpeed;
+                                        aqr->rSpeed = 0;
+                                        //aqr->lSpeed = aqr->desiredSpeed+aqr->tempSpeed;
+                                        //aqr->rSpeed = 0;
+                                        
+                                        /*
+                                        if(aqr->robGroundValues[2] <= aqr->robGroundValues[1]) {        // leaving line to the left => need to turn right
+                                            aqr->lSpeed = aqr->tempSpeed; //(groundValues[1]-groundThreshold)/20;
+                                            if(aqr->lSpeed < aqr->minSpeedLineFollow) {
+                                                aqr->lSpeed = aqr->minSpeedLineFollow;
+                                            }
+                                            aqr->rSpeed = 1; //-tempSpeed; //-((groundValues[1]-groundThreshold)/20)*3;
+                                        } else {        // leaving line to the right => need to turn left
+                                            aqr->lSpeed = 1; //-tempSpeed; //-((groundValues[3]-groundThreshold)/20)*3;
+                                            aqr->rSpeed = aqr->tempSpeed; //(groundValues[3]-groundThreshold)/20;
+                                            if(aqr->rSpeed < aqr->minSpeedLineFollow) {
+                                                aqr->rSpeed = aqr->minSpeedLineFollow;
+                                            }
+                                        }
+                                         */
+                                    } else if(aqr->robGroundValues[2]>aqr->groundThreshold) { // we are on the black line but pointing out to the right => turn left
+                                        aqr->tempSpeed = (aqr->robGroundValues[2]-aqr->groundThreshold);
+                                        if(aqr->tempSpeed > MAX_SPEED) {
+                                            aqr->tempSpeed = MAX_SPEED;
+                                        }
+                                        if(aqr->tempSpeed < aqr->minSpeedLineFollow) {
+                                            aqr->tempSpeed = aqr->minSpeedLineFollow;
+                                        }
+                                        aqr->lSpeed = 0;
+                                        aqr->rSpeed = aqr->tempSpeed;
+                                        //aqr->lSpeed = 0;
+                                        //aqr->rSpeed = aqr->desiredSpeed+aqr->tempSpeed;
+                                        /*
+                                        if(aqr->robGroundValues[2] <= aqr->robGroundValues[1]) {        // leaving line to the left => need to turn right
+                                            aqr->lSpeed = aqr->tempSpeed; //(groundValues[1]-groundThreshold)/20;
+                                            if(aqr->lSpeed < aqr->minSpeedLineFollow) {
+                                                aqr->lSpeed = aqr->minSpeedLineFollow;
+                                            }
+                                            aqr->rSpeed = 1; //-tempSpeed; //-((groundValues[1]-groundThreshold)/20)*3;
+                                        } else {        // leaving line to the right => need to turn left
+                                            aqr->lSpeed = 1; //-tempSpeed; //-((groundValues[3]-groundThreshold)/20)*3;
+                                            aqr->rSpeed = aqr->tempSpeed; //(groundValues[3]-groundThreshold)/20;
+                                            if(aqr->rSpeed < aqr->minSpeedLineFollow) {
+                                                aqr->rSpeed = aqr->minSpeedLineFollow;
+                                            }
+                                        }
+                                         */
+                                    } else {        // within the line
+                                        aqr->lSpeed = aqr->desiredSpeed;
+                                        aqr->rSpeed = aqr->desiredSpeed;
+                                    }
+                                }
+                                
+                                aqr->lSpeed = aqr->lSpeed/2.8;
+                                aqr->rSpeed = aqr->rSpeed/2.8;
+                                
+                                //if((aqr->lSpeed!=aqr->lSpeedPrev) || (aqr->rSpeed!=aqr->rSpeedPrev)) {
+                                if((aqr->lSpeed==0 && aqr->lSpeedPrev>0) || (aqr->rSpeed==0 && aqr->rSpeedPrev>0)) {
+                                    aqr->rSpeedPrev = aqr->rSpeed;
+                                    aqr->lSpeedPrev = aqr->lSpeed;
+                                    aqr->lSpeed = 0;
+                                    aqr->rSpeed = 0;
+                                } else {
+                                    aqr->rSpeedPrev = aqr->rSpeed;
+                                    aqr->lSpeedPrev = aqr->lSpeed;
+                                }
+                                
+                                //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->globalState] forKey:@"behaviorStatus"];
+                                //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                                
+                                //wheelphone.setLeftSpeed(lSpeed);
+                                //wheelphone.setRightSpeed(rSpeed);
+                                
+                                
+                                
+                            } else if(aqr->isCliffDetecting) {
+                                if(aqr->robGroundValues[0]<aqr->groundThreshold || aqr->robGroundValues[1]<aqr->groundThreshold || aqr->robGroundValues[2]<aqr->groundThreshold || aqr->robGroundValues[3]<aqr->groundThreshold) {
+                                    aqr->lSpeed = 0;
+                                    aqr->rSpeed = 0;
+                                } else {
+                                    aqr->lSpeed = aqr->desiredSpeed/2.8;
+                                    aqr->rSpeed = aqr->desiredSpeed/2.8;
+                                }
+                                //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->globalState] forKey:@"behaviorStatus"];
+                                //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            } else {
+                                aqr->lSpeed = 0;
+                                aqr->rSpeed = 0;
+                                //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:aqr->globalState] forKey:@"behaviorStatus"];
+                                //[[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            }
+                            
+                            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:0] forKey:@"packetReceived"];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sensorsNotification" object:nil userInfo:userInfo];
+                            
                             // statistics
                             /*
                             aqr->numPacketsReceived++;
@@ -369,195 +526,7 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
             aqr->start = [NSDate date];
             aqr->numPacketsReceived = 0;
         }
-        
-        
-//        for(i=0; i<inBuffer->mAudioDataByteSize/2; i++) {
-//            //printf("%d ",coreAudioBuffer[i]);
-//            //printf("\n\n\n");
-//            
-//            currentValue = coreAudioBuffer[i];
-//            
-//            if(aqr->lookFor == PACKET_SYNC) {
-//                if(abs(currentValue) < SYNC_THRESHOLD) {
-//                    aqr->syncCounter++;
-//                } else {
-//                    aqr->syncCounter = 0;
-//                }
-//                if(aqr->syncCounter > SYNC_SAMPLES) {
-////                    printf("packet sync found!\n");
-//                    aqr->lookFor = PEAK_MAX;
-//                    aqr->audioDataIndex = 0;
-//                    aqr->syncCounter = 0;
-//                    aqr->localPeakVal = 0;
-//                    aqr->localPeakPos = 0;
-//                    aqr->prevDerivativeSign = 0;
-//                    aqr->derivativeSign = 0;
-//                    aqr->signalState = DETECT_START;
-//                    memset(aqr->tempPeaks, 0, SAMPLES_PER_BIT*BIT_PER_BYTE);
-//                    aqr->tempPeaksIndex = 0;
-//                    aqr->startAdjust = 0;
-//                    aqr->startToStart = 0;
-//                    aqr->nextBitCounter = 0;
-//                    aqr->bitIndex = 0;
-//                    aqr->interpretationState = READ_CONTENT;
-//                    aqr->peakFound = 0;
-//                    aqr->audioDataIndex = 0;
-//                    aqr->tempData = 0;
-//                }
-//            } else {
-//            
-//                if(aqr->lookFor == PEAK_MAX) {
-//                    if(currentValue < PEAK_THRESHOLD && currentValue > 0) {
-//                        currentValue = 0;
-//                        coreAudioBuffer[i] = 0;
-//                    }
-//                    if(aqr->localPeakVal < currentValue) {
-//                        aqr->localPeakVal = currentValue;
-//                        aqr->localPeakPos = i;
-//                    }
-//                } else {
-//                    if(currentValue > -PEAK_THRESHOLD && currentValue < 0) {
-//                        currentValue = 0;
-//                        coreAudioBuffer[i] = 0;
-//                    }
-//                    if(aqr->localPeakVal > currentValue) {
-//                        aqr->localPeakVal = currentValue;
-//                        aqr->localPeakPos = i;
-//                    }
-//                }
-//
-//                if(abs(currentValue - aqr->localPeakVal) >= PEAK_THRESHOLD) {
-//                    //printf("found a peak\n");
-//                    
-//                    aqr->prevDerivativeSign = aqr->derivativeSign;
-//                    aqr->derivativeSign = currentValue - aqr->localPeakVal;
-//                    
-//                    if(aqr->lookFor == PEAK_MAX && aqr->derivativeSign < 0) { // top peak found
-////                        printf("found a peak max, looking for peak min...\n");
-//                        aqr->lookFor = PEAK_MIN;
-//                        if(aqr->signalState == DETECT_START) {
-//                            aqr->tempPeaksIndex = 0;
-//                            aqr->tempPeaks[aqr->tempPeaksIndex] = START_EVENT;
-//                            aqr->startAdjust = i - aqr->localPeakPos;
-//                            aqr->startToStart = (SAMPLES_PER_BIT*BIT_PER_BYTE)-(SAMPLES_PER_BIT/2)-aqr->startAdjust;
-//                            aqr->signalState = DETECT_PEAKS;
-////                            printf("i = %d\n", i);
-////                            printf("localPeakPos = %d\n", aqr->localPeakPos);
-////                            printf("startAdjust = %d\n", aqr->startAdjust);
-////                            printf("startToStart = %d\n", aqr->startToStart);
-//                        } else if (aqr->signalState == DETECT_PEAKS) {
-////                            printf("tempPeaksIndex = %d\n", aqr->tempPeaksIndex);
-////                            printf("i = %d\n", i);
-////                            printf("localPeakPos = %d\n", aqr->localPeakPos);
-////                            printf("startAdjust = %d\n", aqr->startAdjust);
-//                            aqr->tempPeaks[aqr->tempPeaksIndex-(i-aqr->localPeakPos)+aqr->startAdjust] = MAX_PEAK_EVENT;
-//                        }
-//                    } else if(aqr->lookFor == PEAK_MIN && aqr->derivativeSign > 0) {
-////                        printf("found a peak min, looking for peak max...\n");
-//                        aqr->lookFor = PEAK_MAX;
-//                        if(aqr->signalState == DETECT_PEAKS) {
-////                            printf("tempPeaksIndex = %d\n", aqr->tempPeaksIndex);
-////                            printf("i = %d\n", i);
-////                            printf("localPeakPos = %d\n", aqr->localPeakPos);
-////                            printf("startAdjust = %d\n", aqr->startAdjust);
-//                            aqr->tempPeaks[aqr->tempPeaksIndex-(i-aqr->localPeakPos)+aqr->startAdjust] = MIN_PEAK_EVENT;
-//                        }
-//                    }
-//                }
-//                
-//                aqr->tempPeaksIndex++;
-//                aqr->startToStart--;
-//                
-//                if(aqr->startToStart == 0) {    // one byte received
-////                    printf("one byte received, start interpretation!\n");
-//                    
-//                    aqr->nextBitCounter = SAMPLES_PER_BIT/2 + SAMPLES_PER_BIT;
-//                    aqr->bitIndex = 7;
-//                    aqr->currentBit = 1;
-//                    aqr->interpretationState = READ_CONTENT;
-//                    
-//                    for(k=0; k<SAMPLES_PER_BIT*BIT_PER_BYTE; k++) {
-////                        printf("k=%d\n",k);
-//                        if(aqr->tempPeaks[k] > 0) {
-//                            aqr->peakFound = 1;
-//                        }
-//                        aqr->nextBitCounter--;
-//                        if(aqr->interpretationState == READ_CONTENT) {                            
-//                            if(aqr->nextBitCounter == 0) {   // bit is read
-////                                printf("bit %d is read...\n", aqr->bitIndex);
-//                                if(aqr->peakFound == 1) {    // when a peak is found the bit is toggled
-//                                    aqr->peakFound = 0;
-//                                    aqr->currentBit = 1 - aqr->currentBit;
-//                                }
-////                                printf("current bit = %d\n", aqr->currentBit);
-//                                aqr->tempData = aqr->tempData | (aqr->currentBit<<aqr->bitIndex);
-//                                aqr->nextBitCounter = SAMPLES_PER_BIT;
-//                                aqr->bitIndex--;
-//                                if(aqr->bitIndex < 0) {
-//                                    aqr->interpretationState = READ_STOP_BIT;
-////                                    printf("waiting stop bit...\n");
-//                                }
-//                            }
-//                            
-//                        } else if(aqr->interpretationState == READ_STOP_BIT) {
-//                            if(aqr->nextBitCounter == 0) {
-//                                if(aqr->peakFound == 1) {
-//                                    aqr->peakFound = 0;
-//                                    aqr->currentBit = 1 - aqr->currentBit;
-//                                }
-//                                if(aqr->currentBit == 1) {
-////                                    printf("Error in interpretation!!!\n");
-//                                }
-//                                aqr->signalState = DETECT_START;
-//                                memset(aqr->tempPeaks, 0, SAMPLES_PER_BIT*BIT_PER_BYTE);
-//                                aqr->audioData[aqr->audioDataIndex] = aqr->tempData;
-////                                printf("%d) %d\n", aqr->audioDataIndex, aqr->tempData);
-//                                
-//                                if(aqr->waitZero == 1) {
-//                                    if(aqr->audioDataIndex == 0) {
-//                                        if(aqr->tempData == 0) {
-//                                            aqr->waitZero = 0;
-//                                            aqr->expectedData = 1;
-//                                        }
-//                                    }
-//                                } else {
-//                                    if(aqr->audioDataIndex == 0) {  // only first packet byte is used for testing
-//                                        printf("%d) %d\n", aqr->audioDataIndex, aqr->tempData);
-//                                        printf("expected = %d\n", aqr->expectedData);
-//                                        if(aqr->tempData != aqr->expectedData) {
-//                                            if(aqr->currentBit == 1) {
-//                                                aqr->numBytesWrong++;
-//                                            } else {
-//                                                aqr->numBytesWrongNotDetected++;
-//                                            }
-//                                        }
-//                                        aqr->numBytesReceived++;
-//                                        if(aqr->expectedData < 255) {
-//                                            aqr->expectedData++;
-//                                        } else {
-//                                            aqr->expectedData = 0;
-//                                        }
-//                                    }
-//                                }
-//                                aqr->audioDataIndex++;
-//                                if(aqr->audioDataIndex == AUDIO_PACKET_SIZE) {
-//                                    aqr->lookFor = PACKET_SYNC;
-//                                    printf("bytes wrong = %lld\n", aqr->numBytesWrong);
-//                                    printf("bytes wrong not detected = %lld\n", aqr->numBytesWrongNotDetected);
-//                                    printf("total bytes received = %lld\n", aqr->numBytesReceived);
-//                                    printf("corrected bytes received = %f\n", 100.0 - (float)(aqr->numBytesWrong+aqr->numBytesWrongNotDetected)/(float)aqr->numBytesReceived);
-//                                }
-//                                aqr->tempData = 0;
-//                            }
-//                        }
-//                    }
-//                    
-//                }
-//                
-//            }
-//
-//        }
-        
+         
 //        printf("processing end...\n");
 		
 		// if we're not stopping, re-enqueue the buffer so that it gets filled again
@@ -569,28 +538,10 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
 	}
 }
 
-AQRecorder::AQRecorder()
-{
+AQRecorder::AQRecorder() {
+    
 	mIsRunning = false;
-	mRecordPacket = 0;
-    
-//    lookFor = PACKET_SYNC;
-//    localPeakVal = 0;
-//    localPeakPos = 0;
-//    prevDerivativeSign = 0;
-//    derivativeSign = 0;
-//    signalState = DETECT_START;
-//    memset(tempPeaks, 0, SAMPLES_PER_BIT*BIT_PER_BYTE);
-//    tempPeaksIndex = 0;
-//    startAdjust = 0;
-//    startToStart = 0;
-//    nextBitCounter = 0;
-//    bitIndex = 0;
-//    interpretationState = READ_CONTENT;
-//    peakFound = 0;
-//    tempData = 0;
-//    expectedData = 0;
-    
+	mRecordPacket = 0;    
     iChange = 0;
     iStart = 0;
     bitValue = 0;
@@ -609,48 +560,33 @@ AQRecorder::AQRecorder()
     start = [NSDate date];
     end = [NSDate date];
     numPacketsReceived = 0;
-    
-    firstView = [FirstViewController new];
-    
     maxSigValue=0;
     minSigValue=0;
     peakThreshold=0;
     
+    isFollowing = false;
+    isCliffDetecting = false;
+    globalState = LINE_SEARCH;
+    groundThreshold = INIT_GROUND_THR;
+    robGroundValues[0]=robGroundValues[1]=robGroundValues[2]=robGroundValues[3]=1023;
+    lineFound = 0;
+    outOfLine = 0;
+    lineFollowSpeed = 0;
+    minSpeedLineFollow = 10;
+    tempSpeed = 0;
+    desiredSpeed = INIT_SPEED;
+    lineLostThr = INIT_LOST_THR;
+    lSpeed = 0;
+    rSpeed = 0;
+    lSpeedPrev = 0;
+    rSpeedPrev = 0;
+    
 }
 
-AQRecorder::~AQRecorder()
-{
+AQRecorder::~AQRecorder() {
+    
 	AudioQueueDispose(mQueue, TRUE);
-	AudioFileClose(mRecordFile);
-	if (mFileName) CFRelease(mFileName);
-}
-
-// ____________________________________________________________________________________
-// Copy a queue's encoder's magic cookie to an audio file.
-void AQRecorder::CopyEncoderCookieToFile()
-{
-	UInt32 propertySize;
-	// get the magic cookie, if any, from the converter		
-	OSStatus err = AudioQueueGetPropertySize(mQueue, kAudioQueueProperty_MagicCookie, &propertySize);
-	
-	// we can get a noErr result and also a propertySize == 0
-	// -- if the file format does support magic cookies, but this file doesn't have one.
-	if (err == noErr && propertySize > 0) {
-		Byte *magicCookie = new Byte[propertySize];
-		UInt32 magicCookieSize;
-		XThrowIfError(AudioQueueGetProperty(mQueue, kAudioQueueProperty_MagicCookie, magicCookie, &propertySize), "get audio converter's magic cookie");
-		magicCookieSize = propertySize;	// the converter lies and tell us the wrong size
-		
-		// now set the magic cookie on the output file
-		UInt32 willEatTheCookie = false;
-		// the converter wants to give us one; will the file take it?
-		err = AudioFileGetPropertyInfo(mRecordFile, kAudioFilePropertyMagicCookieData, NULL, &willEatTheCookie);
-		if (err == noErr && willEatTheCookie) {
-			err = AudioFileSetProperty(mRecordFile, kAudioFilePropertyMagicCookieData, magicCookieSize, magicCookie);
-			XThrowIfError(err, "set audio file's magic cookie");
-		}
-		delete[] magicCookie;
-	}
+    
 }
 
 void AQRecorder::SetupAudioFormat(UInt32 inFormatID)
@@ -678,14 +614,13 @@ void AQRecorder::SetupAudioFormat(UInt32 inFormatID)
 	}
 }
 
-void AQRecorder::StartRecord(CFStringRef inRecordFile)
-{
+void AQRecorder::StartRecord() {
+    
 	int i, bufferByteSize;
 	UInt32 size;
 	CFURLRef url = nil;
 	
-	try {		
-		mFileName = CFStringCreateCopy(kCFAllocatorDefault, inRecordFile);
+	try {
 
 		// specify the recording format
 		SetupAudioFormat(kAudioFormatLinearPCM);
@@ -705,21 +640,7 @@ void AQRecorder::StartRecord(CFStringRef inRecordFile)
 		size = sizeof(mRecordFormat);
 		XThrowIfError(AudioQueueGetProperty(mQueue, kAudioQueueProperty_StreamDescription,	
 										 &mRecordFormat, &size), "couldn't get queue's format");
-			
-		NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent: (__bridge NSString*)inRecordFile];	
-			
-		url = CFURLCreateWithString(kCFAllocatorDefault, (CFStringRef)recordFile, NULL);
-		
-		// create the audio file
-		OSStatus status = AudioFileCreateWithURL(url, kAudioFileCAFType, &mRecordFormat, kAudioFileFlags_EraseFile, &mRecordFile);
-		CFRelease(url);
         
-        XThrowIfError(status, "AudioFileCreateWithURL failed");
-		
-		// copy the cookie first to give the file object as much info as we can about the data going in
-		// not necessary for pcm, but required for some compressed audio
-		CopyEncoderCookieToFile();
-		
 		// allocate and enqueue buffers
 		bufferByteSize = ComputeRecordBufferSize(&mRecordFormat, kBufferDurationSeconds);	// enough bytes for half a second
 		for (i = 0; i < kNumberRecordBuffers; ++i) {
@@ -728,9 +649,11 @@ void AQRecorder::StartRecord(CFStringRef inRecordFile)
 			XThrowIfError(AudioQueueEnqueueBuffer(mQueue, mBuffers[i], 0, NULL),
 					   "AudioQueueEnqueueBuffer failed");
 		}
+        
 		// start the queue
 		mIsRunning = true;
 		XThrowIfError(AudioQueueStart(mQueue, NULL), "AudioQueueStart failed");
+        
 	}
 	catch (CAXException e) {
 		char buf[256];
@@ -742,18 +665,19 @@ void AQRecorder::StartRecord(CFStringRef inRecordFile)
 
 }
 
-void AQRecorder::StopRecord()
-{
+void AQRecorder::setFollowingEnabled(BOOL state) {
+    isFollowing = state;
+}
+
+BOOL AQRecorder::isFollowingEnabled() {
+    return isFollowing;
+}
+
+void AQRecorder::StopRecord() {
+    
 	// end recording
 	mIsRunning = false;
 	XThrowIfError(AudioQueueStop(mQueue, true), "AudioQueueStop failed");	
-	// a codec may update its cookie at the end of an encoding session, so reapply it to the file now
-	CopyEncoderCookieToFile();
-	if (mFileName)
-	{
-		CFRelease(mFileName);
-		mFileName = NULL;
-	}
 	AudioQueueDispose(mQueue, true);
-	AudioFileClose(mRecordFile);
+
 }

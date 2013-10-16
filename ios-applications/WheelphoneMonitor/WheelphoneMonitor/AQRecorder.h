@@ -53,107 +53,116 @@ Copyright (C) 2012 Apple Inc. All Rights Reserved.
 
 #include "CAStreamBasicDescription.h"
 #include "CAXException.h"
-#import "FirstViewController.h"
 
-#define kNumberRecordBuffers	3
+#define kNumberRecordBuffers	3       // buffers used for audio sampling
 #define kBufferDurationSeconds 0.125    // one entire packet (22 bytes) takes 125 ms
 
-//#define PEAK_MAX 0
-//#define PEAK_MIN 1
-//#define PACKET_SYNC 2
-//#define DETECT_START 0
-//#define DETECT_PEAKS 1
-//#define SAMPLES_PER_BIT 22
-//#define BIT_PER_BYTE 10
-//#define START_EVENT 0
-//#define MAX_PEAK_EVENT 1
-//#define MIN_PEAK_EVENT 2
-//#define READ_CONTENT 0
-//#define READ_STOP_BIT 1
+#define MIN_PEAK_DISTANCE 13    // distance between peaks measured in samples
+#define AUDIO_PACKET_SIZE 18    // complete packet size (containing all sensors data)
+#define SYNC_SAMPLES 150        // number of samples used to sync
+#define SYNC_THRESHOLD 700      // if the signal is higher than this value then the sync is lost
+                                // (for syncing we need the signal to be lower than this value for SYNC_SAMPLES samples)
+#define DEBUG_ALGORITHM 0
 
+#define LINE_SEARCH 0
+#define LINE_FOLLOW 1
+#define INIT_GROUND_THR 180
+#define INIT_SPEED 10
+#define INIT_LOST_THR 15
+#define MAX_SPEED 350
 
-#define PEAK_THRESHOLD 10000 //15000
-#define MIN_PEAK_DISTANCE 13
-#define AUDIO_PACKET_SIZE 22
-#define SYNC_THRESHOLD 700//600//500//450//350//400
-#define SYNC_SAMPLES 150//100//120//150//SAMPLES_PER_BIT*BIT_PER_BYTE   // number of samples used to sync
-
-class AQRecorder
-	{
+class AQRecorder {
+    
 	public:
 		AQRecorder();
 		~AQRecorder();
 		
-		UInt32						GetNumberChannels() const	{ return mRecordFormat.NumberChannels(); }
-		CFStringRef					GetFileName() const			{ return mFileName; }
-		AudioQueueRef				Queue() const				{ return mQueue; }
-		CAStreamBasicDescription	DataFormat() const			{ return mRecordFormat; }
-		
-		void			StartRecord(CFStringRef inRecordFile);
-		void			StopRecord();		
-		Boolean			IsRunning() const			{ return mIsRunning; }
-		
-		UInt64			startTime;
-        
-//        UInt8    lookFor;
-//        short    localPeakVal;
-//        UInt16   localPeakPos;
-//        short    prevDerivativeSign;
-//        short    derivativeSign;
-//        UInt8    signalState;
-//        UInt8    tempPeaks[SAMPLES_PER_BIT*BIT_PER_BYTE];
-//        UInt16   tempPeaksIndex;
-//        UInt16   startAdjust;
-//        UInt16   startToStart;
-//        UInt16   nextBitCounter;
-//        SInt8    bitIndex;
-//        UInt8    currentBit;
-//        UInt8    interpretationState;
-//        UInt8    peakFound;
-//        UInt8    tempData;
-//        UInt8   expectedData;
-        
-        SInt64  iChange;
-        SInt64  iStart;
-        UInt8   bitValue;
+		UInt32 GetNumberChannels() const { return mRecordFormat.NumberChannels(); }
+		AudioQueueRef Queue() const	{ return mQueue; }
+		CAStreamBasicDescription DataFormat() const	{ return mRecordFormat; }		
+		void StartRecord();
+		void StopRecord();		
+		Boolean IsRunning() const { return mIsRunning; }
+        void setFollowingEnabled(BOOL state);
+        BOOL isFollowingEnabled();
+        BOOL isCliffDetectionEnabled() {return isCliffDetecting;}
+        void setCliffDetectionEnabled(BOOL state) {isCliffDetecting=state;}
+        int getLeftSpeed() {return lSpeed;}
+        int getRightSpeed() {return rSpeed;}
+        void setLineFollowThr(int thr) { groundThreshold=thr;}
+        void setLineLostThr(int thr) { lineLostThr=thr;}
+        void setLineSpeed(int speed) { desiredSpeed=speed;}
+    
+        int getProx(int index) { return robProxValues[index];}
+        int getProxAmb(int index) { return robProxAmbValues[index];}
+        int getGround(int index) { return robGroundValues[index];}
+        int getBattery() { return robBattery;}
+        int getFlagsRobotToPhone() { return robFlagsRobotToPhone;}
+        int getMeasLeftSpeed() { return robLeftSpeed;}
+        int getMeasRightSpeed() { return robRightSpeed;}
+        int getBehaviorStatus() { return (int)globalState;}
+    
+		UInt64 startTime;
+        SInt64 iChange;
+        SInt64 iStart;
+        UInt8 bitValue;
         Boolean startDetected;
-        UInt8   currentByte;
-        UInt8   expectedByte;
-        UInt64  numBytesReceived;
-        UInt64  numBytesWrong;
-        UInt64  numBytesWrongNotDetected;
-        UInt8    audioData[AUDIO_PACKET_SIZE];
-        UInt8    audioDataIndex;
-        UInt8    waitZero;
-        Boolean  lookForPacketSync;
-        UInt16   syncCounter;
+        UInt8 currentByte;
+        UInt8 expectedByte;
+        UInt64 numBytesReceived;
+        UInt64 numBytesWrong;
+        UInt64 numBytesWrongNotDetected;
+        UInt8 audioData[AUDIO_PACKET_SIZE];
+        UInt8 audioDataIndex;
+        UInt8 waitZero;
+        Boolean lookForPacketSync;
+        UInt16 syncCounter;
         Boolean isInitiating;
-        short   tempValues[4];
+        short tempValues[4];
         NSDate *start;
         NSDate *end;
-        UInt8   numPacketsReceived;
-        FirstViewController *firstView;
+        UInt8 numPacketsReceived;
         int maxSigValue;
         int minSigValue;
         int peakThreshold;
-        
+    
+        BOOL isFollowing;
+        BOOL isCliffDetecting;
+        char globalState;
+        int groundThreshold;
+        int lineLostThr;
+        int robGroundValues[4];
+        int robProxValues[4];
+        int robProxAmbValues[4];
+        int robBattery;
+        int robFlagsRobotToPhone;
+        int robLeftSpeed;
+        int robRightSpeed;
+        int lineFound;
+        int outOfLine;
+        int lineFollowSpeed;
+        int minSpeedLineFollow;
+        int tempSpeed;
+        int desiredSpeed;    
+        int lSpeed;
+        int rSpeed;
+        int lSpeedPrev;
+        int rSpeedPrev;
+    
 	private:
-		CFStringRef					mFileName;
-		AudioQueueRef				mQueue;
-		AudioQueueBufferRef			mBuffers[kNumberRecordBuffers];
-		AudioFileID					mRecordFile;
-		SInt64						mRecordPacket; // current packet number in record file
-		CAStreamBasicDescription	mRecordFormat;
-		Boolean						mIsRunning;
-        
-		void			CopyEncoderCookieToFile();
-		void			SetupAudioFormat(UInt32 inFormatID);
-		int				ComputeRecordBufferSize(const AudioStreamBasicDescription *format, float seconds);
-
+		AudioQueueRef mQueue;
+		AudioQueueBufferRef mBuffers[kNumberRecordBuffers];
+		SInt64 mRecordPacket; // current packet number in record file
+		CAStreamBasicDescription mRecordFormat;
+		Boolean	mIsRunning;
+		void SetupAudioFormat(UInt32 inFormatID);
+		int ComputeRecordBufferSize(const AudioStreamBasicDescription *format, float seconds);
         static void MyInputBufferHandler(	void *								inUserData,
 											AudioQueueRef						inAQ,
 											AudioQueueBufferRef					inBuffer,
 											const AudioTimeStamp *				inStartTime,
 											UInt32								inNumPackets,
 											const AudioStreamPacketDescription*	inPacketDesc);
-	};
+
+};
+

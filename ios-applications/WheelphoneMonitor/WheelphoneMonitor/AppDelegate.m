@@ -17,6 +17,8 @@
     NSLog(@"Application started!");
     printf("ciao bello!");
     
+    [UIApplication sharedApplication].idleTimerDisabled=YES;
+    
     return YES;
 }
 							
