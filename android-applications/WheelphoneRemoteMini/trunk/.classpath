@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry exported="true" kind="lib" path="/home/stefano/Desktop/vuforia-sdk-android-2-0-30/build/java/QCAR/QCAR.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneRemoteMini/trunk/libs/wheelphonelibrary.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneRemoteMini/libs/wheelphonelibrary.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
