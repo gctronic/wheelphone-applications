@@ -7,27 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B61F68E1742215D0053D248 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B61F6871742215D0053D248 /* CADebugMacros.cpp */; };
-		7B61F68F1742215D0053D248 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B61F68A1742215D0053D248 /* CAStreamBasicDescription.cpp */; };
-		7B61F6901742215D0053D248 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B61F68C1742215D0053D248 /* CAXException.cpp */; };
-		7B6E0E3B1805A19A00063EFA /* dtmf_hash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E3A1805A19A00063EFA /* dtmf_hash.wav */; };
-		7B6E0E471805A1A600063EFA /* dtmf_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E3C1805A1A600063EFA /* dtmf_star.wav */; };
-		7B6E0E481805A1A600063EFA /* dtmf0.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E3D1805A1A600063EFA /* dtmf0.wav */; };
-		7B6E0E491805A1A600063EFA /* dtmf1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E3E1805A1A600063EFA /* dtmf1.wav */; };
-		7B6E0E4A1805A1A600063EFA /* dtmf2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E3F1805A1A600063EFA /* dtmf2.wav */; };
-		7B6E0E4B1805A1A600063EFA /* dtmf3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E401805A1A600063EFA /* dtmf3.wav */; };
-		7B6E0E4C1805A1A600063EFA /* dtmf4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E411805A1A600063EFA /* dtmf4.wav */; };
-		7B6E0E4D1805A1A600063EFA /* dtmf5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E421805A1A600063EFA /* dtmf5.wav */; };
-		7B6E0E4E1805A1A600063EFA /* dtmf6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E431805A1A600063EFA /* dtmf6.wav */; };
-		7B6E0E4F1805A1A600063EFA /* dtmf7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E441805A1A600063EFA /* dtmf7.wav */; };
-		7B6E0E501805A1A600063EFA /* dtmf8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E451805A1A600063EFA /* dtmf8.wav */; };
-		7B6E0E511805A1A600063EFA /* dtmf9.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E461805A1A600063EFA /* dtmf9.wav */; };
-		7B6E0E571805A1B700063EFA /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E521805A1B700063EFA /* down-arrow.png */; };
-		7B6E0E581805A1B700063EFA /* left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E531805A1B700063EFA /* left-arrow.png */; };
-		7B6E0E591805A1B700063EFA /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E541805A1B700063EFA /* right-arrow.png */; };
-		7B6E0E5A1805A1B700063EFA /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E551805A1B700063EFA /* stop.png */; };
-		7B6E0E5B1805A1B700063EFA /* up-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B6E0E561805A1B700063EFA /* up-arrow.png */; };
 		7B6E0E5D1806E5B900063EFA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6E0E5C1806E5B900063EFA /* AVFoundation.framework */; };
+		7B7211F61811056600430B1C /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7211F51811056600430B1C /* ios-wheelphone-library.framework */; };
+		7B7533EB1815535200033F2D /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B7533EA1815535200033F2D /* ios-wheelphone-library.bundle */; };
+		7B7B3DD61817B42600D8D4FC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7B3DD51817B42600D8D4FC /* MediaPlayer.framework */; };
+		7B7B3DDE1817D27100D8D4FC /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7B3DDD1817D27100D8D4FC /* OpenAL.framework */; };
 		7BAB018C17420979003BF1A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB018B17420979003BF1A0 /* UIKit.framework */; };
 		7BAB018E17420979003BF1A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB018D17420979003BF1A0 /* Foundation.framework */; };
 		7BAB019017420979003BF1A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB018F17420979003BF1A0 /* CoreGraphics.framework */; };
@@ -46,35 +30,14 @@
 		7BAB01E117421378003BF1A0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB01E017421378003BF1A0 /* CoreAudio.framework */; };
 		7BAB01E31742139C003BF1A0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB01E21742139C003BF1A0 /* AudioToolbox.framework */; };
 		7BAB01E5174213B7003BF1A0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB01E4174213B7003BF1A0 /* CoreFoundation.framework */; };
-		7BAB01EA17421556003BF1A0 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7BAB01E917421556003BF1A0 /* AQRecorder.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7B61F6871742215D0053D248 /* CADebugMacros.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADebugMacros.cpp; sourceTree = "<group>"; };
-		7B61F6881742215D0053D248 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
-		7B61F6891742215D0053D248 /* CAMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMath.h; sourceTree = "<group>"; };
-		7B61F68A1742215D0053D248 /* CAStreamBasicDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStreamBasicDescription.cpp; sourceTree = "<group>"; };
-		7B61F68B1742215D0053D248 /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
-		7B61F68C1742215D0053D248 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
-		7B61F68D1742215D0053D248 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
-		7B6E0E3A1805A19A00063EFA /* dtmf_hash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf_hash.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E3C1805A1A600063EFA /* dtmf_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf_star.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E3D1805A1A600063EFA /* dtmf0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf0.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E3E1805A1A600063EFA /* dtmf1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf1.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E3F1805A1A600063EFA /* dtmf2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf2.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E401805A1A600063EFA /* dtmf3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf3.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E411805A1A600063EFA /* dtmf4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf4.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E421805A1A600063EFA /* dtmf5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf5.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E431805A1A600063EFA /* dtmf6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf6.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E441805A1A600063EFA /* dtmf7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf7.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E451805A1A600063EFA /* dtmf8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf8.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E461805A1A600063EFA /* dtmf9.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf9.wav; sourceTree = SOURCE_ROOT; };
-		7B6E0E521805A1B700063EFA /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = SOURCE_ROOT; };
-		7B6E0E531805A1B700063EFA /* left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow.png"; sourceTree = SOURCE_ROOT; };
-		7B6E0E541805A1B700063EFA /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = SOURCE_ROOT; };
-		7B6E0E551805A1B700063EFA /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = SOURCE_ROOT; };
-		7B6E0E561805A1B700063EFA /* up-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-arrow.png"; sourceTree = SOURCE_ROOT; };
 		7B6E0E5C1806E5B900063EFA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7B7211F51811056600430B1C /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ios-wheelphone-library.framework"; path = "../../ios-wheelphone-library.framework"; sourceTree = "<group>"; };
+		7B7533EA1815535200033F2D /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "ios-wheelphone-library.bundle"; path = "../../ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
+		7B7B3DD51817B42600D8D4FC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		7B7B3DDD1817D27100D8D4FC /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		7BAB018817420979003BF1A0 /* WheelphoneMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WheelphoneMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BAB018B17420979003BF1A0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7BAB018D17420979003BF1A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -99,8 +62,6 @@
 		7BAB01E017421378003BF1A0 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		7BAB01E21742139C003BF1A0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7BAB01E4174213B7003BF1A0 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		7BAB01E817421556003BF1A0 /* AQRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecorder.h; sourceTree = "<group>"; };
-		7BAB01E917421556003BF1A0 /* AQRecorder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQRecorder.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B7B3DDE1817D27100D8D4FC /* OpenAL.framework in Frameworks */,
+				7B7B3DD61817B42600D8D4FC /* MediaPlayer.framework in Frameworks */,
 				7B6E0E5D1806E5B900063EFA /* AVFoundation.framework in Frameworks */,
 				7BAB01E5174213B7003BF1A0 /* CoreFoundation.framework in Frameworks */,
 				7BAB01E31742139C003BF1A0 /* AudioToolbox.framework in Frameworks */,
@@ -115,30 +78,16 @@
 				7BAB018C17420979003BF1A0 /* UIKit.framework in Frameworks */,
 				7BAB018E17420979003BF1A0 /* Foundation.framework in Frameworks */,
 				7BAB019017420979003BF1A0 /* CoreGraphics.framework in Frameworks */,
+				7B7211F61811056600430B1C /* ios-wheelphone-library.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7B61F6861742215D0053D248 /* PublicUtility */ = {
-			isa = PBXGroup;
-			children = (
-				7B61F6871742215D0053D248 /* CADebugMacros.cpp */,
-				7B61F6881742215D0053D248 /* CADebugMacros.h */,
-				7B61F6891742215D0053D248 /* CAMath.h */,
-				7B61F68A1742215D0053D248 /* CAStreamBasicDescription.cpp */,
-				7B61F68B1742215D0053D248 /* CAStreamBasicDescription.h */,
-				7B61F68C1742215D0053D248 /* CAXException.cpp */,
-				7B61F68D1742215D0053D248 /* CAXException.h */,
-			);
-			path = PublicUtility;
-			sourceTree = "<group>";
-		};
 		7BAB017F17420979003BF1A0 = {
 			isa = PBXGroup;
 			children = (
-				7B61F6861742215D0053D248 /* PublicUtility */,
 				7BAB019117420979003BF1A0 /* WheelphoneMonitor */,
 				7BAB018A17420979003BF1A0 /* Frameworks */,
 				7BAB018917420979003BF1A0 /* Products */,
@@ -156,6 +105,10 @@
 		7BAB018A17420979003BF1A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B7B3DDD1817D27100D8D4FC /* OpenAL.framework */,
+				7B7B3DD51817B42600D8D4FC /* MediaPlayer.framework */,
+				7B7533EA1815535200033F2D /* ios-wheelphone-library.bundle */,
+				7B7211F51811056600430B1C /* ios-wheelphone-library.framework */,
 				7B6E0E5C1806E5B900063EFA /* AVFoundation.framework */,
 				7BAB01E4174213B7003BF1A0 /* CoreFoundation.framework */,
 				7BAB01E21742139C003BF1A0 /* AudioToolbox.framework */,
@@ -171,8 +124,6 @@
 		7BAB019117420979003BF1A0 /* WheelphoneMonitor */ = {
 			isa = PBXGroup;
 			children = (
-				7BAB01E817421556003BF1A0 /* AQRecorder.h */,
-				7BAB01E917421556003BF1A0 /* AQRecorder.mm */,
 				7BAB019A17420979003BF1A0 /* AppDelegate.h */,
 				7BAB019B17420979003BF1A0 /* AppDelegate.m */,
 				7BAB01A317420979003BF1A0 /* MainStoryboard_iPhone.storyboard */,
@@ -190,23 +141,6 @@
 		7BAB019217420979003BF1A0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7B6E0E521805A1B700063EFA /* down-arrow.png */,
-				7B6E0E531805A1B700063EFA /* left-arrow.png */,
-				7B6E0E541805A1B700063EFA /* right-arrow.png */,
-				7B6E0E551805A1B700063EFA /* stop.png */,
-				7B6E0E561805A1B700063EFA /* up-arrow.png */,
-				7B6E0E3C1805A1A600063EFA /* dtmf_star.wav */,
-				7B6E0E3D1805A1A600063EFA /* dtmf0.wav */,
-				7B6E0E3E1805A1A600063EFA /* dtmf1.wav */,
-				7B6E0E3F1805A1A600063EFA /* dtmf2.wav */,
-				7B6E0E401805A1A600063EFA /* dtmf3.wav */,
-				7B6E0E411805A1A600063EFA /* dtmf4.wav */,
-				7B6E0E421805A1A600063EFA /* dtmf5.wav */,
-				7B6E0E431805A1A600063EFA /* dtmf6.wav */,
-				7B6E0E441805A1A600063EFA /* dtmf7.wav */,
-				7B6E0E451805A1A600063EFA /* dtmf8.wav */,
-				7B6E0E461805A1A600063EFA /* dtmf9.wav */,
-				7B6E0E3A1805A19A00063EFA /* dtmf_hash.wav */,
 				7BAB019317420979003BF1A0 /* WheelphoneMonitor-Info.plist */,
 				7BAB019417420979003BF1A0 /* InfoPlist.strings */,
 				7BAB019717420979003BF1A0 /* main.m */,
@@ -278,23 +212,7 @@
 				7BAB01AF17420979003BF1A0 /* first@2x.png in Resources */,
 				7BAB01B417420979003BF1A0 /* second.png in Resources */,
 				7BAB01B617420979003BF1A0 /* second@2x.png in Resources */,
-				7B6E0E3B1805A19A00063EFA /* dtmf_hash.wav in Resources */,
-				7B6E0E471805A1A600063EFA /* dtmf_star.wav in Resources */,
-				7B6E0E481805A1A600063EFA /* dtmf0.wav in Resources */,
-				7B6E0E491805A1A600063EFA /* dtmf1.wav in Resources */,
-				7B6E0E4A1805A1A600063EFA /* dtmf2.wav in Resources */,
-				7B6E0E4B1805A1A600063EFA /* dtmf3.wav in Resources */,
-				7B6E0E4C1805A1A600063EFA /* dtmf4.wav in Resources */,
-				7B6E0E4D1805A1A600063EFA /* dtmf5.wav in Resources */,
-				7B6E0E4E1805A1A600063EFA /* dtmf6.wav in Resources */,
-				7B6E0E4F1805A1A600063EFA /* dtmf7.wav in Resources */,
-				7B6E0E501805A1A600063EFA /* dtmf8.wav in Resources */,
-				7B6E0E511805A1A600063EFA /* dtmf9.wav in Resources */,
-				7B6E0E571805A1B700063EFA /* down-arrow.png in Resources */,
-				7B6E0E581805A1B700063EFA /* left-arrow.png in Resources */,
-				7B6E0E591805A1B700063EFA /* right-arrow.png in Resources */,
-				7B6E0E5A1805A1B700063EFA /* stop.png in Resources */,
-				7B6E0E5B1805A1B700063EFA /* up-arrow.png in Resources */,
+				7B7533EB1815535200033F2D /* ios-wheelphone-library.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,10 +226,6 @@
 				7BAB019817420979003BF1A0 /* main.m in Sources */,
 				7BAB019C17420979003BF1A0 /* AppDelegate.m in Sources */,
 				7BAB01AB17420979003BF1A0 /* FirstViewController.mm in Sources */,
-				7BAB01EA17421556003BF1A0 /* AQRecorder.mm in Sources */,
-				7B61F68E1742215D0053D248 /* CADebugMacros.cpp in Sources */,
-				7B61F68F1742215D0053D248 /* CAStreamBasicDescription.cpp in Sources */,
-				7B61F6901742215D0053D248 /* CAXException.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +280,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -392,12 +307,17 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};
 		7BAB01CF1742097A003BF1A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../..\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WheelphoneMonitor/WheelphoneMonitor-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -410,6 +330,10 @@
 		7BAB01D01742097A003BF1A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../..\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WheelphoneMonitor/WheelphoneMonitor-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";

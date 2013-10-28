@@ -8,55 +8,67 @@
 
 #import <UIKit/UIKit.h>
 #include <AVFoundation/AVFoundation.h>
-#import "AQRecorder.h"
+#include <MediaPlayer/MediaPlayer.h>
+#import <ios-wheelphone-library/WheelphoneRobot.h>
+
 
 #define DEBUG_PRINT 0
 
-#define DTMF_0 0
-#define DTMF_1 1
-#define DTMF_2 2
-#define DTMF_3 3
-#define DTMF_4 4
-#define DTMF_5 5
-#define DTMF_6 6
-#define DTMF_7 7
-#define DTMF_8 8
-#define DTMF_9 9
-#define DTMF_STAR 10
-#define DTMF_HASH 11
-#define DTMF_SPEED_STEP 1
+#define LINE_SEARCH 0
+#define LINE_FOLLOW 1
+#define AVOID_OBJECT 2
+#define PIVOT_ROTATION 3
+#define INIT_GROUND_THR 180
+#define INIT_SPEED 10
+#define INIT_LOST_THR 15
+#define MAX_SPEED 350
+#define OBJECT_THR 35
 
 @interface FirstViewController : UIViewController <UITextFieldDelegate, AVAudioPlayerDelegate> {
     
-    AQRecorder* recorder;
-    AVAudioPlayer *testAudioPlayer;
-    
-    int currentLeftSpeed;
-    int currentRightSpeed;
-    int desiredLeftSpeed;
-    int desiredRightSpeed;
-    NSString *audioFilePath[12];
-    NSURL *audioFileURL[12];
-    
-    int counter;
+    // LINE  FOLLOWING
+    BOOL isFollowing;
+    char globalState;
+    int desiredSpeed;
+    int groundThreshold;
+    int lineFound;
+    int lineLostThr;
+    int outOfLine;
     int tempSpeed;
-    int robotR;
-    int robotL;
-    BOOL played;
+    int minSpeedLineFollow;
+    BOOL isNearObject;
+    NSDate *startAvoidTime;
+    NSDate *stopAvoidTime;
+    NSTimeInterval avoidTime;
+    char globalStatePrev;
+    int sameObjDetectCount;
     
-    //SystemSoundID _fwSound;
+    // CLIFF DETECTION
+    BOOL isCliffDetecting;
+    
+    // VARIOUS
+    WheelphoneRobot* robot;    
+    int lSpeed;
+    int rSpeed;
+    int lSpeedPrev;
+    int rSpeedPrev;
+    int robGroundValues[4];
+    int robProxValues[4];
+    int robProxAmbValues[4];
+    int robBattery;
+    int robFlagsRobotToPhone;
+    int robLeftSpeed;
+    int robRightSpeed;
 
 }
 
-- (void)registerForBackgroundNotifications;
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
-
+- (void)updateUI;
+- (void)executeBehaviors;
+- (IBAction)calibrateSensors:(id)sender;
 - (IBAction)fwTapped:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *lineSpeedTxt;
-
 @property (weak, nonatomic) IBOutlet UITextField *threshold;
 @property (weak, nonatomic) IBOutlet UITextField *lineLostTx;
-@property (readonly) AQRecorder *recorder;
 @property (nonatomic, retain) IBOutlet UIProgressView *prox0;
 @property (nonatomic, retain) IBOutlet UIProgressView *prox1;
 @property (nonatomic, retain) IBOutlet UIProgressView *prox2;
