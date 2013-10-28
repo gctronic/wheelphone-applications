@@ -1,14 +1,13 @@
 /*==============================================================================
-            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
-            All Rights Reserved.
-            Qualcomm Confidential and Proprietary
-            
+Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
+All Rights Reserved.
+Proprietary - QUALCOMM Austria Research Center GmbH.
+
 @file 
     Tracker.h
 
 @brief
     Header file for Tracker class.
-
 ==============================================================================*/
 #ifndef _QCAR_TRACKER_H_
 #define _QCAR_TRACKER_H_
@@ -33,6 +32,7 @@ public:
     enum TYPE {
         IMAGE_TRACKER,      ///< Tracks ImageTargets and MultiTargets.
         MARKER_TRACKER,     ///< Tracks Markers.
+        TEXT_TRACKER,       ///< Tracks Words.        
     };
 
     /// Returns the tracker type

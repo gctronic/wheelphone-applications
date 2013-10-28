@@ -1,14 +1,13 @@
 /*==============================================================================
-            Copyright (c) 2012 QUALCOMM Austria Research Center GmbH.
-            All Rights Reserved.
-            Qualcomm Confidential and Proprietary
-            
+Copyright (c) 2012-2013 QUALCOMM Austria Research Center GmbH.
+All Rights Reserved.
+Proprietary - QUALCOMM Austria Research Center GmbH.
+
 @file 
     ImageTargetResult.h
 
 @brief
     Header file for ImageTargetResult class.
-
 ==============================================================================*/
 #ifndef _QCAR_IMAGETARGETRESULT_H_
 #define _QCAR_IMAGETARGETRESULT_H_

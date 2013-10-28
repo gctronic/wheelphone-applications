@@ -1,14 +1,13 @@
 /*==============================================================================
-            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
-            All Rights Reserved.
-            Qualcomm Confidential and Proprietary
-            
+Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
+All Rights Reserved.
+Proprietary - QUALCOMM Austria Research Center GmbH.
+
 @file 
     VideoBackgroundConfig.h
 
 @brief
     Header file for VideoBackgroundConfig struct.
-
 ==============================================================================*/
 #ifndef _QCAR_VIDEOBACKGROUNDCONFIG_H_
 #define _QCAR_VIDEOBACKGROUNDCONFIG_H_

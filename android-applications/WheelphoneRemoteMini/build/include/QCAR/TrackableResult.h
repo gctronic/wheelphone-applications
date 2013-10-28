@@ -1,14 +1,13 @@
 /*==============================================================================
-            Copyright (c) 2012 QUALCOMM Austria Research Center GmbH.
-            All Rights Reserved.
-            Qualcomm Confidential and Proprietary
-            
+Copyright (c) 2012-2013 QUALCOMM Austria Research Center GmbH.
+All Rights Reserved.
+Proprietary - QUALCOMM Austria Research Center GmbH.
+
 @file 
     TrackableResult.h
 
 @brief
     Header file for TrackableResult class.
-
 ==============================================================================*/
 #ifndef _QCAR_TRACKABLERESULT_H_
 #define _QCAR_TRACKABLERESULT_H_
@@ -38,6 +37,7 @@ public:
         IMAGE_TARGET_RESULT,    ///< A TrackableResult of ImageTargetResult type
         MULTI_TARGET_RESULT,    ///< A TrackableResult of MultiTargetResult type
         MARKER_RESULT,          ///< A TrackableResult of MarkerResult type
+        WORD_RESULT,            ///< A TrackableResult of WordResult type
     };
 
     /// Status of a TrackableResults

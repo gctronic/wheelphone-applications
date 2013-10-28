@@ -1,14 +1,13 @@
 /*==============================================================================
-            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
-            All Rights Reserved.
-            Qualcomm Confidential and Proprietary
-            
+Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
+All Rights Reserved.
+Proprietary - QUALCOMM Austria Research Center GmbH.
+
 @file 
     QCAR.h
 
 @brief
     Header file for global QCAR methods.
-
 ==============================================================================*/
 #ifndef _QCAR_QCAR_H_
 #define _QCAR_QCAR_H_
@@ -53,6 +52,8 @@ enum PIXEL_FORMAT {
                                 ///< using Y, U and V planes
     RGBA8888 = 16,              ///< A color pixel stored in 32 bits using 8 bits
                                 ///< each and an alpha channel.
+    INDEXED = 32,               ///< One byte per pixel where the value maps to
+                                ///< a domain-specific range.
 };
 
 
