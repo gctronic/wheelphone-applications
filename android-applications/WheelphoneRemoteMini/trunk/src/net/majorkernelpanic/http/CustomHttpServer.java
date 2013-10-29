@@ -112,11 +112,11 @@ public class CustomHttpServer extends HttpServer {
         	response.setEntity(body);
         	
         	// Bring SpydrdoiActivity to the foreground
-        	if (!screenState) {
-    			Intent i = new Intent(context,WheelphoneRemoteMini.class);
-    			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    			context.startActivity(i);
-        	}
+        	//if (!screenState) {
+    		//	Intent i = new Intent(context,WheelphoneRemoteMini.class);
+    		//	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    		//	context.startActivity(i);
+        	//}
         	
 		}
 	}

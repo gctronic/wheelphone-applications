@@ -2,7 +2,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.wheelphone.remotemini"
-      android:versionCode="4"
+      android:versionCode="5"
       android:versionName="1.0">
       
     <uses-sdk android:minSdkVersion="13" android:targetSdkVersion="13"/>
@@ -38,6 +38,7 @@
 			            
         </activity>
         <activity android:name="com.wheelphone.remotemini.FrontImageActivity"
+            	  android:screenOrientation="portrait"             
                   android:label="@string/front_image_activity_title" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         
