@@ -1,0 +1,356 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* WheelphoneBasicAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* WheelphoneBasicAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2899E5220DE3E06400AC0155 /* WheelphoneBasicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* WheelphoneBasicViewController.xib */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */; };
+		3536F4E911134D2900F2D0B2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */; };
+		3536F5351113563300F2D0B2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3536F5341113563300F2D0B2 /* AVFoundation.framework */; };
+		7B51B2E51829001600167A5A /* dtmf_hash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2D91829001600167A5A /* dtmf_hash.wav */; };
+		7B51B2E61829001600167A5A /* dtmf_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DA1829001600167A5A /* dtmf_star.wav */; };
+		7B51B2E71829001600167A5A /* dtmf0.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DB1829001600167A5A /* dtmf0.wav */; };
+		7B51B2E81829001600167A5A /* dtmf1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DC1829001600167A5A /* dtmf1.wav */; };
+		7B51B2E91829001600167A5A /* dtmf2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DD1829001600167A5A /* dtmf2.wav */; };
+		7B51B2EA1829001600167A5A /* dtmf3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DE1829001600167A5A /* dtmf3.wav */; };
+		7B51B2EB1829001600167A5A /* dtmf4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DF1829001600167A5A /* dtmf4.wav */; };
+		7B51B2EC1829001600167A5A /* dtmf5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E01829001600167A5A /* dtmf5.wav */; };
+		7B51B2ED1829001600167A5A /* dtmf6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E11829001600167A5A /* dtmf6.wav */; };
+		7B51B2EE1829001600167A5A /* dtmf7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E21829001600167A5A /* dtmf7.wav */; };
+		7B51B2EF1829001600167A5A /* dtmf8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E31829001600167A5A /* dtmf8.wav */; };
+		7B51B2F01829001600167A5A /* dtmf9.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E41829001600167A5A /* dtmf9.wav */; };
+		7BD8343B16F08EA7000863FF /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343616F08EA7000863FF /* down-arrow.png */; };
+		7BD8343C16F08EA7000863FF /* left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343716F08EA7000863FF /* left-arrow.png */; };
+		7BD8343D16F08EA7000863FF /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343816F08EA7000863FF /* right-arrow.png */; };
+		7BD8343E16F08EA7000863FF /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343916F08EA7000863FF /* stop.png */; };
+		7BD8343F16F08EA7000863FF /* up-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343A16F08EA7000863FF /* up-arrow.png */; };
+		7BD8344116F0BD4C000863FF /* wheelphone-basic.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8344016F0BD4C000863FF /* wheelphone-basic.png */; };
+		7BD8344316F0BD8A000863FF /* wheelphone-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8344216F0BD8A000863FF /* wheelphone-logo.png */; };
+		7BDF589216F2166300273D92 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BDF589116F2166300273D92 /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* WheelphoneBasicAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelphoneBasicAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* WheelphoneBasicAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WheelphoneBasicAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* WheelphoneBasic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WheelphoneBasic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2899E5210DE3E06400AC0155 /* WheelphoneBasicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WheelphoneBasicViewController.xib; sourceTree = "<group>"; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28D7ACF60DDB3853001CB0EB /* WheelphoneBasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelphoneBasicViewController.h; sourceTree = "<group>"; };
+		28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WheelphoneBasicViewController.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* WheelphoneBasic_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelphoneBasic_Prefix.pch; sourceTree = "<group>"; };
+		3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		3536F5341113563300F2D0B2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7B51B2D91829001600167A5A /* dtmf_hash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf_hash.wav; sourceTree = "<group>"; };
+		7B51B2DA1829001600167A5A /* dtmf_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf_star.wav; sourceTree = "<group>"; };
+		7B51B2DB1829001600167A5A /* dtmf0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf0.wav; sourceTree = "<group>"; };
+		7B51B2DC1829001600167A5A /* dtmf1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf1.wav; sourceTree = "<group>"; };
+		7B51B2DD1829001600167A5A /* dtmf2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf2.wav; sourceTree = "<group>"; };
+		7B51B2DE1829001600167A5A /* dtmf3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf3.wav; sourceTree = "<group>"; };
+		7B51B2DF1829001600167A5A /* dtmf4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf4.wav; sourceTree = "<group>"; };
+		7B51B2E01829001600167A5A /* dtmf5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf5.wav; sourceTree = "<group>"; };
+		7B51B2E11829001600167A5A /* dtmf6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf6.wav; sourceTree = "<group>"; };
+		7B51B2E21829001600167A5A /* dtmf7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf7.wav; sourceTree = "<group>"; };
+		7B51B2E31829001600167A5A /* dtmf8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf8.wav; sourceTree = "<group>"; };
+		7B51B2E41829001600167A5A /* dtmf9.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf9.wav; sourceTree = "<group>"; };
+		7BD8343616F08EA7000863FF /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
+		7BD8343716F08EA7000863FF /* left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow.png"; sourceTree = "<group>"; };
+		7BD8343816F08EA7000863FF /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
+		7BD8343916F08EA7000863FF /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		7BD8343A16F08EA7000863FF /* up-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-arrow.png"; sourceTree = "<group>"; };
+		7BD8344016F0BD4C000863FF /* wheelphone-basic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-basic.png"; sourceTree = "<group>"; };
+		7BD8344216F0BD8A000863FF /* wheelphone-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo.png"; sourceTree = "<group>"; };
+		7BDF589116F2166300273D92 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* WheelphoneBasic-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WheelphoneBasic-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				3536F4E911134D2900F2D0B2 /* AudioToolbox.framework in Frameworks */,
+				3536F5351113563300F2D0B2 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1D3623240D0F684500981E51 /* WheelphoneBasicAppDelegate.h */,
+				1D3623250D0F684500981E51 /* WheelphoneBasicAppDelegate.m */,
+				28D7ACF60DDB3853001CB0EB /* WheelphoneBasicViewController.h */,
+				28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* WheelphoneBasic.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				7BDF589116F2166300273D92 /* Default-568h@2x.png */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* WheelphoneBasic_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7B51B2D91829001600167A5A /* dtmf_hash.wav */,
+				7B51B2DA1829001600167A5A /* dtmf_star.wav */,
+				7B51B2DB1829001600167A5A /* dtmf0.wav */,
+				7B51B2DC1829001600167A5A /* dtmf1.wav */,
+				7B51B2DD1829001600167A5A /* dtmf2.wav */,
+				7B51B2DE1829001600167A5A /* dtmf3.wav */,
+				7B51B2DF1829001600167A5A /* dtmf4.wav */,
+				7B51B2E01829001600167A5A /* dtmf5.wav */,
+				7B51B2E11829001600167A5A /* dtmf6.wav */,
+				7B51B2E21829001600167A5A /* dtmf7.wav */,
+				7B51B2E31829001600167A5A /* dtmf8.wav */,
+				7B51B2E41829001600167A5A /* dtmf9.wav */,
+				7BD8344216F0BD8A000863FF /* wheelphone-logo.png */,
+				7BD8344016F0BD4C000863FF /* wheelphone-basic.png */,
+				7BD8343616F08EA7000863FF /* down-arrow.png */,
+				7BD8343716F08EA7000863FF /* left-arrow.png */,
+				7BD8343816F08EA7000863FF /* right-arrow.png */,
+				7BD8343916F08EA7000863FF /* stop.png */,
+				7BD8343A16F08EA7000863FF /* up-arrow.png */,
+				2899E5210DE3E06400AC0155 /* WheelphoneBasicViewController.xib */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* WheelphoneBasic-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */,
+				3536F5341113563300F2D0B2 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* WheelphoneBasic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WheelphoneBasic" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WheelphoneBasic;
+			productName = BasicSounds;
+			productReference = 1D6058910D05DD3D006BFB54 /* WheelphoneBasic.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WheelphoneBasic" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* WheelphoneBasic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				2899E5220DE3E06400AC0155 /* WheelphoneBasicViewController.xib in Resources */,
+				7BD8343B16F08EA7000863FF /* down-arrow.png in Resources */,
+				7BD8343C16F08EA7000863FF /* left-arrow.png in Resources */,
+				7BD8343D16F08EA7000863FF /* right-arrow.png in Resources */,
+				7BD8343E16F08EA7000863FF /* stop.png in Resources */,
+				7BD8343F16F08EA7000863FF /* up-arrow.png in Resources */,
+				7BD8344116F0BD4C000863FF /* wheelphone-basic.png in Resources */,
+				7BD8344316F0BD8A000863FF /* wheelphone-logo.png in Resources */,
+				7BDF589216F2166300273D92 /* Default-568h@2x.png in Resources */,
+				7B51B2E51829001600167A5A /* dtmf_hash.wav in Resources */,
+				7B51B2E61829001600167A5A /* dtmf_star.wav in Resources */,
+				7B51B2E71829001600167A5A /* dtmf0.wav in Resources */,
+				7B51B2E81829001600167A5A /* dtmf1.wav in Resources */,
+				7B51B2E91829001600167A5A /* dtmf2.wav in Resources */,
+				7B51B2EA1829001600167A5A /* dtmf3.wav in Resources */,
+				7B51B2EB1829001600167A5A /* dtmf4.wav in Resources */,
+				7B51B2EC1829001600167A5A /* dtmf5.wav in Resources */,
+				7B51B2ED1829001600167A5A /* dtmf6.wav in Resources */,
+				7B51B2EE1829001600167A5A /* dtmf7.wav in Resources */,
+				7B51B2EF1829001600167A5A /* dtmf8.wav in Resources */,
+				7B51B2F01829001600167A5A /* dtmf9.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* WheelphoneBasicAppDelegate.m in Sources */,
+				28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../..\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WheelphoneBasic_Prefix.pch;
+				INFOPLIST_FILE = "WheelphoneBasic-Info.plist";
+				PRODUCT_NAME = WheelphoneBasic;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../..\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WheelphoneBasic_Prefix.pch;
+				INFOPLIST_FILE = "WheelphoneBasic-Info.plist";
+				PRODUCT_NAME = WheelphoneBasic;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefano Morgani (5QWJ4RGGU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = Wheelphone;
+				PROVISIONING_PROFILE = "426B3C55-6E4F-41FA-A3DA-052066CA427A";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefano Morgani";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = Wheelphone;
+				PROVISIONING_PROFILE = "DC21C9BC-4AB8-4260-B112-2FC5152BFDC0";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WheelphoneBasic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WheelphoneBasic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
