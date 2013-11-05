@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <meta charset="UTF-8">
+
+    <title>Wheelphone - Remote control </title>
+    
+    <link rel="stylesheet/less" type="text/css" href="less/styles.less"> 
+    <script src="js/less-1.2.2.min.js" type="text/javascript"></script>
+    <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="js/translations.js" type="text/javascript"></script>
+    <script src="js/params.js" type="text/javascript"></script>
+    <script src="js/ui.js" type="text/javascript"></script>
+
+    <!--[if lt IE 9 ]>    
+	<script src="js/ie.js" type="text/javascript"></script>
+    <![endif]-->
+	
+  </head>
+
+  <body>
+
+    <div id="background"></div>
+<!--
+    <header>
+    	Wheelphone - Remote control      
+    </header>
+-->
+
+	<table>
+	<tr>
+	<td><font size="4" face="Comic Sans MS"> </font></td>
+	</tr>
+	<tr>
+	<td style="text-align:center">
+	<font size="4" face="Comic Sans MS">Wheelphone remote control</font>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">
+	  <div class="section selected" id="motion">
+	    <div class="section-content">
+	    <form id="motion">
+	    	<table style="border:0px;width: 100%;">
+	    		<tr>
+	    			<td></td>
+	    			<td>
+	      			<img id="forward" src="images/up-arrow.png" alt="forward" width="50px" height="50px"></img>
+	      			</td>
+	      			<td></td>
+	      		</tr>
+	      		<tr>
+	    			<td>
+	      			<img id="left" src="images/left-arrow.png" alt="left" width="50px" height="50px"></img>	    			
+	    			</td>
+	    			<td>
+	      			<img id="stop" src="images/stop.png" alt="stop" width="50px" height="50px"></img>
+	      			</td>
+	      			<td>
+	      			<img id="right" src="images/right-arrow.png" alt="right" width="50px" height="50px"></img>      			
+	      			</td>		
+	      		</tr>
+	    		<tr>
+	    			<td></td>
+	    			<td>
+	      			<img id="backward" src="images/down-arrow.png" alt="backward" width="50px" height="50px"></img>
+	      			</td>
+	      			<td></td>
+	      		</tr>	      		
+	      	</table>
+	     </form>
+	</td>
+	</tr>
+	  
+	<tr>     
+	<td style="text-align:center">
+	     <div class="block behaviors">
+	     	<div class="checkbox-group">
+		  		<label><input type="checkbox" id="obstacleAvoidance"></input>Obstacle avoidance</label><br/>
+		  		<label><input type="checkbox" id="cliffAvoidance"></input>Cliff avoidance</label>
+			</div>
+		 </div> <!-- block behaviors -->
+		 
+	  	</div>	<!-- section content -->
+	  	
+	  </div> <!-- Section 4 -->
+	</td>
+	</tr>
+	</table>
+
+
+  </body>
+
+</html>
