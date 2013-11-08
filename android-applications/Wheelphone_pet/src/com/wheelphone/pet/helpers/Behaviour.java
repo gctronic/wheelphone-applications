@@ -29,8 +29,8 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	private static final int SPEED_EXPLORE = 10;
 	private static final int SPEED_ESCAPE = 50;
 
-	private static final int LINEAR_SPRING_CONST = 12;//5
-	private static final int ANGULAR_SPRING_CONST = 5;//5
+	private static final int LINEAR_SPRING_CONST = 17;//5
+	private static final int ANGULAR_SPRING_CONST = 8;//5
 
 	private static final double DUMPING_FACTOR = 1;
 
