@@ -36,7 +36,7 @@ public class FragmentPet extends Fragment {
 	private FaceTracking mFaceTracking;  
 //	private Intent speechIntent;
 	
-	private LogcatStreamer mLogcatStreamer;
+//	private LogcatStreamer mLogcatStreamer;
 	
 	private Behaviour mBehaviour;
 
@@ -104,7 +104,7 @@ public class FragmentPet extends Fragment {
 		mWheelphone.resumeUSBCommunication();
 		mBehaviour.resume();
 		//Start logcat streamer
-		mLogcatStreamer = new LogcatStreamer();
+//		mLogcatStreamer = new LogcatStreamer();
 		mTalker.resume();
 //		getActivity().startService(speechIntent);
 	}
@@ -117,7 +117,7 @@ public class FragmentPet extends Fragment {
 //		getActivity().stopService(speechIntent);
 		mBehaviour.pause();
 		//Stop logcat streamer
-		mLogcatStreamer.stop();
+//		mLogcatStreamer.stop();
 //		mTalker.pause();
 		super.onPause();
 	}
