@@ -84,8 +84,8 @@ public class FrameMarkersRenderer implements GLSurfaceView.Renderer
     	wheelphoneActivity = wtd;
     }
     
-    public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z) {
-    	wheelphoneActivity.updateMarkersInfo(markerId, detected, i1, i2, dist, z);
+    public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z, float tpx, float tpz) {
+    	wheelphoneActivity.updateMarkersInfo(markerId, detected, i1, i2, dist, z, tpx, tpz);
     }
     
 }

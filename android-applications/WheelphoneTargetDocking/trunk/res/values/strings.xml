@@ -17,7 +17,7 @@
 	<string name="status_header">General Status</string>
 	<string name="robotDockingSearch">Robot is looking for docking station</string>
 	<string name="settings_header">Settings</string>
-	<string name="groundThr">Threshold</string>
+	<string name="roomWidth">width:</string>
 	<string name="http_header">HTTP status</string>
 	<string name="emptyString"/>
 	<string name="initialState">Waiting start...</string>
@@ -26,4 +26,5 @@
 	<string name="camOffset_header">Camera offset</string>
 	<string name="targets_header">Targets Status</string>
 	<string name="robotDisconnected">Disconnected</string>
+	<string name="roomLength">length:</string>
 </resources>

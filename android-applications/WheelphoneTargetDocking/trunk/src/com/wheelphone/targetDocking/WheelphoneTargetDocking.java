@@ -23,8 +23,8 @@ package com.wheelphone.targetDocking;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
-
 import com.qualcomm.QCAR.QCAR;
 import com.wheelphone.targetDocking.WheelphoneTargetDocking;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
@@ -55,16 +55,21 @@ import android.speech.tts.TextToSpeech;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView.OnEditorActionListener;
 
 /** 
  * Spydroid launches an RtspServer, clients can then connect to it and receive audio/video streams from the phone
@@ -73,7 +78,6 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
     
 	// Various
 	private static String TAG = "Wheelphone";
-	Timer timer = new Timer();
 	boolean getFirmwareFlag = true;
 	private TextToSpeech tts;
 	private PowerManager.WakeLock wl;
@@ -93,11 +97,14 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	public static final int markerSize = 50;
 	public static final byte MIN_SPEED = -127;
 	public static final byte MAX_SPEED = 127;
-	public int[] targetX = new int[2];
+	public int[] targetX = new int[2];		// x coordinate on the screen of the target
 	public int[] lastTargetX = new int[2];
 	public int[] targetY = new int[2];
-	public float[] targetOrientation = new float[2];
+	public float[] targetOrientation = new float[2];	// orientation of the robot/camera
 	public float[] targetDist = new float[2];
+	public float[] targetPoseX = new float[2];	// x coordinate (position) of the target with respect to the camera frame
+	public float[] targetPoseZ = new float[2];
+	public float[] angleTargetRobot = new float[2];	// angle between the robot and the target, independent from robot orientation
 	public static final int NO_INFO = 0;    
 	public static final int NO_TARGET_FOUND = 1;
 	public static final int TARGET_FOUND = 2;	
@@ -137,12 +144,18 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
     private Context context;
 
 	// UI
-	TabSpec spec1, spec2;
+	TabSpec spec1, spec2, spec3;
 	TextView txtX0, txtY0, txtd0, txtOrient0, txtX1, txtY1, txtd1, txtOrient1;   
 	private TextView batteryValue;
 	private TextView leftSpeed, rightSpeed;
 	private TextView txtConnected;
+	FloorPlanView fpv;
+	private EditText txtRoomWidth, txtRoomLength;
+	private TextView robotX, robotY, robotTheta;
     
+	// map
+	int roomWidth, roomLength;
+	
     // AR
     // Menu item string constants:
     private static final String MENU_ITEM_ACTIVATE_CONT_AUTO_FOCUS =
@@ -193,6 +206,33 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
         loadLibrary(NATIVE_LIB_SAMPLE);
     }
 
+    // testing
+	//tells activity to run on ui thread    
+    Timer timer = new Timer();
+	class trackerTask extends TimerTask {          
+		@Override        
+		public void run() {             
+			WheelphoneTargetDocking.this.runOnUiThread(new Runnable() {                  
+				//@Override                 
+				public void run() {
+					getTrackInfo();
+					txtd0.setText(String.valueOf(String.format("%.4f", targetOrientation[0]))); //targetDist[0])));
+					txtX0.setText(String.valueOf(targetPoseX[0])); //targetX[0]));
+					txtY0.setText(String.valueOf(targetPoseZ[0])); //targetY[0]));
+					txtOrient0.setText(String.valueOf(String.format("%.4f", angleTargetRobot[0]))); //targetOrientation[0])));
+					txtd1.setText(String.valueOf(String.format("%.4f", targetOrientation[1]))); //targetDist[1])));
+					txtX1.setText(String.valueOf(targetPoseX[1])); //targetX[1]));
+					txtY1.setText(String.valueOf(targetPoseZ[1])); //targetY[1]));
+					txtOrient1.setText(String.valueOf(String.format("%.4f", angleTargetRobot[1]))); //targetOrientation[1])));
+					float currentAbsoluteOrientation = (0 + (int)targetOrientation[1] + 180)%360; // ID + orientation + 180
+					robotX.setText(String.valueOf(0+(int)(Math.cos(targetOrientation[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0)));
+					robotY.setText(String.valueOf(100+(int)(Math.sin(targetOrientation[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0)));
+					robotTheta.setText(String.valueOf((int)currentAbsoluteOrientation));
+					fpv.updateRobotInfo(0+(int)(Math.cos(angleTargetRobot[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0), 100-(int)(Math.sin(angleTargetRobot[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0), (int)currentAbsoluteOrientation);
+				}
+			});         
+		}    
+	}; 	
     
     /** An async task to initialize QCAR asynchronously. */
     private class InitQCARTask extends AsyncTask<Void, Integer, Boolean>
@@ -609,21 +649,26 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
        mTextures.add(Texture.loadTextureFromApk("letter_R.png", getAssets()));
    }
    
-   public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z) {
+   public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z, float tpx, float tpz) {
        // We use a handler because this thread cannot change the UI
        Message message = new Message();
        message.obj = String.valueOf(i1) + ", " + String.valueOf(i2);
-       Log.d(TAG, "detected=" + detected + ", x=" + i1 + ", y=" + i2 + ", dist=" + dist + "angle=" + Math.sin(z)/Math.PI*180.0 + " (z=" + z + "), h=" + mScreenHeight + ", w=" + mScreenWidth + "\n");
+       
+       targetX[markerId] = i1;
+       targetY[markerId] = i2;
+       targetOrientation[markerId] = (float) ((Math.asin(z)/Math.PI)*180.0);
+       targetDist[markerId] = dist;
+       targetPoseX[markerId] = tpx;
+       targetPoseZ[markerId] = tpz;
+       angleTargetRobot[markerId] = (float) ((Math.atan2(tpx, tpz)/Math.PI)*180.0) + targetOrientation[markerId];
+       
+       Log.d(TAG, "detected=" + detected + ", x=" + i1 + ", y=" + i2 + ", dist=" + dist + "angle=" + ((Math.asin(z)/Math.PI)*180.0) + " (z=" + z + "), h=" + mScreenHeight + ", w=" + mScreenWidth + "\n");
+       Log.d(TAG, "target x=" + tpx + ", target z=" + tpz + ", angle target robot=" + angleTargetRobot[markerId]);
        //Log.d(TAG, "x=" + x + ", y=" + y + ", z=" + z + "\n");
        //Log.d(TAG, "sin(x)=" + Math.sin(x)/Math.PI*180.0 + ", cos(x)=" + Math.cos(x)/Math.PI*180.0 + "\n");
        //Log.d(TAG, "sin(y)=" + Math.sin(y)/Math.PI*180.0 + ", cos(y)=" + Math.cos(y)/Math.PI*180.0 + "\n");
-       //Log.d(TAG, "sin(z)=" + Math.sin(z)/Math.PI*180.0 + ", cos(z)=" + Math.cos(z)/Math.PI*180.0 + "\n");
-              
-       targetX[markerId] = i1;
-       targetY[markerId] = i2;
-       targetOrientation[markerId] = (float) (Math.sin(z)/Math.PI*180.0);
-       targetDist[markerId] = dist;
-       
+       //Log.d(TAG, "sin(z)=" + Math.sin(z)/Math.PI*180.0 + ", cos(z)=" + Math.cos(z)/Math.PI*180.0 + "\n");         
+    		   
 	   	if(!detected) {	
 			newTargetInfo[markerId] = NO_TARGET_FOUND;
 		} else { 
@@ -713,8 +758,15 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
         spec2=tabHost.newTabSpec("Target");
         spec2.setIndicator("Target");
         spec2.setContent(R.id.tab2);
+        spec3=tabHost.newTabSpec("Map");
+        spec3.setIndicator("Map");
+        spec3.setContent(R.id.tab3);        
         tabHost.addTab(spec1);
-        tabHost.addTab(spec2);  				    
+        tabHost.addTab(spec2);  	
+        tabHost.addTab(spec3);
+        for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight()*7/100; // 7% of total screen height
+        }  
         
         SeekBar seekbar = (SeekBar) findViewById(R.id.camOffset);
         seekbar.setMax(mScreenWidth);
@@ -749,6 +801,47 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 
         newTargetInfo[0] = NO_INFO;
         newTargetInfo[1] = NO_INFO;
+        
+        fpv = (FloorPlanView)findViewById(R.id.floorPlanView);
+        roomWidth = 200;
+        roomLength = 200;
+        fpv.updateMapSize(roomWidth, roomLength);
+        txtRoomWidth = (EditText) findViewById(R.id.txtRoomWidth);
+        txtRoomWidth.setOnEditorActionListener(new OnEditorActionListener() {        	
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {               	
+                    roomWidth = Integer.parseInt(v.getText().toString());
+                    fpv.updateMapSize(roomWidth, roomLength);
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);                     
+                    handled = true;
+                }
+                return handled;
+            }                      
+        }); 
+        txtRoomLength = (EditText) findViewById(R.id.txtRoomLength);
+        txtRoomLength.setOnEditorActionListener(new OnEditorActionListener() {        	
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {               	
+                    roomLength = Integer.parseInt(v.getText().toString());
+                    fpv.updateMapSize(roomWidth, roomLength);
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);                     
+                    handled = true;
+                }
+                return handled;
+            }                      
+        });
+        
+        robotX = (TextView)findViewById(R.id.robotX);
+        robotY = (TextView)findViewById(R.id.robotY);
+        robotTheta = (TextView)findViewById(R.id.robotTheta);
+        
+        // for testing target detection without robot
+        timer = new Timer();                               
+        timer.schedule(new trackerTask(), 0, 500); 
     }
     
     public void onStart() {
@@ -1018,6 +1111,8 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		if(mAppStatus == APPSTATUS_CAMERA_RUNNING) {
 			getTrackInfo();
 		}
+		
+		fpv.updateRobotInfo(100, 100, (0 + (int)targetOrientation[0] + 180)%360);
 		
 		if(globalState == STATE_WAITING_START) {
 			

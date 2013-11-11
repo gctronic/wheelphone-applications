@@ -175,6 +175,7 @@ Java_com_wheelphone_targetDocking_FrameMarkersRenderer_renderFrame(JNIEnv *env, 
     {
         // Get the trackable:
         const QCAR::TrackableResult* trackableResult = state.getTrackableResult(tIdx);
+        // get position and orientation of the target respect to the camera reference frame
         QCAR::Matrix44F modelViewMatrix =
             QCAR::Tool::convertPose2GLMatrix(trackableResult->getPose());        
       
@@ -228,11 +229,14 @@ Java_com_wheelphone_targetDocking_FrameMarkersRenderer_renderFrame(JNIEnv *env, 
 		    }		           
             jx = (int)result.data[0];
             jy = (int)result.data[1];
+            // get position and orientation of the target respect to the camera reference frame
            	QCAR::Matrix34F pose = trackableResult->getPose();        
 			QCAR::Vec3F position(pose.data[3], pose.data[7], pose.data[11]);
+			// dist = modulo del vettore traslazione = sqrt(x*x + y*y + z*z)
 			distance = sqrt(position.data[0] * position.data[0] + position.data[1] * position.data[1] + position.data[2] * position.data[2]);            
             QCAR::Matrix44F inverseMV = SampleMath::Matrix44FInverse(modelViewMatrix);
             QCAR::Matrix44F invTranspMV = SampleMath::Matrix44FTranspose(inverseMV);
+            // position of the camera and orientation axis with coordinates represented in the reference frame of the trackable
             //jfloat cam_x = invTranspMV.data[4];
             //jfloat cam_y = invTranspMV.data[5];
             cam_z = invTranspMV.data[6]; 
@@ -336,11 +340,17 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_getTrackInfo(JNIEnv *e
    	jint jx[2] = {0};
 	jint jy[2] = {0};            
 	jfloat distance[2] = {0};
+	jfloat cam_x[2] = {0}; 
+	jfloat cam_y[2] = {0}; 
 	jfloat cam_z[2] = {0}; 
+	jfloat target_pose_x[2] = {0};	// x, y, z coordinates of the targets with respect to the camera frame
+	jfloat target_pose_y[2] = {0};
+	jfloat target_pose_z[2] = {0};
+	
 	jboolean detected[2] = {false};
 	jclass javaClass = env->GetObjectClass(obj);	// obj is the java class object calling the "renderFrame" method, that is an FrameMarkersRenderer object
     //jclass javaClass = env->FindClass("Lcom/wheelphone/targetDocking/WheelphoneTargetDocking;"); // doesn't work!
-	jmethodID method = env->GetMethodID(javaClass, "updateMarkersInfo", "(IZIIFF)V");
+	jmethodID method = env->GetMethodID(javaClass, "updateMarkersInfo", "(IZIIFFFF)V");
         
     // Did we find any trackables this frame?
     for(int tIdx = 0; tIdx < state.getNumTrackableResults(); tIdx++)
@@ -399,13 +409,19 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_getTrackInfo(JNIEnv *e
 		    }		           
             jx[0] = (int)result.data[0];
             jy[0] = (int)result.data[1];
+            // get position and orientation of the target respect to the camera reference frame
            	QCAR::Matrix34F pose = trackableResult->getPose();        
+           	target_pose_x[0] = pose.data[3];
+           	target_pose_y[0] = pose.data[7];
+           	target_pose_z[0] = pose.data[11];
 			QCAR::Vec3F position(pose.data[3], pose.data[7], pose.data[11]);
+			// dist = modulo del vettore traslazione = sqrt(x*x + y*y + z*z)
 			distance[0] = sqrt(position.data[0] * position.data[0] + position.data[1] * position.data[1] + position.data[2] * position.data[2]);            
             QCAR::Matrix44F inverseMV = SampleMath::Matrix44FInverse(modelViewMatrix);
             QCAR::Matrix44F invTranspMV = SampleMath::Matrix44FTranspose(inverseMV);
-            //jfloat cam_x = invTranspMV.data[4];
-            //jfloat cam_y = invTranspMV.data[5];
+            // position of the camera and orientation axis with coordinates represented in the reference frame of the trackable
+            //cam_x[0] = invTranspMV.data[4];
+            //cam_y[0] = invTranspMV.data[5];
             cam_z[0] = invTranspMV.data[6]; 
             detected[0] = true;           	              
 
@@ -443,12 +459,15 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_getTrackInfo(JNIEnv *e
             jx[1] = (int)result.data[0];
             jy[1] = (int)result.data[1];
            	QCAR::Matrix34F pose = trackableResult->getPose();        
+           	target_pose_x[1] = pose.data[3];
+           	target_pose_y[1] = pose.data[7];
+           	target_pose_z[1] = pose.data[11];
 			QCAR::Vec3F position(pose.data[3], pose.data[7], pose.data[11]);
 			distance[1] = sqrt(position.data[0] * position.data[0] + position.data[1] * position.data[1] + position.data[2] * position.data[2]);            
             QCAR::Matrix44F inverseMV = SampleMath::Matrix44FInverse(modelViewMatrix);
             QCAR::Matrix44F invTranspMV = SampleMath::Matrix44FTranspose(inverseMV);
-            //jfloat cam_x = invTranspMV.data[4];
-            //jfloat cam_y = invTranspMV.data[5];
+            //cam_x[1] = invTranspMV.data[4];
+            //cam_y[1] = invTranspMV.data[5];
             cam_z[1] = invTranspMV.data[6]; 
             detected[1] = true;           	              
 
@@ -462,9 +481,9 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_getTrackInfo(JNIEnv *e
     }
 
 	//env->CallVoidMethod(obj, method, detected, jx, jy, markerSize.data[0], markerSize.data[1]);
-	env->CallVoidMethod(obj, method, 0, detected[0], jx[0], jy[0], distance[0], cam_z[0]);	
-	env->CallVoidMethod(obj, method, 1, detected[1], jx[1], jy[1], distance[1], cam_z[1]);
-
+	env->CallVoidMethod(obj, method, 0, detected[0], jx[0], jy[0], distance[0], cam_z[0], target_pose_y[0], target_pose_z[0]);	
+	env->CallVoidMethod(obj, method, 1, detected[1], jx[1], jy[1], distance[1], cam_z[1], target_pose_y[1], target_pose_z[1]);
+	
     QCAR::Renderer::getInstance().end();
 }
 
