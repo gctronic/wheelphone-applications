@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WP Odometry Motion</string>
+    <string name="status_header">Status</string>
+    <string name="desSpeed">Speed (mm/s):</string>
+    <string name="go">GO</string>    
+    <string name="weblink">www.wheelphone.com</string>
+	<string name="left_speed_txt">Left:</string>
+	<string name="right_speed_txt">Right:</string>
+	<string name="init_value">0</string>
+	<string name="robot_status_header">Robot status</string>
+	<string name="robotConnected">Connected</string>
+	<string name="robotDisconnected">Disconnected</string>
+	<string name="empty"/>
+	<string name="setting_header">Settings</string>
+	<string name="rotationTxt">Rotation (degrees):</string>
+	<string name="movementTxt">Movement (cm):</string>
+	<string name="odomXlabel">X:</string>
+	<string name="odomYlabel">Y:</string>
+	<string name="odomThetalabel">\u03B1:</string>
+	<string name="batteryLabel">Battery:</string>
+	<string name="stop">Stop robot</string>
+									
+</resources>
