@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    
+    <TabHost   xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tabHost"
+    >
+    <TabWidget
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@android:id/tabs"
+    />
+    
+
+
+    
+     <FrameLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@android:id/tabcontent"
+     >
+    
+             
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:id="@+id/tab1"
+	    >	    
+	    
+      	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="70dp"
+	    android:id="@+id/spacingLayout"
+	    >
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    >	
+		</LinearLayout>  
+		    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    >		
+		</LinearLayout>    
+
+	    <LinearLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center"
+			        android:orientation="horizontal"
+			        android:background="@color/white" >
+			        
+			        <TextView
+			            android:id="@+id/txtConnection"
+			            android:layout_width="0dp"
+			            android:layout_height="25dp"
+			            android:layout_weight="0.41"
+			            android:gravity="center_vertical|center_horizontal"
+			            android:text="@string/robotDisconnected"
+			            android:textColor="@color/red"
+			            android:textSize="18sp"
+			            android:textStyle="bold" />
+			        
+		</LinearLayout>
+	    
+	    <!-- Speed status -->	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/speeds_header"
+		    android:id="@+id/text_view"
+		    />
+	    </LinearLayout>	    
+		
+  
+	    <!-- Creation of current desired speed -->    	    
+	   	<LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+	   				    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="80dp"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/left_speed_txt"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="50dp"
+		    android:layout_height="wrap_content"
+		    >
+		        <EditText
+		            android:id="@+id/txtLeftSpeed"
+		            android:layout_width="80dp"
+		            android:layout_height="40dp"
+		            android:layout_weight="1"
+		            android:ems="10"
+		            android:imeOptions="actionDone|normal"
+		            android:inputType="number|numberSigned"
+		            android:text="0" >
+		            <requestFocus />
+		        </EditText>	    
+		     </LinearLayout>
+
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="80dp"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/right_speed_txt"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="50dp"
+		    android:layout_height="wrap_content"
+		    >
+		        <EditText
+		            android:id="@+id/txtRightSpeed"
+		            android:layout_width="80dp"
+		            android:layout_height="40dp"
+		            android:layout_weight="1"
+		            android:ems="10"
+		            android:imeOptions="actionDone|normal"
+		            android:inputType="number|numberSigned"
+		            android:text="0" >
+		            <requestFocus />
+		        </EditText>	
+			</LinearLayout>
+
+	    </LinearLayout>      
+	    
+    
+	    
+	    
+	    <!-- Targets status -->
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/targets_header"
+		    android:id="@+id/text_view"
+		    />
+	    </LinearLayout>
+	 
+	 	<!-- Creation of target0 info -->
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/markerId"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/markerId"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/X"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/X0"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>
+			
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/Y"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/Y0"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>   
+			
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/d"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/d0"
+			        android:layout_width="55dp"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>   		
+	   				
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/orient"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/orient0"
+			        android:layout_width="55dp"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>      		
+	   		
+	    </LinearLayout>
+	    
+
+
+
+	    <!-- Creation of general status -->    
+
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/status_header"
+		    android:id="@+id/text_view"
+		    />
+	    </LinearLayout>
+	    
+		   <LinearLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="horizontal" >
+			
+			        <CheckBox
+			            android:id="@+id/chkSpeedControl"
+			            android:layout_width="110dp"
+			            android:layout_height="40dp"
+			            android:layout_weight="0.85"
+			            android:onClick="controllerOnOff"
+			            android:text="@string/speed_control" />
+			        
+			        <CheckBox
+			            android:id="@+id/chkSoftAcc"
+			            android:layout_width="103dp"
+			            android:layout_height="40dp"
+			            android:layout_weight="1.22"
+			            android:onClick="softAccOnOff"
+			            android:text="@string/soft_accel" />
+			        
+			
+			    </LinearLayout>	    
+	    
+	    <!-- Creation of battery -->
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/battery_level"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/batteryLevel"
+			    />
+			</LinearLayout>
+	    </LinearLayout>	    
+	    
+
+	
+   	 <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/minTime"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/minTime"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>	    
+
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/maxTime"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/maxTime"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>		   		
+	   </LinearLayout>
+	   		
+<!--  Creation of camera offset -->   
+   	<LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/camOffset_header"
+		    android:id="@+id/txtHeaderCamOffset"
+		    />
+	    </LinearLayout>
+	    
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <SeekBar
+            android:id="@+id/camOffset"
+            android:layout_width="fill_parent"
+            android:layout_height="25dp"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>	 
+    
+    			<!-- Logo and site -->
+			    
+			    <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:gravity="center_horizontal|bottom"
+			    >
+			        
+				    <ImageView
+				        android:layout_width="100dp"
+				        android:layout_height="wrap_content"
+				        android:adjustViewBounds="true"
+				        android:contentDescription="wheelphone"
+				        android:maxWidth="200dp"
+				        android:src="@drawable/ic_launcher" />
+			
+				    <TextView  
+				    android:layout_width="150dp" 
+				    android:layout_height="wrap_content" 
+				    android:text="@string/weblink"
+				    android:gravity="center"
+				    />
+			    </LinearLayout>
+    
+	</LinearLayout>
+	
+	  
+	<LinearLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tab2"
+    android:orientation="vertical"
+    android:paddingTop="60px"
+     >
+	    <com.wheelphone.targetDebug.QCARSampleGLView
+	        android:id="@+id/glView"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:adjustViewBounds="true" />	    				    
+
+     </LinearLayout>
+
+
+     </FrameLayout>
+    
+    </TabHost>	
+
+	

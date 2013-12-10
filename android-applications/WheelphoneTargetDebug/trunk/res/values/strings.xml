@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WP target debug</string>
+    <string name="speeds_header">Speeds Status</string>    
+    <string name="X">X:</string>
+    <string name="Y">Y:</string>
+    <string name="d">d:</string>
+    <string name="orient">\u03B1:</string>
+    <string name="battery_level">Battery:</string>
+	<string name="left_speed_txt">L (mm/s):</string>
+	<string name="right_speed_txt">R (mm/s):</string>
+	<string name="init_value">0</string>
+	<string name="status_header">General Status</string>
+	<string name="emptyString"/>
+	<string name="initialState">Waiting start...</string>
+	<string name="weblink">www.wheelphone.com</string>
+	<string name="camOffset_header">Camera offset</string>
+	<string name="targets_header">Targets Status</string>
+	<string name="robotDisconnected">Disconnected</string>
+	<string name="minTime">min (ms):</string>
+	<string name="maxTime">max (ms):</string>
+	<string name="markerId">Marker id (0..3):</string>
+	<string name="speed_control">Speed control</string>
+	<string name="soft_accel">Soft acceleration</string>
+</resources>
