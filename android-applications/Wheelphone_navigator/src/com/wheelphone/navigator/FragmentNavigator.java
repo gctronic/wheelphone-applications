@@ -92,6 +92,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 
 		//Start robot control:
 		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
+		mWheelphone.setUSBCommunicationTimeout(10000);
 		mWheelphone.startUSBCommunication();
 		//		mWheelphone.enableSoftAcceleration();
 		if (useSpeedControl) {
