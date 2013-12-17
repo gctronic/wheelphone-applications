@@ -2,7 +2,7 @@
 <resources>
     <string name="options">Options</string>
     <string name="quit">Quit</string>
-    <string name="app_name">Wheelphone Remote Mini</string>
+    <string name="app_name">WP Remote Mini</string>
     <string name="description">Wheelphone remote mini - only http server for receive commands</string>
     <string name="line1">In chrome or firefox type</string>
     <string name="line2">Or in VLC open</string>

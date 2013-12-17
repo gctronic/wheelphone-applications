@@ -1219,10 +1219,10 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
 				timerImg = new Timer();
 				timerImg.schedule(new frontImageStateTask(), 15000);
 			}			
-			if(targetX > 180) {
+			if(targetX > (mScreenWidth/2)+20) {
 				lSpeed = 10;
 				rSpeed = -10;
-			} else if(targetX < 140) {
+			} else if(targetX < (mScreenWidth/2)-20) {
 				lSpeed = -10;
 				rSpeed = 10;
 			} else {
