@@ -21,7 +21,6 @@
 	<classpathentry kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneROS/libs/com.springsource.org.apache.commons.net-2.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneROS/libs/dnsjava-2.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneROS/libs/netty-3.2.4.Final.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneROS/libs/wheelphonelibrary.jar"/>
 	<classpathentry kind="lib" path="/home/stefano/Desktop/eclipse_workspace/WheelphoneROS/libs/ws-commons-util-1.0.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
