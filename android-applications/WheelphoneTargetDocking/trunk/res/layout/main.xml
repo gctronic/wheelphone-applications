@@ -494,6 +494,21 @@
             android:textStyle="bold" />
     </LinearLayout>	    
 	
+    	   	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>
+		
+	 <Button
+			            android:id="@+id/btnRestart"
+			            android:layout_width="0dp"
+			            android:layout_height="35dp"
+			            android:layout_weight="0.41"
+			            android:onClick="restartSequence"
+			            android:text="@string/restart" />
+			        
+		</LinearLayout> 
 	    
    	    <!-- Creation of http status -->    
 	    
@@ -529,32 +544,7 @@
             android:textStyle="bold" />
     </LinearLayout>	  
    
-   	<LinearLayout
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:background='@color/title_bar'
-	    >
-			<TextView  
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content" 
-		    android:text="@string/camOffset_header"
-		    android:id="@+id/txtHeaderCamOffset"
-		    />
-	    </LinearLayout>
-	    
-        <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <SeekBar
-            android:id="@+id/camOffset"
-            android:layout_width="fill_parent"
-            android:layout_height="25dp"
-            android:gravity="center_vertical|center_horizontal" />
-    </LinearLayout>	 
+ 
     
     			<!-- Logo and site -->
 			    
@@ -615,106 +605,6 @@
         -->
      </LinearLayout>
 
-	
-	<LinearLayout
-     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/tab3"
-    android:orientation="vertical"
-    android:paddingTop="60px"
-     >
-
-	    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="@string/roomWidth" />
-	
-	        <EditText
-	            android:id="@+id/txtRoomWidth"
-	            android:layout_width="80dp"
-	            android:layout_height="40dp"
-	            android:layout_weight="1"
-	            android:ems="10"
-	            android:imeOptions="actionDone|normal"
-	            android:inputType="number"
-	            android:text="200" >
-	            <requestFocus />
-	        </EditText>	    
-
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="@string/roomLength" />
-	
-	        <EditText
-	            android:id="@+id/txtRoomLength"
-	            android:layout_width="80dp"
-	            android:layout_height="40dp"
-	            android:layout_weight="1"
-	            android:ems="10"
-	            android:imeOptions="actionDone|normal"
-	            android:inputType="number"
-	            android:text="200" >
-	            <requestFocus />
-	        </EditText>	  	        	        				    
-     	</LinearLayout>	
-     	
-	   	<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="Target info..." />
-		        	        				    
-     	</LinearLayout>		    
-     	
-	   	<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="Robot info (x,y,theta):" />
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="0" 
-	            android:id="@+id/robotX" />
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="0" 
-	            android:id="@+id/robotY" />
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="0" 
-	            android:id="@+id/robotTheta" />	        	        		        	        				    
-     	</LinearLayout>		   	
-	    
-	    <com.wheelphone.targetDocking.FloorPlanView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/floorPlanView" />    
-	    
-	 </LinearLayout>	
 
      </FrameLayout>
     
