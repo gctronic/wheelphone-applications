@@ -414,19 +414,7 @@
 		    android:id="@+id/txtHeaderCamOffset"
 		    />
 	    </LinearLayout>
-	    
-        <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
 
-        <SeekBar
-            android:id="@+id/camOffset"
-            android:layout_width="fill_parent"
-            android:layout_height="25dp"
-            android:gravity="center_vertical|center_horizontal" />
-    </LinearLayout>	 
     
 	    <LinearLayout
         android:layout_width="wrap_content"
@@ -434,15 +422,37 @@
         android:gravity="center"
         android:orientation="horizontal" >
 	        <TextView
-	            android:layout_width="wrap_content"
+	            android:layout_width="80dp"
 	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
+	            android:gravity="center"
 	            android:text="@string/chargeTimeLabel" />
-	
-	        <EditText
+		    <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/stopDistanceLabel" />  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/k1" />	  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/k2" />	                       
+		</LinearLayout>	 
+	    
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >	        
+
+		        <EditText
 	            android:id="@+id/chargeTime"
 	            android:layout_width="80dp"
-	            android:layout_height="40dp"
+	            android:layout_height="37dp"
 	            android:layout_weight="1"
 	            android:ems="10"
 	            android:imeOptions="actionDone|normal"
@@ -451,48 +461,22 @@
 
 	            <requestFocus android:layout_width="wrap_content" />
 
-	        </EditText>	    
-		</LinearLayout>	 
-	    
-	    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >	        
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="@string/stopDistanceLabel" />
-	
+	        </EditText>	 
 	        <EditText
 	            android:id="@+id/stopDistance"
 	            android:layout_width="80dp"
-	            android:layout_height="40dp"
+	            android:layout_height="37dp"
 	            android:layout_weight="1"
 	            android:ems="10"
 	            android:imeOptions="actionDone|normal"
 	            android:inputType="number"
-	            android:text="250" >
+	            android:text="120" >
 	            <requestFocus />
-	        </EditText>	  	        	        				    
-     	</LinearLayout>	        
-        
-	    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >	        
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="@string/k1" />
-	
+	        </EditText>	  	  
 	        <EditText
 	            android:id="@+id/k1"
 	            android:layout_width="80dp"
-	            android:layout_height="40dp"
+	            android:layout_height="37dp"
 	            android:layout_weight="1"
 	            android:ems="10"
 	            android:imeOptions="actionDone|normal"
@@ -500,17 +484,10 @@
 	            android:text="0.07" >
 	            <requestFocus />
 	        </EditText>	  	
-	        
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingRight="20sp"
-	            android:text="@string/k2" />
-	
 	        <EditText
 	            android:id="@+id/k2"
 	            android:layout_width="80dp"
-	            android:layout_height="40dp"
+	            android:layout_height="37dp"
 	            android:layout_weight="1"
 	            android:ems="10"
 	            android:imeOptions="actionDone|normal"
@@ -518,11 +495,99 @@
 	            android:text="0.36" >
 	            <requestFocus />
 	        </EditText>	 	        
+     	</LinearLayout>	        
+        
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/tagLinearCoeffLabel" />
+		    <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/tagRotationCoeffLabel" />  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/dockBaseSpeedLabel" />	  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/searchAngleLabel" />	                       
+		</LinearLayout>	 
+	    
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >	        
+
+		        <EditText
+	            android:id="@+id/tagLinearCoeff"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="100" >
+
+	            <requestFocus android:layout_width="wrap_content" />
+
+	        </EditText>	 
+	        <EditText
+	            android:id="@+id/tagRotationCoeff"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="16" >
+	            <requestFocus />
+	        </EditText>	  	  
+	        <EditText
+	            android:id="@+id/dockBaseSpeed"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="80" >
+	            <requestFocus />
+	        </EditText>	  	
+	        <EditText
+	            android:id="@+id/searchAngle"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="20" >
+	            <requestFocus />
+	        </EditText>	 	        
+     	</LinearLayout>	 	    
+	    
+	    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >	        
 
 			        <Button
 			            android:id="@+id/btnResetBehavior"
-	            		android:layout_width="80dp"
-	            		android:layout_height="wrap_content"			            
+	            		android:layout_width="fill_parent"
+	            		android:layout_height="35dp"			            
 			            android:onClick="resetBehavior"
 			            android:text="@string/resetBehavior" />		        
 	        

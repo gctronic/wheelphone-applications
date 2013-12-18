@@ -23,9 +23,13 @@
 	<string name="targets_header">Targets Status</string>
 	<string name="robotDisconnected">Disconnected</string>
 	<string name="roomLength">length:</string>
-	<string name="chargeTimeLabel">Charge time (sec):</string>
-	<string name="stopDistanceLabel">Stop dist (scene units):</string>
-	<string name="k1">k1:</string>
-	<string name="k2">k2:</string>
+	<string name="chargeTimeLabel">Charge time</string>
+	<string name="stopDistanceLabel">Dist</string>
+	<string name="k1">k1</string>
+	<string name="k2">k2</string>
 	<string name="resetBehavior">Reset</string>
+	<string name="tagLinearCoeffLabel">Tag linear</string>
+	<string name="tagRotationCoeffLabel">Tag rotation</string>
+	<string name="dockBaseSpeedLabel">Dock speed</string>
+	<string name="searchAngleLabel">Angle</string>
 </resources>

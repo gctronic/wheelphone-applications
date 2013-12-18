@@ -87,7 +87,6 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	private int instableChargeCounter=0;
 	private int lSpeedTemp=0, rSpeedTemp=0;
 	public long startTime=0, endTime=0;
-	public int camOffset = 0;
 	public boolean takeScreenshot=false;
 	private int mCurrentTab = 0;
 	private boolean mContinuousMode = true;
@@ -122,7 +121,7 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	public int[] targetDetectedInfo = new int[NUM_TARGETS];
 	private double mCoordCoeff = 0.07;
 	private double mOrientCoeff = 0.36;
-	public static final int BASE_SPEED = 80; //20;
+	public int BASE_SPEED = 80; //20;
 	private int baseSpeed = BASE_SPEED;
 	private int speedFactor = 0;
 	private int rotationFactor = 0;
@@ -135,7 +134,6 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	public static final int STATE_DOCKING_REACHED = 5;
 	public static final int STATE_ROBOT_CHARGING = 6;
 	public static final int STATE_ROBOT_GO_BACK_DOCKING = 7;
-	public static final int STATE_ROBOT_GO_FORWARD = 8;
 	public static final int STATE_TARGET_SEARCH_AND_APPROACH = 9;
 	public static final int STATE_ROBOT_GO_BACK_TARGET = 10;
 	public static final int STATE_ROTATE_FOR_SCREENSHOT = 11;
@@ -150,7 +148,6 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	public int chargeCounter = 0;
 	public boolean invertRotation= true;
 	public int rotCounter = 0;	
-	public int targetTimesInScreen = 1;
 	public static final int ROT_LEFT = 0;
 	public static final int ROT_RIGHT = 1;
 	public int lastRotation = ROT_LEFT;
@@ -167,19 +164,21 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	private static final long DOCK_TIMEOUT = 40000;	// 30 seconds  
 	private static final long TARGET_TIMEOUT = 30000;	// 10 seconds
 	// Scaling factor for each spring. Since the spring values come between -1 and 1, this value defines the maximum contribution by each spring
-	private static final int LINEAR_SPRING_CONST = 80; //12;
-	private static final int ANGULAR_SPRING_CONST = 16; //8;
+	private int LINEAR_SPRING_CONST = 100; //12;
+	private int ANGULAR_SPRING_CONST = 16; //8;
 	private static final double DUMPING_FACTOR = 1;
 	private int mLeftSpeed;
 	private int mRightSpeed;
 	private int mCurrentTargetId=2;
-	private int mStopDistance=250;	// distance (in scene units) used to know when we are near a target point and we want to pass to the next
-	private int mStopDistanceTemp=250;
+	private int mStopDistance=120;	// distance (in scene units) used to know when we are near a target point and we want to pass to the next
+	private int mStopDistanceTemp=120;
 	private int mChargeTime=20;		// given in seconds (base time is usb communication of 50 ms)
 	private int mLastDetectedMarkerId=0;
 	private static final long GLOBAL_TIMEOUT = 120000;	// 2 minutes
 	private long mGlobalTimestamp=0;
 	private boolean mSeenOnce = false;
+	private int mSearchAngle = 20;
+	private boolean rotationInProgress = false;
 	
     // http server
     private CustomHttpServer httpServer = null;
@@ -197,6 +196,7 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	private EditText txtChargeTime, txtStopDistance;
 	private TextView robotX, robotY, robotTheta;
 	private EditText txtK1, txtK2;
+	private EditText txtTagLinearCoeff, txtTagRotationCoeff, txtDockBaseSpeed, txtSearchAngle;
     
 	// map
 	int roomWidth, roomLength;
@@ -842,23 +842,7 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
         tabHost.addTab(spec3);
         for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
             tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight()*7/100; // 7% of total screen height
-        }  
-        
-        SeekBar seekbar = (SeekBar) findViewById(R.id.camOffset);
-        seekbar.setMax(mScreenWidth);
-        seekbar.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
-        	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        		// TODO Auto-generated method stub
-                camOffset = progress - mScreenWidth/2;
-        	}
-        	public void onStartTrackingTouch(SeekBar seekBar) {
-        		// TODO Auto-generated method stub
-        	}
-        	public void onStopTrackingTouch(SeekBar seekBar) {
-        		// TODO Auto-generated method stub
-        	}
-        });
-        seekbar.setProgress(mScreenWidth/2);
+        }
         
         displayIpAddress();
         	
@@ -963,6 +947,62 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
             }                      
         });
         
+        txtTagLinearCoeff = (EditText) findViewById(R.id.tagLinearCoeff);
+        txtTagLinearCoeff.setOnEditorActionListener(new OnEditorActionListener() {        	
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {               	
+                	LINEAR_SPRING_CONST = Integer.parseInt(v.getText().toString());
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);                     
+                    handled = true;
+                }
+                return handled;
+            }                      
+        });
+        
+        txtTagRotationCoeff = (EditText) findViewById(R.id.tagRotationCoeff);
+        txtTagRotationCoeff.setOnEditorActionListener(new OnEditorActionListener() {        	
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {               	
+                	ANGULAR_SPRING_CONST = Integer.parseInt(v.getText().toString());
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);                     
+                    handled = true;
+                }
+                return handled;
+            }                      
+        });        
+        
+        txtDockBaseSpeed = (EditText) findViewById(R.id.dockBaseSpeed);
+        txtDockBaseSpeed.setOnEditorActionListener(new OnEditorActionListener() {        	
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {               	
+                	BASE_SPEED = Integer.parseInt(v.getText().toString());
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);                     
+                    handled = true;
+                }
+                return handled;
+            }                      
+        });        
+        
+        txtSearchAngle = (EditText) findViewById(R.id.searchAngle);
+        txtSearchAngle.setOnEditorActionListener(new OnEditorActionListener() {        	
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {               	
+                	mSearchAngle = Integer.parseInt(v.getText().toString());
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);                     
+                    handled = true;
+                }
+                return handled;
+            }                      
+        });        
+
         robotX = (TextView)findViewById(R.id.robotX);
         robotY = (TextView)findViewById(R.id.robotY);
         robotTheta = (TextView)findViewById(R.id.robotTheta);
@@ -1211,11 +1251,13 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 			lastRotation = ROT_LEFT;
 			invertRotation = true;
 			rotCounter = 0;
+			rotationInProgress = false;
 			mTimestampDocking = System.currentTimeMillis();
 		} else {
 			mCurrentScreenshot++;
 			mCurrentTargetId = mCurrentTargetId + 1;
 			rotCounter = 0;
+			rotationInProgress = false;
 			globalState = STATE_TARGET_SEARCH_AND_APPROACH;		
 			startExploring();
 			switchToLittleTag[mCurrentTargetId] = false;
@@ -1350,18 +1392,23 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		    txtConnected.setText("Looking for target " + mCurrentTargetId + "(" + (mIsExploring?1:0) + ", " + (mIsAvoiding?1:0) + ", " + (switchToLittleTag[mCurrentTargetId]?1:0) + ")" + "/" + (System.currentTimeMillis()-mGlobalTimestamp)/1000);
 		    txtConnected.setTextColor(getResources().getColor(R.color.red));					    
 		    
-		    if(mIsExploring) {
-			    rotCounter++;
-			    if(rotCounter == 7) {	//10
-			    	lSpeedTemp = mLeftSpeed;
-			    	rSpeedTemp = mRightSpeed;
-			    	lSpeed = 0;
-			    	rSpeed = 0;	
-			    } else if(rotCounter >= 35) {	//38
-		    		rotCounter = 0;
-		    		lSpeed = lSpeedTemp;
-		    		rSpeed = rSpeedTemp;
-		    	}		    	
+		    if(mIsExploring) {		    	
+		    	if(rotationInProgress) {
+		    		if(Math.abs((mOdomTheta/Math.PI*180.0)) >= mSearchAngle) {			    	
+				    	lSpeed = 0;
+				    	rSpeed = 0;
+				    	rotCounter = 0;
+				    	rotationInProgress = false;
+			    	}
+		    	} else {
+		    		rotCounter++;
+		    		if(rotCounter >= 28) {	// stopped for about 1.5 seconds
+		    			wheelphone.resetOdometry();
+		    			rotationInProgress = true;
+		    			lSpeed = mLeftSpeed;
+		    			rSpeed = mRightSpeed;
+		    		}
+			    }
 		    } else {
 				lSpeed = mLeftSpeed;
 				rSpeed = mRightSpeed;		    	
@@ -1389,7 +1436,8 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 				}
 				startExploring();			
 				lSpeed = 0;
-				rSpeed = ROT_SPEED;		
+				rSpeed = ROT_SPEED;	
+				rotationInProgress = false;
 				rotCounter = 0;
 				wheelphone.resetOdometry();
 				globalState = STATE_ROTATE_FOR_SCREENSHOT;
@@ -1422,19 +1470,28 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		    		lSpeed = -baseSpeed;
 		    		rSpeed = baseSpeed;
 		    	}
-		    }
-		    
-		    rotCounter++;
-		    if(rotCounter == 10) {
 		    	lSpeedTemp = lSpeed;
 		    	rSpeedTemp = rSpeed;
-		    	lSpeed = 0;
-		    	rSpeed = 0;	
-		    } else if(rotCounter >= 38) {
-	    		rotCounter = 0;
-	    		lSpeed = lSpeedTemp;
-	    		rSpeed = rSpeedTemp;
-	    	}
+		    }
+
+	    	if(rotationInProgress) {
+	    		if(Math.abs((mOdomTheta/Math.PI*180.0)) >= mSearchAngle) {			    	
+			    	lSpeedTemp = lSpeed;
+			    	rSpeedTemp = rSpeed;
+			    	lSpeed = 0;
+			    	rSpeed = 0;	
+			    	rotCounter = 0;
+			    	rotationInProgress = false;
+		    	}
+	    	} else {
+	    		rotCounter++;
+	    		if(rotCounter >= 28) {	// stopped for about 1.5 seconds
+	    			wheelphone.resetOdometry();
+	    			rotationInProgress = true;
+		    		lSpeed = lSpeedTemp;
+		    		rSpeed = rSpeedTemp;
+	    		}
+		    }		    
 		    
 			if(targetDetectedInfo[0]==TARGET_FOUND) {
 				globalState = STATE_DOCKING_APPROACH_SMALL;
@@ -1462,26 +1519,12 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		    txtConnected.setTextColor(getResources().getColor(R.color.green));
 					
 		    if(targetDetectedInfo[1] == TARGET_FOUND) {						
-				targetTimesInScreen = (int)(targetDist[1]/markerSize);	// if the ratio is 1 (target dist = marker size) it means that the target fill the image completely		
-				if(targetTimesInScreen < 1) {	// shouldn't never be lower than 1, but check it for safety
-					targetTimesInScreen = 1;
-				}
-				//rotationFactor = (int)(COORDINATE_COEFF*(mScreenWidth/2-targetX[1]-(int)(camOffset*50.0/targetDist[1]))) + (int)(ORIENTATION_COEFF*targetOrientation[1]);
 				rotationFactor = (int)(mCoordCoeff*(mScreenWidth/2-targetX[1]) + mOrientCoeff*angleTargetRobot[1]);
-				//if(rotationFactor >= 0) {
 				if(targetX[1] < mScreenWidth/2) {
 					lastRotation = ROT_LEFT;
 				} else {
 					lastRotation = ROT_RIGHT;
 				}
-//				// avoid to lose the target; check the x coordinate and when it is near the border stop rotating
-//				// otherwise the rotation will lead to lose the target, instead goes forward
-//				if(targetX[1] < (mScreenWidth*1/targetTimesInScreen)) {
-//					rotationFactor = 0;
-//				}
-//				if(targetX[1] > (mScreenWidth*(targetTimesInScreen-1)/targetTimesInScreen)) {
-//					rotationFactor = 0;
-//				}
 				lSpeed = baseSpeed - rotationFactor;
 				rSpeed = baseSpeed + rotationFactor; 														
 			} else if(targetDetectedInfo[0] == TARGET_FOUND) {
@@ -1490,10 +1533,11 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		    } else if(targetDetectedInfo[1] == NO_TARGET_FOUND) {							
 				//globalState = STATE_DOCKING_SEARCH;
 		    	dockReachedTimeout = 0;
-				globalState = STATE_ROBOT_GO_FORWARD;
+				globalState = STATE_DOCKING_SEARCH;
 				prevGlobalState = STATE_DOCKING_APPROACH_BIG;
 				invertRotation = true;
-				rotCounter = 0;							
+				rotCounter = 0;		
+				rotationInProgress = true;
 			}
 				
 		} else if(globalState == STATE_DOCKING_APPROACH_SMALL) {
@@ -1532,33 +1576,19 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 			} else if(targetDetectedInfo[0] == NO_TARGET_FOUND) {							
 				//globalState = STATE_DOCKING_SEARCH;
 				dockReachedTimeout = 0;
-				globalState = STATE_ROBOT_GO_FORWARD;
+				globalState = STATE_DOCKING_SEARCH;
 				prevGlobalState = STATE_DOCKING_APPROACH_SMALL;
 				invertRotation = true;
-				rotCounter = 0;							
+				rotCounter = 0;		
+				rotationInProgress = true;
 			} else if(targetDetectedInfo[0] == TARGET_FOUND) {	
-				lastTargetX[0] = targetX[0];
-				targetTimesInScreen = (int)(targetDist[0]/markerSize);	// if the ratio is 1 (target dist = marker size) it means that the target fill the image completely
-				if(targetTimesInScreen < 1) {	// shouldn't never be lower than 1, but check it for safety
-					targetTimesInScreen = 1;
-				}				
-				// camOffset influences the rotationFactor linearly with the inverse of the distance, the near the target the more influence is actuated   
-				//rotationFactor = (int)(COORDINATE_COEFF*(mScreenWidth/2-targetX[0]+(int)(camOffset*50.0/targetDist[0])) + ORIENTATION_COEFF*angleTargetRobot[0]);
+				lastTargetX[0] = targetX[0];		
 				rotationFactor = (int)(mCoordCoeff*(mScreenWidth/2-targetX[0]) + mOrientCoeff*angleTargetRobot[0]);
-				//if(rotationFactor >= 0) {
 				if(targetX[0] < mScreenWidth/2) {
 					lastRotation = ROT_LEFT;
 				} else {
 					lastRotation = ROT_RIGHT;
 				}
-//				// avoid to lose the target; check the x coordinate and when it is near the border stop rotating
-//				// otherwise the rotation will lead to lose the target, instead goes forward				
-//				if(targetX[0] < (mScreenWidth*1/targetTimesInScreen)) {
-//					rotationFactor = 0;
-//				}
-//				if(targetX[0] > (mScreenWidth*(targetTimesInScreen-1)/targetTimesInScreen)) {
-//					rotationFactor = 0;
-//				}
 				lSpeed = baseSpeed - rotationFactor;
 				rSpeed = baseSpeed + rotationFactor; 														
 			}
@@ -1691,6 +1721,7 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 				prevGlobalState = STATE_DOCKING_REACHED;
 				invertRotation = true;
 				rotCounter = 0;	
+				rotationInProgress = false;
 			}
 			
 			
@@ -1706,19 +1737,8 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 				prevGlobalState = STATE_ROBOT_GO_BACK_DOCKING;
 				invertRotation = true;
 				rotCounter = 0;
+				rotationInProgress = false;
 			}
-			
-		} else if(globalState == STATE_ROBOT_GO_FORWARD) { 
-			baseSpeed = BASE_SPEED*2/3;
-			lSpeed = baseSpeed;
-			rSpeed = baseSpeed;
-			//dockReachedTimeout++;
-			//if(dockReachedTimeout >= 25) {	// go forward for about 1.25 seconds
-				globalState = STATE_DOCKING_SEARCH;
-				prevGlobalState = STATE_ROBOT_GO_FORWARD;
-				invertRotation = true;
-				rotCounter = 0;
-			//}
 			
 		} else if(globalState == STATE_ROBOT_CHARGING) {
 			
