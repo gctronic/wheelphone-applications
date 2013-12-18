@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WP target docking</string>
+    <string name="sensors_header">Sensors Status</string>    
+    <string name="xLabel">X:</string>
+    <string name="yLabel">Y:</string>
+    <string name="distLabel">d:</string>
+    <string name="orientLabel">\u03B1:</string>
+    <string name="battery_level">Battery:</string>
+	<string name="left_speed_txt">L (mm/s):</string>
+	<string name="right_speed_txt">R (mm/s):</string>
+	<string name="init_value">0</string>
+	<string name="status_header">General Status</string>
+	<string name="robotDockingSearch">Robot is looking for docking station</string>
+	<string name="settings_header">Settings</string>
+	<string name="roomWidth">width:</string>
+	<string name="http_header">HTTP status</string>
+	<string name="emptyString"/>
+	<string name="initialState">Waiting start...</string>
+	<string name="calibration">Calibrate sensors</string>
+	<string name="weblink">www.wheelphone.com</string>
+	<string name="camOffset_header">Camera offset</string>
+	<string name="targets_header">Targets Status</string>
+	<string name="robotDisconnected">Disconnected</string>
+	<string name="roomLength">length:</string>
+	<string name="chargeTimeLabel">Charge time (sec):</string>
+	<string name="stopDistanceLabel">Stop dist (scene units):</string>
+	<string name="k1">k1:</string>
+	<string name="k2">k2:</string>
+</resources>

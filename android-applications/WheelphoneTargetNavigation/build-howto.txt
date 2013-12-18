@@ -1,0 +1,4 @@
+1) the build directory is taken from the "vuforia-sdk-android" package to avoid having external dependencies
+2) modify the "Android.mk" (in /trunk/jni) file to include the sources and give the output library name
+3) reference the QCAR.jar library (under build/java/QCAR or vuforia-sdk-android/build/java/QCAR)
+4) goto to "trunk" directory and type ndk-build
