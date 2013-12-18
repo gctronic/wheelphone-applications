@@ -33,7 +33,6 @@ import com.wheelphone.targetDocking.WheelphoneTargetDocking;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot.WheelPhoneRobotListener;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -50,7 +49,6 @@ import android.graphics.Point;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -89,8 +87,6 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	private int instableChargeCounter=0;
 	private int lSpeedTemp=0, rSpeedTemp=0;
 	public long startTime=0, endTime=0;
-	public int procTime=0, minProcTime=1000, maxProcTime=0, procTimeResetCounter=0;
-	public boolean startFlag=true;
 	public int camOffset = 0;
 	public boolean takeScreenshot=false;
 	private int mCurrentTab = 0;
@@ -753,7 +749,7 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		   			    }
 		   				mDesiredAcceleration = 0;
 		   			}
-		   			if (System.currentTimeMillis() - mTimestampLastSeen > TARGET_TIMEOUT) {
+		   			if (System.currentTimeMillis() - mTimestampLastSeen > TARGET_TIMEOUT && globalState!=STATE_WAITING_START) {
 		   				startExploring();
 		   				goToNextTarget();		   				
 		   			}
@@ -767,7 +763,9 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 					mTimestampLastSeen = System.currentTimeMillis();
 		   		}
 		   	}
-	   	}	   		   
+	   	}	   	
+	   	
+	   	appendLog(logString);
 
    }   
    
@@ -789,8 +787,7 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 
    }
    
-    @SuppressLint("NewApi")
-	public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
@@ -816,15 +813,9 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
         // Update the application status to start initializing application
         updateApplicationStatus(APPSTATUS_INIT_APP);        
         
-        Display display;
+        Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-        	display = getWindowManager().getDefaultDisplay();
-        	display.getSize(size);
-        } else {
-        	display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        	size.set(display.getWidth(), display.getHeight());        	
-        }
+        display.getSize(size);
         //updateRendering(size.x, size.y);
                
         wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
@@ -984,6 +975,9 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
         // for testing target detection without robot
         //timer = new Timer();                               
         //timer.schedule(new trackerTask(), 0, 500); 
+		
+		logString = "\n\n\nSTART NEW LOG\n";
+		appendLog(logString);
     }
     
     public void onStart() {
@@ -1133,37 +1127,26 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 				case CustomHttpServer.ENABLE_CLIFF_AVOIDANCE:
 				case CustomHttpServer.DISABLE_CLIFF_AVOIDANCE:
 					mContinuousMode = false;
-					if(globalState == STATE_ROBOT_CHARGING) {	// go out of docking station
-						dockReachedTimeout = 0;
-						lSpeed = -40;
-						rSpeed = -40;
-			    		globalState = STATE_ROBOT_GO_BACK_TARGET;
-			    		prevGlobalState = STATE_ROBOT_CHARGING;
-					} else {	// restart from beginning otherwise
-						globalState = STATE_TARGET_SEARCH_AND_APPROACH;
-						prevGlobalState = STATE_WAITING_START;
-						invertRotation = true;
-						rotCounter = 0;
-					}
 					break;  			
 				case CustomHttpServer.STOP:
-					//globalState = STATE_WAITING_START;
-					mContinuousMode = true;	
-					if(globalState == STATE_ROBOT_CHARGING) {	// go out of docking station
-						dockReachedTimeout = 0;
-						lSpeed = -40;
-						rSpeed = -40;
-			    		globalState = STATE_ROBOT_GO_BACK_TARGET;
-			    		prevGlobalState = STATE_ROBOT_CHARGING;
-					} else {	// restart from beginning otherwise
-						globalState = STATE_TARGET_SEARCH_AND_APPROACH;
-						prevGlobalState = STATE_WAITING_START;
-						invertRotation = true;
-						rotCounter = 0;
-					}				
+					mContinuousMode = true;				
 					break;
-    		}
-			
+    		}			
+			prevGlobalState = globalState;
+			if(wheelphone.isCharging()) {	// go out of docking station
+				dockReachedTimeout = 0;
+				lSpeed = -40;
+				rSpeed = -40;	
+				mCurrentScreenshot = 1;
+				mCurrentTargetId = 1;
+	    		globalState = STATE_ROBOT_GO_BACK_TARGET;
+			} else {	// restart from beginning otherwise
+				globalState = STATE_TARGET_SEARCH_AND_APPROACH;						
+				mCurrentScreenshot = 1;
+				mCurrentTargetId = 1;
+				goToNextTarget();
+			}
+    		
     	} //handle_message
     	
     };
@@ -1239,6 +1222,8 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 			mTimestampLastSeen = System.currentTimeMillis();
 			mSeenOnce = false;
 		}	
+		
+		targetDistPrev[mCurrentTargetId] = 0;
 		
 		if(mCurrentScreenshot == 1) {
 			mRenderer.rotataImages();
@@ -1341,17 +1326,18 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		
 		calculateSpeeds();
 		
+		logString = "WU: globalState="+globalState;
+		logString += "\nLooking for target " + mCurrentTargetId + "(" + (mIsExploring?1:0) + ", " + (mIsAvoiding?1:0) + ", " + (switchToLittleTag[mCurrentTargetId]?1:0) + ")" + "/" + (System.currentTimeMillis()-mGlobalTimestamp)/1000;
+		
 		if(globalState == STATE_WAITING_START) {
 			
 			TextView txtConnected;	
 		    txtConnected = (TextView)findViewById(R.id.txtGeneralStatus);
-		    txtConnected.setText("Waiting start...");
+		    txtConnected.setText("Waiting start..."+ mCurrentTargetId + "(" + (mIsExploring?1:0) + ", " + (mIsAvoiding?1:0) + ", " + (switchToLittleTag[mCurrentTargetId]?1:0) + ")" + "/" + (System.currentTimeMillis()-mGlobalTimestamp)/1000);
 		    txtConnected.setTextColor(getResources().getColor(R.color.white));
 			
 		    rSpeed = 0;
 			lSpeed = 0;
-			wheelphone.setRawLeftSpeed(lSpeed);
-			wheelphone.setRawRightSpeed(rSpeed);
 		
 		} else if(globalState==STATE_TARGET_SEARCH_AND_APPROACH) {
 			
@@ -1362,16 +1348,16 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 			TextView txtConnected;
 		    txtConnected = (TextView)findViewById(R.id.txtGeneralStatus);
 		    txtConnected.setText("Looking for target " + mCurrentTargetId + "(" + (mIsExploring?1:0) + ", " + (mIsAvoiding?1:0) + ", " + (switchToLittleTag[mCurrentTargetId]?1:0) + ")" + "/" + (System.currentTimeMillis()-mGlobalTimestamp)/1000);
-		    txtConnected.setTextColor(getResources().getColor(R.color.red));
-					    
+		    txtConnected.setTextColor(getResources().getColor(R.color.red));					    
+		    
 		    if(mIsExploring) {
 			    rotCounter++;
-			    if(rotCounter == 10) {
+			    if(rotCounter == 7) {	//10
 			    	lSpeedTemp = mLeftSpeed;
 			    	rSpeedTemp = mRightSpeed;
 			    	lSpeed = 0;
 			    	rSpeed = 0;	
-			    } else if(rotCounter >= 38) {
+			    } else if(rotCounter >= 35) {	//38
 		    		rotCounter = 0;
 		    		lSpeed = lSpeedTemp;
 		    		rSpeed = rSpeedTemp;
@@ -1754,6 +1740,8 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 		    		instableChargeCounter = 0;
 		    		tts.speak("charging", TextToSpeech.QUEUE_FLUSH, null);
 		    	} else if(chargeCounter >= (mChargeTime*20)) {	// *1000/50
+		    		mGlobalTimestamp = System.currentTimeMillis();
+		    		mTimestampDocking = System.currentTimeMillis();
 		    		chargeCounter = mChargeTime*20;
 		    		if(mContinuousMode) {
 			    		dockReachedTimeout = 0;
@@ -1815,6 +1803,9 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 				goToNextTarget();
 			}
 		}
+		
+		logString += "\nl="+lSpeed+",r="+rSpeed;
+		appendLog(logString);
 		
 		wheelphone.setLeftSpeed(lSpeed);
 		wheelphone.setRightSpeed(rSpeed);
@@ -1898,5 +1889,13 @@ public class WheelphoneTargetDocking extends Activity implements OnSharedPrefere
 	      e.printStackTrace();
 	   }
 	}
+	
+    public void resetBehavior(View view) {
+    	mContinuousMode = false;
+    	lSpeed=0;
+    	rSpeed=0;
+    	prevGlobalState=globalState;
+    	globalState=STATE_WAITING_START;
+    }
 	
 }

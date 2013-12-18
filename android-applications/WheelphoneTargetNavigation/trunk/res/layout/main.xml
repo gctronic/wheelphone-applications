@@ -448,7 +448,9 @@
 	            android:imeOptions="actionDone|normal"
 	            android:inputType="number"
 	            android:text="20" >
-	            <requestFocus />
+
+	            <requestFocus android:layout_width="wrap_content" />
+
 	        </EditText>	    
 		</LinearLayout>	 
 	    
@@ -516,9 +518,18 @@
 	            android:text="0.36" >
 	            <requestFocus />
 	        </EditText>	 	        
-	        	        				    
-     	</LinearLayout>	  	    
-	    
+
+			        <Button
+			            android:id="@+id/btnResetBehavior"
+	            		android:layout_width="80dp"
+	            		android:layout_height="wrap_content"			            
+			            android:onClick="resetBehavior"
+			            android:text="@string/resetBehavior" />		        
+	        
+		</LinearLayout> 
+
+
+			            
     			<!-- Logo and site -->
 			    
 			    <LinearLayout
