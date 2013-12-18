@@ -77,14 +77,14 @@ static const float kLetterTranslate    = 25.0f;
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_setActivityPortraitMode(JNIEnv *, jobject, jboolean isPortrait)
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_setActivityPortraitMode(JNIEnv *, jobject, jboolean isPortrait)
 {
     isActivityInPortraitMode = isPortrait;
 }
 
 
 JNIEXPORT int JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_initTracker(JNIEnv *, jobject)
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_initTracker(JNIEnv *, jobject)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_initTracker");
     
@@ -122,9 +122,9 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_initTracker(JNIEnv *, 
 
 
 JNIEXPORT void JNICALL
-    Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_deinitTracker(JNIEnv *, jobject)
+    Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_deinitTracker(JNIEnv *, jobject)
 {
-    LOG("Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_deinitTracker");
+    LOG("Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_deinitTracker");
 
     // Deinit the marker tracker, this will destroy all created frame markers:
     QCAR::TrackerManager& trackerManager = QCAR::TrackerManager::getInstance();
@@ -133,9 +133,9 @@ JNIEXPORT void JNICALL
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_FrameMarkersRenderer_renderFrame(JNIEnv *env, jobject obj)
+Java_com_wheelphone_targetNavigation_FrameMarkersRenderer_renderFrame(JNIEnv *env, jobject obj)
 {
-    //LOG("Java_com_wheelphone_targetDocking_FrameMarkersRenderer_renderFrame");
+    //LOG("Java_com_wheelphone_targetNavigation_FrameMarkersRenderer_renderFrame");
  
     // Clear color and depth buffer 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -166,7 +166,7 @@ Java_com_wheelphone_targetDocking_FrameMarkersRenderer_renderFrame(JNIEnv *env, 
 	jfloat cam_z = 0; 
 	jboolean detected = false;
 	jclass javaClass = env->GetObjectClass(obj);	// obj is the java class object calling the "renderFrame" method, that is an FrameMarkersRenderer object
-    //jclass javaClass = env->FindClass("Lcom/wheelphone/targetDocking/WheelphoneTargetDocking;"); // doesn't work!
+    //jclass javaClass = env->FindClass("Lcom/wheelphone/targetNavigation/WheelphoneTargetNavigation;"); // doesn't work!
 	jmethodID method = env->GetMethodID(javaClass, "displayMessageInt2", "(ZIIFF)V");
 */
 
@@ -330,7 +330,7 @@ Java_com_wheelphone_targetDocking_FrameMarkersRenderer_renderFrame(JNIEnv *env, 
 }
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_getTrackInfo(JNIEnv *env, jobject obj)
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_getTrackInfo(JNIEnv *env, jobject obj)
 {
 
     // Get the state from QCAR and mark the beginning of a rendering section
@@ -349,7 +349,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_getTrackInfo(JNIEnv *e
 	
 	jboolean detected[4] = {false};
 	jclass javaClass = env->GetObjectClass(obj);	// obj is the java class object calling the "renderFrame" method, that is an FrameMarkersRenderer object
-    //jclass javaClass = env->FindClass("Lcom/wheelphone/targetDocking/WheelphoneTargetDocking;"); // doesn't work!
+    //jclass javaClass = env->FindClass("Lcom/wheelphone/targetNavigation/WheelphoneTargetNavigation;"); // doesn't work!
 	jmethodID method = env->GetMethodID(javaClass, "updateMarkersInfo", "(IZIIFFFF)V");
         
     // Did we find any trackables this frame?
@@ -493,7 +493,7 @@ configureVideoBackground()
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_initApplicationNative(
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_initApplicationNative(
                             JNIEnv* env, jobject obj, jint width, jint height)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_initApplicationNative");
@@ -523,7 +523,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_initApplicationNative(
    textures = new Texture*[textureCount];
 
    jmethodID getTextureMethodID = env->GetMethodID(activityClass,
-       "getTexture", "(I)Lcom/wheelphone/targetDocking/Texture;");
+       "getTexture", "(I)Lcom/wheelphone/targetNavigation/Texture;");
 
    if (getTextureMethodID == 0)
    {
@@ -549,7 +549,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_initApplicationNative(
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_deinitApplicationNative(
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_deinitApplicationNative(
                                                         JNIEnv* env, jobject obj)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_deinitApplicationNative");
@@ -572,7 +572,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_deinitApplicationNativ
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_startCamera(JNIEnv *,
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_startCamera(JNIEnv *,
                                                                          jobject)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_startCamera");
@@ -614,7 +614,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_startCamera(JNIEnv *,
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_stopCamera(JNIEnv *,
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_stopCamera(JNIEnv *,
                                                                    jobject)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_stopCamera");
@@ -630,7 +630,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_stopCamera(JNIEnv *,
 }
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_setProjectionMatrix(JNIEnv *, jobject)
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_setProjectionMatrix(JNIEnv *, jobject)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_setProjectionMatrix");
 
@@ -642,13 +642,13 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_setProjectionMatrix(JN
 
 
 JNIEXPORT jboolean JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_autofocus(JNIEnv*, jobject)
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_autofocus(JNIEnv*, jobject)
 {
     return QCAR::CameraDevice::getInstance().setFocusMode(QCAR::CameraDevice::FOCUS_MODE_TRIGGERAUTO) ? JNI_TRUE : JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_setFocusMode(JNIEnv*, jobject, jint mode)
+Java_com_wheelphone_targetNavigation_WheelphoneTargetNavigation_setFocusMode(JNIEnv*, jobject, jint mode)
 {
     int qcarFocusMode;
 
@@ -679,7 +679,7 @@ Java_com_wheelphone_targetDocking_WheelphoneTargetDocking_setFocusMode(JNIEnv*, 
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_FrameMarkersRenderer_initRendering(
+Java_com_wheelphone_targetNavigation_FrameMarkersRenderer_initRendering(
                                                     JNIEnv* env, jobject obj)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkersRenderer_initRendering");
@@ -716,7 +716,7 @@ Java_com_wheelphone_targetDocking_FrameMarkersRenderer_initRendering(
 
 
 JNIEXPORT void JNICALL
-Java_com_wheelphone_targetDocking_FrameMarkersRenderer_updateRendering(
+Java_com_wheelphone_targetNavigation_FrameMarkersRenderer_updateRendering(
                         JNIEnv* env, jobject obj, jint width, jint height)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkersRenderer_updateRendering");

@@ -39,7 +39,7 @@ include $(CLEAR_VARS)
 # prefix and suffix to the corresponding generated file. In other words,
 # a shared library module named 'foo' will generate 'libfoo.so'.
 
-LOCAL_MODULE := WheelphoneTargetDocking
+LOCAL_MODULE := WheelphoneTargetNavigation
 
 # This sample always uses OpenGL ES 2.0.
 

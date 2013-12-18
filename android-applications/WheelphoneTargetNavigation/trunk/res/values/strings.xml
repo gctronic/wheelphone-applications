@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WP target docking</string>
+    <string name="app_name">WP target navigation</string>
     <string name="sensors_header">Sensors Status</string>    
     <string name="xLabel">X:</string>
     <string name="yLabel">Y:</string>
@@ -19,7 +19,7 @@
 	<string name="initialState">Waiting start...</string>
 	<string name="calibration">Calibrate sensors</string>
 	<string name="weblink">www.wheelphone.com</string>
-	<string name="camOffset_header">Camera offset</string>
+	<string name="params_header">Parameters</string>
 	<string name="targets_header">Targets Status</string>
 	<string name="robotDisconnected">Disconnected</string>
 	<string name="roomLength">length:</string>
