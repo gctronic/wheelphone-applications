@@ -11,94 +11,115 @@
 
 @implementation WheelphoneBasicViewController
 
+@synthesize txtLeftSpeed;
+@synthesize txtRightSpeed;
+
 - (void)viewDidLoad {
-	
-	// This is the simplest way to play a sound.
-	// But note with System Sound services you can only use:
-	// File Formats (a.k.a. audio containers or extensions): CAF, AIF, WAV
-	// Data Formats (a.k.a. audio encoding): linear PCM (such as LEI16) or IMA4
-	// Sounds must be 30 sec or less
-	// And only one sound plays at a time!
-	NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf0" ofType:@"wav"];
-	NSURL *soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_calibrateSound);
     
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf2" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_fwSound);
+}
 
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf8" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_bwSound);
+- (void)updateSpeed {
+    if(lSpeed >= 0) {
+        [robot setLeftSpeed:lSpeed-rotSpeed];
+        [txtLeftSpeed setText:[NSString stringWithFormat:@"%d", lSpeed-rotSpeed]];
+    } else {
+        [robot setLeftSpeed:lSpeed+rotSpeed];
+        [txtLeftSpeed setText:[NSString stringWithFormat:@"%d", lSpeed+rotSpeed]];
+    }
     
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf4" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_leftSound);
-    
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf6" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_rightSound);
-    
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf5" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_stopSound);
+    if(rSpeed >= 0) {
+        [robot setRightSpeed:rSpeed+rotSpeed];
+        [txtRightSpeed setText:[NSString stringWithFormat:@"%d", rSpeed+rotSpeed]];
+    } else {
+        [robot setRightSpeed:rSpeed-rotSpeed];
+        [txtRightSpeed setText:[NSString stringWithFormat:@"%d", rSpeed-rotSpeed]];
+    }
 
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf7" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_speedControlSound);
-    
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf9" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_softAccSound);
-    
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf_star" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_avoidObstacleSound);
-    
-	soundPath = [[NSBundle mainBundle] pathForResource:@"dtmf_hash" ofType:@"wav"];
-	soundURL = [NSURL fileURLWithPath:soundPath];
-	AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &_avoidCliffSound);
-    
 }
 
 - (IBAction)fwTapped:(id)sender {
-	AudioServicesPlaySystemSound(_fwSound);
+    if(rotSpeed == 0) {
+        if(lSpeed < (MAX_SPEED-SPEED_STEP)) {
+            lSpeed += SPEED_STEP;
+        } else {
+            lSpeed = MAX_SPEED;
+        }
+        if(rSpeed < (MAX_SPEED-SPEED_STEP)) {
+            rSpeed += SPEED_STEP;
+        } else {
+            rSpeed = MAX_SPEED;
+        }
+    } else {
+        rotSpeed = 0;
+    }
+    [self updateSpeed];
 }
 
 - (IBAction)bwTapped:(id)sender {
-	AudioServicesPlaySystemSound(_bwSound);
+    if(rotSpeed == 0) {
+        if(lSpeed > (-MAX_SPEED+SPEED_STEP)) {
+            lSpeed -= SPEED_STEP;
+        } else {
+            lSpeed = -MAX_SPEED;
+        }
+        if(rSpeed > (-MAX_SPEED+SPEED_STEP)) {
+            rSpeed -= SPEED_STEP;
+        } else {
+            rSpeed = -MAX_SPEED;
+        }
+    } else {
+        rotSpeed = 0;
+    }
+    [self updateSpeed];
 }
 
 - (IBAction)leftTapped:(id)sender {
-	AudioServicesPlaySystemSound(_leftSound);
+    if(rotSpeed < (MAX_SPEED-SPEED_STEP)) {
+        rotSpeed += SPEED_STEP;
+    } else {
+        rotSpeed = MAX_SPEED;
+    }
+    [self updateSpeed];
 }
 
 - (IBAction)rightTapped:(id)sender {
-	AudioServicesPlaySystemSound(_rightSound);
+    if(rotSpeed > (-MAX_SPEED+SPEED_STEP)) {
+        rotSpeed -= SPEED_STEP;
+    } else {
+        rotSpeed = -MAX_SPEED;
+    }
+    [self updateSpeed];
 }
 
 - (IBAction)stopTapped:(id)sender {
-	AudioServicesPlaySystemSound(_stopSound);
+    rotSpeed = 0;
+    lSpeed = 0;
+    rSpeed = 0;
+    [self updateSpeed];
 }
 
 - (IBAction)calibrateTapped:(id)sender {
-	AudioServicesPlaySystemSound(_calibrateSound);
-}
-
-- (IBAction)speedControlTapped:(id)sender {
-	AudioServicesPlaySystemSound(_speedControlSound);
-}
-
-- (IBAction)softAccTapped:(id)sender {
-	AudioServicesPlaySystemSound(_softAccSound);
+    [robot calibrateSensors];
 }
 
 - (IBAction)avoidObstacleTapped:(id)sender {
-	AudioServicesPlaySystemSound(_avoidObstacleSound);
+    if(isAvoidingObstacles) {
+        isAvoidingObstacles = false;
+        [robot disableObstacleAvoidance];
+    } else {
+        isAvoidingObstacles = true;
+        [robot enableObstacleAvoidance];
+    }
 }
 
 - (IBAction)avoidCliffTapped:(id)sender {
-	AudioServicesPlaySystemSound(_avoidCliffSound);
+    if(isAvoidingCliff) {
+        isAvoidingCliff = false;
+        [robot disableCliffAvoidance];
+    } else {
+        isAvoidingCliff = true;
+        [robot enableCliffAvoidance];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,16 +130,8 @@
 }
 
 - (void)dealloc {
-	AudioServicesDisposeSystemSoundID(_fwSound);
-	AudioServicesDisposeSystemSoundID(_bwSound);
-    AudioServicesDisposeSystemSoundID(_leftSound);
-    AudioServicesDisposeSystemSoundID(_rightSound);
-    AudioServicesDisposeSystemSoundID(_stopSound);
-    AudioServicesDisposeSystemSoundID(_calibrateSound);
-    AudioServicesDisposeSystemSoundID(_speedControlSound);
-    AudioServicesDisposeSystemSoundID(_softAccSound);
-    AudioServicesDisposeSystemSoundID(_avoidObstacleSound);
-    AudioServicesDisposeSystemSoundID(_avoidCliffSound);
+    [txtLeftSpeed release];
+    [txtRightSpeed release];
     [super dealloc];
 }
 

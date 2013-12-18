@@ -17,18 +17,8 @@
 		28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */; };
 		3536F4E911134D2900F2D0B2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */; };
 		3536F5351113563300F2D0B2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3536F5341113563300F2D0B2 /* AVFoundation.framework */; };
-		7B51B2E51829001600167A5A /* dtmf_hash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2D91829001600167A5A /* dtmf_hash.wav */; };
-		7B51B2E61829001600167A5A /* dtmf_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DA1829001600167A5A /* dtmf_star.wav */; };
-		7B51B2E71829001600167A5A /* dtmf0.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DB1829001600167A5A /* dtmf0.wav */; };
-		7B51B2E81829001600167A5A /* dtmf1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DC1829001600167A5A /* dtmf1.wav */; };
-		7B51B2E91829001600167A5A /* dtmf2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DD1829001600167A5A /* dtmf2.wav */; };
-		7B51B2EA1829001600167A5A /* dtmf3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DE1829001600167A5A /* dtmf3.wav */; };
-		7B51B2EB1829001600167A5A /* dtmf4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2DF1829001600167A5A /* dtmf4.wav */; };
-		7B51B2EC1829001600167A5A /* dtmf5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E01829001600167A5A /* dtmf5.wav */; };
-		7B51B2ED1829001600167A5A /* dtmf6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E11829001600167A5A /* dtmf6.wav */; };
-		7B51B2EE1829001600167A5A /* dtmf7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E21829001600167A5A /* dtmf7.wav */; };
-		7B51B2EF1829001600167A5A /* dtmf8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E31829001600167A5A /* dtmf8.wav */; };
-		7B51B2F01829001600167A5A /* dtmf9.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2E41829001600167A5A /* dtmf9.wav */; };
+		7B51B2F3182901D400167A5A /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2F1182901D400167A5A /* ios-wheelphone-library.bundle */; };
+		7B51B2F4182901D400167A5A /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B51B2F2182901D400167A5A /* ios-wheelphone-library.framework */; };
 		7BD8343B16F08EA7000863FF /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343616F08EA7000863FF /* down-arrow.png */; };
 		7BD8343C16F08EA7000863FF /* left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343716F08EA7000863FF /* left-arrow.png */; };
 		7BD8343D16F08EA7000863FF /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343816F08EA7000863FF /* right-arrow.png */; };
@@ -54,18 +44,8 @@
 		32CA4F630368D1EE00C91783 /* WheelphoneBasic_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelphoneBasic_Prefix.pch; sourceTree = "<group>"; };
 		3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		3536F5341113563300F2D0B2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		7B51B2D91829001600167A5A /* dtmf_hash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf_hash.wav; sourceTree = "<group>"; };
-		7B51B2DA1829001600167A5A /* dtmf_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf_star.wav; sourceTree = "<group>"; };
-		7B51B2DB1829001600167A5A /* dtmf0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf0.wav; sourceTree = "<group>"; };
-		7B51B2DC1829001600167A5A /* dtmf1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf1.wav; sourceTree = "<group>"; };
-		7B51B2DD1829001600167A5A /* dtmf2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf2.wav; sourceTree = "<group>"; };
-		7B51B2DE1829001600167A5A /* dtmf3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf3.wav; sourceTree = "<group>"; };
-		7B51B2DF1829001600167A5A /* dtmf4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf4.wav; sourceTree = "<group>"; };
-		7B51B2E01829001600167A5A /* dtmf5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf5.wav; sourceTree = "<group>"; };
-		7B51B2E11829001600167A5A /* dtmf6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf6.wav; sourceTree = "<group>"; };
-		7B51B2E21829001600167A5A /* dtmf7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf7.wav; sourceTree = "<group>"; };
-		7B51B2E31829001600167A5A /* dtmf8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf8.wav; sourceTree = "<group>"; };
-		7B51B2E41829001600167A5A /* dtmf9.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf9.wav; sourceTree = "<group>"; };
+		7B51B2F1182901D400167A5A /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "ios-wheelphone-library.bundle"; path = "../../ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
+		7B51B2F2182901D400167A5A /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ios-wheelphone-library.framework"; path = "../../ios-wheelphone-library.framework"; sourceTree = "<group>"; };
 		7BD8343616F08EA7000863FF /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
 		7BD8343716F08EA7000863FF /* left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow.png"; sourceTree = "<group>"; };
 		7BD8343816F08EA7000863FF /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
@@ -87,6 +67,7 @@
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				3536F4E911134D2900F2D0B2 /* AudioToolbox.framework in Frameworks */,
 				3536F5351113563300F2D0B2 /* AVFoundation.framework in Frameworks */,
+				7B51B2F4182901D400167A5A /* ios-wheelphone-library.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,18 +118,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7B51B2D91829001600167A5A /* dtmf_hash.wav */,
-				7B51B2DA1829001600167A5A /* dtmf_star.wav */,
-				7B51B2DB1829001600167A5A /* dtmf0.wav */,
-				7B51B2DC1829001600167A5A /* dtmf1.wav */,
-				7B51B2DD1829001600167A5A /* dtmf2.wav */,
-				7B51B2DE1829001600167A5A /* dtmf3.wav */,
-				7B51B2DF1829001600167A5A /* dtmf4.wav */,
-				7B51B2E01829001600167A5A /* dtmf5.wav */,
-				7B51B2E11829001600167A5A /* dtmf6.wav */,
-				7B51B2E21829001600167A5A /* dtmf7.wav */,
-				7B51B2E31829001600167A5A /* dtmf8.wav */,
-				7B51B2E41829001600167A5A /* dtmf9.wav */,
 				7BD8344216F0BD8A000863FF /* wheelphone-logo.png */,
 				7BD8344016F0BD4C000863FF /* wheelphone-basic.png */,
 				7BD8343616F08EA7000863FF /* down-arrow.png */,
@@ -166,6 +135,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B51B2F1182901D400167A5A /* ios-wheelphone-library.bundle */,
+				7B51B2F2182901D400167A5A /* ios-wheelphone-library.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -201,7 +172,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WheelphoneBasic" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -234,18 +205,7 @@
 				7BD8344116F0BD4C000863FF /* wheelphone-basic.png in Resources */,
 				7BD8344316F0BD8A000863FF /* wheelphone-logo.png in Resources */,
 				7BDF589216F2166300273D92 /* Default-568h@2x.png in Resources */,
-				7B51B2E51829001600167A5A /* dtmf_hash.wav in Resources */,
-				7B51B2E61829001600167A5A /* dtmf_star.wav in Resources */,
-				7B51B2E71829001600167A5A /* dtmf0.wav in Resources */,
-				7B51B2E81829001600167A5A /* dtmf1.wav in Resources */,
-				7B51B2E91829001600167A5A /* dtmf2.wav in Resources */,
-				7B51B2EA1829001600167A5A /* dtmf3.wav in Resources */,
-				7B51B2EB1829001600167A5A /* dtmf4.wav in Resources */,
-				7B51B2EC1829001600167A5A /* dtmf5.wav in Resources */,
-				7B51B2ED1829001600167A5A /* dtmf6.wav in Resources */,
-				7B51B2EE1829001600167A5A /* dtmf7.wav in Resources */,
-				7B51B2EF1829001600167A5A /* dtmf8.wav in Resources */,
-				7B51B2F01829001600167A5A /* dtmf9.wav in Resources */,
+				7B51B2F3182901D400167A5A /* ios-wheelphone-library.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,12 +262,12 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Stefano Morgani (5QWJ4RGGU9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Wheelphone;
 				PROVISIONING_PROFILE = "426B3C55-6E4F-41FA-A3DA-052066CA427A";
 				SDKROOT = iphoneos;
@@ -317,7 +277,6 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefano Morgani";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
