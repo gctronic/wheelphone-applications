@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7BAB018717420979003BF1A0"
-               BuildableName = "WheelphoneMonitor.app"
+               BuildableName = "WPMonitor.app"
                BlueprintName = "WheelphoneMonitor"
                ReferencedContainer = "container:WheelphoneMonitor.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7BAB018717420979003BF1A0"
-            BuildableName = "WheelphoneMonitor.app"
+            BuildableName = "WPMonitor.app"
             BlueprintName = "WheelphoneMonitor"
             ReferencedContainer = "container:WheelphoneMonitor.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7BAB018717420979003BF1A0"
-            BuildableName = "WheelphoneMonitor.app"
+            BuildableName = "WPMonitor.app"
             BlueprintName = "WheelphoneMonitor"
             ReferencedContainer = "container:WheelphoneMonitor.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7BAB018717420979003BF1A0"
-            BuildableName = "WheelphoneMonitor.app"
+            BuildableName = "WPMonitor.app"
             BlueprintName = "WheelphoneMonitor"
             ReferencedContainer = "container:WheelphoneMonitor.xcodeproj">
          </BuildableReference>
