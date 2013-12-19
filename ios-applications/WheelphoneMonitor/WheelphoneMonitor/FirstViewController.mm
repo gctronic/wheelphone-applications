@@ -48,7 +48,8 @@
 @synthesize lineLostTx;
 @synthesize lineSpeedTxt;
 @synthesize btnCliffDetection;
-
+@synthesize btnStayOnTable;
+@synthesize imageState;
 
 - (void)viewDidLoad
 {
@@ -75,6 +76,14 @@
     ground2.transform = transform;
     ground3.transform = transform;
     
+    imgDriveNormal = [UIImage imageNamed: @"drive_00.png"];
+    imgDriveFear = [UIImage imageNamed: @"drive_01.png"];
+    imgDriveAngry = [UIImage imageNamed: @"drive_02.png"];
+    imgDriveLeft = [UIImage imageNamed: @"drive_sx.png"];
+    imgDriveRight = [UIImage imageNamed: @"drive_dx.png"];
+    
+    [imageState setImage:imgDriveNormal];
+    
     threshold.delegate = self;
     lineLostTx.delegate = self;
     lineSpeedTxt.delegate = self;    
@@ -98,6 +107,7 @@
         [btnFollowing setTitle:@"Start line following" forState:UIControlStateNormal];
     } else {
         isFollowing = true;
+        globalState = LINE_SEARCH;
         [btnFollowing setTitle:@"Stop line following" forState:UIControlStateNormal];
     }
     
@@ -108,7 +118,20 @@
         [btnCliffDetection setTitle:@"Cliff detection ON" forState:UIControlStateNormal];
     } else {
         isCliffDetecting = true;
+        globalState = MOVE_AROUND;
         [btnCliffDetection setTitle:@"Cliff detection OFF" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)stayOnTablePressed:(UIButton *)sender {
+    if(stayingOnTable) {
+        stayingOnTable = false;
+        [btnStayOnTable setTitle:@"Start stay on the table" forState:UIControlStateNormal];
+    } else {
+        stayingOnTable = true;
+        globalState = ENABLE_OBSTACLE_AVOIDANCE;
+        initCounter = 20;
+        [btnStayOnTable setTitle:@"Stop stay on the table" forState:UIControlStateNormal];
     }
 }
 
@@ -153,11 +176,13 @@
                 break;
             case 2:
                 if ([textField.text isEqualToString:@""]) {
-                    [textField setText:[NSString stringWithFormat:@"%d",10]];
-                    desiredSpeed = 10;
+                    [textField setText:[NSString stringWithFormat:@"%d",INIT_SPEED]];
+                    desiredSpeed = INIT_SPEED;
+                    maxSpeed = desiredSpeed*1.5;
                     return;
                 }
                 desiredSpeed = [textField.text intValue];
+                maxSpeed = desiredSpeed*1.5;
                 break;
                                 
         }
@@ -312,6 +337,10 @@
             } else {
                 outOfLine = 0;
             }
+            /*
+            lSpeed = -(groundThreshold-robGroundValues[0])/10 - (groundThreshold-robGroundValues[1])/5 + (groundThreshold-robGroundValues[2])/5 + (groundThreshold-robGroundValues[3])/10 + desiredSpeed;
+            rSpeed = (groundThreshold-robGroundValues[0])/10 + (groundThreshold-robGroundValues[1])/5 - (groundThreshold-robGroundValues[2])/5 - (groundThreshold-robGroundValues[3])/10 + desiredSpeed;
+            */
             
             if(robGroundValues[0]<groundThreshold && robGroundValues[1]>groundThreshold && robGroundValues[2]>groundThreshold && robGroundValues[3]>groundThreshold) { // left ground inside line, turn left
                 lSpeed = 0;
@@ -355,6 +384,21 @@
                 lSpeed = desiredSpeed;
                 rSpeed = desiredSpeed;
             }
+            
+            /*
+            if(lSpeed > maxSpeed) {
+                lSpeed = maxSpeed;
+            }
+            if(lSpeed < -maxSpeed) {
+                lSpeed = -maxSpeed;
+            }
+            if(rSpeed > maxSpeed) {
+                rSpeed = maxSpeed;
+            }
+            if(rSpeed < -maxSpeed) {
+                rSpeed = -maxSpeed;
+            }
+            */
             
             [behaviorStat setText:[NSString stringWithFormat:@"LINE FOLLOW (%d,%d)", lSpeed, rSpeed]];
             
@@ -411,8 +455,147 @@
             rSpeedPrev = rSpeed;
             lSpeedPrev = lSpeed;
         }
-
+        
     } else if(isCliffDetecting) {
+
+        if([robot isCalibrating]) {
+            return;
+        }
+			
+        if(globalState == MOVE_AROUND) {
+            lSpeed = desiredSpeed;
+            rSpeed = desiredSpeed;
+            [behaviorStat setText:[NSString stringWithFormat:@"CLIFF NOT DETECTED"]];
+				
+            if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
+            
+                minSensorValue = robGroundValues[0];
+                minSensor = GROUND_LEFT;
+                if(robGroundValues[1] < minSensorValue) {
+                    minSensorValue = robGroundValues[1];
+                    minSensor = GROUND_CENTER_LEFT;
+                }
+                if(robGroundValues[2] < minSensorValue) {
+                    minSensorValue = robGroundValues[2];
+                    minSensor = GROUND_CENTER_RIGHT;
+                }
+                if(robGroundValues[3] < minSensorValue) {
+                    minSensorValue = robGroundValues[3];
+                    minSensor = GROUND_RIGHT;
+                }
+                
+                lSpeed = -30;
+                rSpeed = -30;
+                globalState = COME_BACK;
+                moveBackCounter = 0;
+                //[robot disableObstacleAvoidance];
+                
+                [behaviorStat setText:[NSString stringWithFormat:@"CLIFF DETECTED (%d,%d)", lSpeed, rSpeed]];
+                
+            }
+            
+            if(robProxValues[0]>=OBJECT_THR || robProxValues[1]>=OBJECT_THR || robProxValues[2]>=OBJECT_THR || robProxValues[3]>=OBJECT_THR) {
+                stopAvoidTime = [NSDate date];
+                avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
+                if(avoidTime < 1) {   // if an object is encountered soon (within 0.5 seconds) then we can suppose
+                    // this is the same object as before still not overcome
+                    sameObjDetectCount++;
+                } else {
+                    sameObjDetectCount = 0;
+                }
+                printf("avoid time = %f\n", avoidTime);
+                printf("sameObjCount = %d\n", sameObjDetectCount);
+                if(sameObjDetectCount >= 4) {   // if after four times the same object cannot be overcome it means the
+                    // robot is somehow blocked, thus pivot turn
+                    lSpeed = -desiredSpeed;
+                    rSpeed = desiredSpeed;
+                    globalState = PIVOT_ROTATION_2;
+                    globalStatePrev = MOVE_AROUND;
+                    
+                } else {
+                    lSpeed = desiredSpeed*2;
+                    rSpeed = desiredSpeed*2;
+                    globalState = AVOID_OBJECT_2;
+                    globalStatePrev = MOVE_AROUND;
+                }
+                startAvoidTime = [NSDate date];
+            }
+            
+        } else if(globalState == COME_BACK) {
+				
+            moveBackCounter++;
+            if(moveBackCounter >= 11) {	// about 750 msec
+                stoppedCounter = 0;
+                lSpeed = 0;
+                rSpeed = 0;
+                globalState = STOPPED;
+            }
+            
+            [behaviorStat setText:[NSString stringWithFormat:@"COME BACK (%d,%d)", lSpeed, rSpeed]];
+				
+        } else if(globalState == STOPPED) {
+            
+            stoppedCounter++;
+            if(stoppedCounter >= 5) {
+                rotateCounter = 0;
+                switch(minSensor) {
+                    case GROUND_LEFT:
+                    case GROUND_CENTER_LEFT:
+                        lSpeed = 20;
+						rSpeed = -20;
+                        break;
+                        
+                    case GROUND_RIGHT:
+                    case GROUND_CENTER_RIGHT:
+						lSpeed = -20;
+						rSpeed = 20;
+                        break;
+                        
+                }
+                globalState = ROTATE;
+            }
+            [behaviorStat setText:[NSString stringWithFormat:@"STOPPED (%d,%d)", lSpeed, rSpeed]];
+        
+        } else if(globalState == ROTATE) {
+            
+            rotateCounter++;
+            if(rotateCounter >= 16) {
+                globalState = MOVE_AROUND;
+                //[robot enableObstacleAvoidance];
+            }
+            
+            [behaviorStat setText:[NSString stringWithFormat:@"ROTATE (%d,%d)", lSpeed, rSpeed]];
+            
+        } else if(globalState == AVOID_OBJECT_2) {
+            [behaviorStat setText:@"AVOID OBJECT"];
+            stopAvoidTime = [NSDate date];
+            avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
+            if(avoidTime >= 4) {
+                globalState = MOVE_AROUND;
+                globalStatePrev = AVOID_OBJECT_2;
+                startAvoidTime = [NSDate date];
+            }
+            if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
+                globalState = MOVE_AROUND;
+                lSpeed = 0;
+                rSpeed = 0;
+            }
+        } else if(globalState == PIVOT_ROTATION_2) {
+            [behaviorStat setText:@"PIVOT ROTATION"];
+            stopAvoidTime = [NSDate date];
+            avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
+            if(avoidTime >= 4) {
+                globalState = MOVE_AROUND;
+                globalStatePrev = PIVOT_ROTATION_2;
+            }
+            if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
+                globalState = MOVE_AROUND;
+                lSpeed = 0;
+                rSpeed = 0;
+            }
+        }
+        
+        /*}
         
         if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
             lSpeed = 0;
@@ -422,6 +605,161 @@
             lSpeed = desiredSpeed;
             rSpeed = desiredSpeed;
             [behaviorStat setText:[NSString stringWithFormat:@"CLIFF NOT DETECTED"]];
+        }
+        */
+            
+    } else if(stayingOnTable) {
+        
+        if([robot isCalibrating]) {
+            return;
+        }
+        
+        if(globalState == ENABLE_OBSTACLE_AVOIDANCE) {
+            [robot enableObstacleAvoidance];
+            globalState = CHECK_OA_ENABLED;
+            robotStoppedCounter = 0;
+            [behaviorStat setText:[NSString stringWithFormat:@"ENABLE OA"]];
+        } else if(globalState == CHECK_OA_ENABLED) {
+            robotStoppedCounter++;
+            if(robotStoppedCounter >= 5) {
+                if([robot isObstacleAvoidanceEnabled]) {
+                    globalState = ENABLE_CLIFF_AVOIDANCE;
+                } else {
+                    globalState = ENABLE_OBSTACLE_AVOIDANCE;
+                }
+            }
+            [behaviorStat setText:[NSString stringWithFormat:@"CHECK OA"]];
+        } else if(globalState == ENABLE_CLIFF_AVOIDANCE) {
+            [robot enableCliffAvoidance];
+            globalState = CHECK_CA_ENABLED;
+            robotStoppedCounter = 0;
+            [behaviorStat setText:[NSString stringWithFormat:@"ENABLE CA"]];
+        } else if(globalState == CHECK_CA_ENABLED) {
+            robotStoppedCounter++;
+            if(robotStoppedCounter >= 5) {
+                if([robot isCliffAvoidanceEnabled]) {
+                    globalState = MOVE_AROUND;
+                } else {
+                    globalState = ENABLE_CLIFF_AVOIDANCE;
+                }
+            }
+            [behaviorStat setText:[NSString stringWithFormat:@"CHECK CA"]];
+        } else if(globalState == MOVE_AROUND) {
+            lSpeed = desiredSpeed;
+            rSpeed = desiredSpeed;
+            [behaviorStat setText:[NSString stringWithFormat:@"MOVE AROUND"]];
+            
+            if(initCounter > 0) { 	// let the robot start moving forward before beginning the behavior otherwise
+                initCounter--;		// a false cliff is detected (vel=0 for both motors)
+                [robot setLeftSpeed:lSpeed];
+                [robot setRightSpeed:rSpeed];
+                return;
+            }
+            
+            if([robot getRightSpeed]==0 && [robot getLeftSpeed]==0) {   // cliff detected
+                robotStoppedCounter++;
+            } else {
+                robotStoppedCounter = 0;
+            }
+            
+            if(robotStoppedCounter >= 5) {	//5*50  about 250 ms
+                
+                [imageState setImage:imgDriveFear];
+                
+                robotStoppedCounter = 0;
+                
+                minSensorValue = robGroundValues[0];
+                minSensor = GROUND_LEFT;
+                if(robGroundValues[1] < minSensorValue) {
+                    minSensorValue = robGroundValues[1];
+                    minSensor = GROUND_CENTER_LEFT;
+                }
+                if(robGroundValues[2] < minSensorValue) {
+                    minSensorValue = robGroundValues[2];
+                    minSensor = GROUND_CENTER_RIGHT;
+                }
+                if(robGroundValues[3] < minSensorValue) {
+                    minSensorValue = robGroundValues[3];
+                    minSensor = GROUND_RIGHT;
+                }
+                
+                lSpeed = 0;
+                rSpeed = 0;
+                stoppedCounter = 0;
+                globalState = STOPPED2;
+                moveBackCounter = 0;
+                
+                [behaviorStat setText:[NSString stringWithFormat:@"CLIFF DETECTED (%d,%d)", lSpeed, rSpeed]];
+
+            }
+            
+        } else if(globalState == STOPPED2) {
+            
+            stoppedCounter++;
+            if(stoppedCounter >= 5) {
+                globalState = CHECK_CA_DISABLED;
+                [robot disableCliffAvoidance];	// disable cliff avoidance to let the robot move backward
+            }
+            [behaviorStat setText:[NSString stringWithFormat:@"STOPPED2 (%d,%d)", lSpeed, rSpeed]];
+            
+        } else if(globalState == DISABLE_CLIFF_AVOIDANCE) {
+            [robot disableCliffAvoidance];
+            globalState = CHECK_CA_DISABLED;
+        } else if(globalState == CHECK_CA_DISABLED) {
+            if([robot isCliffAvoidanceEnabled] == false) {
+                globalState = COME_BACK;
+                lSpeed = -30;
+                rSpeed = -30;
+            } else {
+                globalState = DISABLE_CLIFF_AVOIDANCE;
+            }
+        } else if(globalState == COME_BACK) {
+            
+            moveBackCounter++;
+            if(moveBackCounter >= 11) {	// about 750 msec
+                stoppedCounter = 0;
+                lSpeed = 0;
+                rSpeed = 0;
+                globalState = STOPPED;
+            }
+            
+            [behaviorStat setText:[NSString stringWithFormat:@"COME BACK (%d,%d)", lSpeed, rSpeed]];
+            
+        } else if(globalState == STOPPED) {
+            
+            stoppedCounter++;
+            if(stoppedCounter >= 5) {
+                rotateCounter = 0;
+                switch(minSensor) {
+                    case GROUND_LEFT:
+                    case GROUND_CENTER_LEFT:
+                        lSpeed = 20;
+						rSpeed = -20;
+                        [imageState setImage:imgDriveRight];
+                        break;
+                        
+                    case GROUND_RIGHT:
+                    case GROUND_CENTER_RIGHT:
+						lSpeed = -20;
+						rSpeed = 20;
+                        [imageState setImage:imgDriveLeft];
+                        break;
+                        
+                }
+                globalState = ROTATE;
+            }
+            [behaviorStat setText:[NSString stringWithFormat:@"STOPPED (%d,%d)", lSpeed, rSpeed]];
+            
+        } else if(globalState == ROTATE) {
+            
+            rotateCounter++;
+            if(rotateCounter >= 16) {
+                globalState = ENABLE_CLIFF_AVOIDANCE;
+                [imageState setImage:imgDriveNormal];
+            }
+            
+            [behaviorStat setText:[NSString stringWithFormat:@"ROTATE (%d,%d)", lSpeed, rSpeed]];
+            
         }
         
     } else {
@@ -455,12 +793,14 @@
     minSpeedLineFollow = 10;
     tempSpeed = 0;
     desiredSpeed = INIT_SPEED;
+    maxSpeed = desiredSpeed*1.5;
     lineLostThr = INIT_LOST_THR;
     lSpeed = 0;
     rSpeed = 0;
     lSpeedPrev = 0;
     rSpeedPrev = 0;
     isNearObject = false;
+    stayingOnTable = false;
     
     [robot enableObstacleAvoidance];
     

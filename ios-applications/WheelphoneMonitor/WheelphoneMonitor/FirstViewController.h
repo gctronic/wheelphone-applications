@@ -14,15 +14,37 @@
 
 #define DEBUG_PRINT 0
 
+// line following
 #define LINE_SEARCH 0
 #define LINE_FOLLOW 1
 #define AVOID_OBJECT 2
 #define PIVOT_ROTATION 3
 #define INIT_GROUND_THR 180
-#define INIT_SPEED 10
+#define INIT_SPEED 60
 #define INIT_LOST_THR 15
 #define MAX_SPEED 350
 #define OBJECT_THR 35
+
+// stay on the table using sensors information
+#define MOVE_AROUND 0
+#define COME_BACK 1
+#define ROTATE 2
+#define AVOID_OBJECT_2 3
+#define PIVOT_ROTATION_2 4
+#define STOPPED 5
+#define GROUND_LEFT 0
+#define GROUND_CENTER_LEFT 1
+#define GROUND_CENTER_RIGHT 2
+#define GROUND_RIGHT 3
+
+// stay on the table using onboard behavior
+#define ENABLE_OBSTACLE_AVOIDANCE 6
+#define CHECK_OA_ENABLED 7
+#define ENABLE_CLIFF_AVOIDANCE 8
+#define CHECK_CA_ENABLED 9
+#define DISABLE_CLIFF_AVOIDANCE 10
+#define CHECK_CA_DISABLED 11
+#define STOPPED2 12
 
 @interface FirstViewController : UIViewController <UITextFieldDelegate, AVAudioPlayerDelegate> {
     
@@ -30,6 +52,7 @@
     BOOL isFollowing;
     char globalState;
     int desiredSpeed;
+    int maxSpeed;
     int groundThreshold;
     int lineFound;
     int lineLostThr;
@@ -43,8 +66,23 @@
     char globalStatePrev;
     int sameObjDetectCount;
     
-    // CLIFF DETECTION
+    // STAY ON TABLE USING SENSORS INFORMATION
     BOOL isCliffDetecting;
+    int minSensorValue;
+    int minSensor;
+    int moveBackCounter;
+    int rotateCounter;
+    int stoppedCounter;
+    
+    // STAY ON THE TABLE WITH ONBOARD BEHAVIOR ENABLED
+    BOOL stayingOnTable;
+    int initCounter;
+    int robotStoppedCounter;
+    UIImage *imgDriveNormal;
+    UIImage *imgDriveFear;
+    UIImage *imgDriveAngry;
+    UIImage *imgDriveLeft;
+    UIImage *imgDriveRight;
     
     // VARIOUS
     WheelphoneRobot* robot;    
@@ -66,6 +104,8 @@
 - (void)executeBehaviors;
 - (IBAction)calibrateSensors:(id)sender;
 - (IBAction)fwTapped:(id)sender;
+- (IBAction)cliffDetectionPressed:(UIButton *)sender;
+- (IBAction)stayOnTablePressed:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UITextField *lineSpeedTxt;
 @property (weak, nonatomic) IBOutlet UITextField *threshold;
 @property (weak, nonatomic) IBOutlet UITextField *lineLostTx;
@@ -100,6 +140,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnFollowing;
 @property (weak, nonatomic) IBOutlet UILabel *behaviorStat;
 @property (weak, nonatomic) IBOutlet UIButton *btnCliffDetection;
+@property (weak, nonatomic) IBOutlet UIButton *btnStayOnTable;
+@property (weak, nonatomic) IBOutlet UIImageView *imageState;
 
 
 @end

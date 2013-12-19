@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CAD12BC0-FD56-4005-8A94-DFE0BFC349DA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>WheelphoneMonitor</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>252273D0-2A41-4F15-A6B6-222E87A16A0E</key>
+		<string>https://wheelphone-applications.googlecode.com/svn/trunk/ios-applications/WheelphoneMonitor</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>WheelphoneMonitor.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>252273D0-2A41-4F15-A6B6-222E87A16A0E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>252273D0-2A41-4F15-A6B6-222E87A16A0E</key>
+		<string>https://gctronic.com@wheelphone-applications.googlecode.com/svn</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://gctronic.com@wheelphone-applications.googlecode.com/svn/trunk/ios-applications/WheelphoneMonitor/WheelphoneMonitor.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>252273D0-2A41-4F15-A6B6-222E87A16A0E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>252273D0-2A41-4F15-A6B6-222E87A16A0E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WheelphoneMonitor</string>
+		</dict>
+	</array>
+</dict>
+</plist>
