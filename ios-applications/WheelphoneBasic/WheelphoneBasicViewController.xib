@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
@@ -113,7 +114,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="calibrateTapped:" destination="-1" eventType="touchUpInside" id="34"/>
+                        <action selector="calibrateTapped:" destination="-1" eventType="touchUpInside" id="bES-Kp-1qb"/>
                     </connections>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="L:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="39">

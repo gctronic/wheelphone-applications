@@ -14,11 +14,12 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2899E5220DE3E06400AC0155 /* WheelphoneBasicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* WheelphoneBasicViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
-		28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */; };
+		28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.mm */; };
 		3536F4E911134D2900F2D0B2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */; };
 		3536F5351113563300F2D0B2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3536F5341113563300F2D0B2 /* AVFoundation.framework */; };
-		7B51B2F3182901D400167A5A /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B51B2F1182901D400167A5A /* ios-wheelphone-library.bundle */; };
-		7B51B2F4182901D400167A5A /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B51B2F2182901D400167A5A /* ios-wheelphone-library.framework */; };
+		7B7E384C18634A1E002D7004 /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B7E384A18634A1E002D7004 /* ios-wheelphone-library.bundle */; };
+		7B7E384D18634A1E002D7004 /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7E384B18634A1E002D7004 /* ios-wheelphone-library.framework */; };
+		7B7E384F18634C41002D7004 /* wheelphone-basic~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B7E384E18634C41002D7004 /* wheelphone-basic~iphone.png */; };
 		7BD8343B16F08EA7000863FF /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343616F08EA7000863FF /* down-arrow.png */; };
 		7BD8343C16F08EA7000863FF /* left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343716F08EA7000863FF /* left-arrow.png */; };
 		7BD8343D16F08EA7000863FF /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BD8343816F08EA7000863FF /* right-arrow.png */; };
@@ -39,13 +40,14 @@
 		2899E5210DE3E06400AC0155 /* WheelphoneBasicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WheelphoneBasicViewController.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		28D7ACF60DDB3853001CB0EB /* WheelphoneBasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelphoneBasicViewController.h; sourceTree = "<group>"; };
-		28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WheelphoneBasicViewController.m; sourceTree = "<group>"; };
+		28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WheelphoneBasicViewController.mm; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* WheelphoneBasic_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelphoneBasic_Prefix.pch; sourceTree = "<group>"; };
 		3536F4E811134D2900F2D0B2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		3536F5341113563300F2D0B2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		7B51B2F1182901D400167A5A /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "ios-wheelphone-library.bundle"; path = "../../ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
-		7B51B2F2182901D400167A5A /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ios-wheelphone-library.framework"; path = "../../ios-wheelphone-library.framework"; sourceTree = "<group>"; };
+		7B7E384A18634A1E002D7004 /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
+		7B7E384B18634A1E002D7004 /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ios-wheelphone-library.framework"; sourceTree = "<group>"; };
+		7B7E384E18634C41002D7004 /* wheelphone-basic~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-basic~iphone.png"; sourceTree = "<group>"; };
 		7BD8343616F08EA7000863FF /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
 		7BD8343716F08EA7000863FF /* left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow.png"; sourceTree = "<group>"; };
 		7BD8343816F08EA7000863FF /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
@@ -66,8 +68,8 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				3536F4E911134D2900F2D0B2 /* AudioToolbox.framework in Frameworks */,
+				7B7E384D18634A1E002D7004 /* ios-wheelphone-library.framework in Frameworks */,
 				3536F5351113563300F2D0B2 /* AVFoundation.framework in Frameworks */,
-				7B51B2F4182901D400167A5A /* ios-wheelphone-library.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +82,7 @@
 				1D3623240D0F684500981E51 /* WheelphoneBasicAppDelegate.h */,
 				1D3623250D0F684500981E51 /* WheelphoneBasicAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* WheelphoneBasicViewController.h */,
-				28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.m */,
+				28D7ACF70DDB3853001CB0EB /* WheelphoneBasicViewController.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -118,6 +120,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B7E384E18634C41002D7004 /* wheelphone-basic~iphone.png */,
 				7BD8344216F0BD8A000863FF /* wheelphone-logo.png */,
 				7BD8344016F0BD4C000863FF /* wheelphone-basic.png */,
 				7BD8343616F08EA7000863FF /* down-arrow.png */,
@@ -135,8 +138,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7B51B2F1182901D400167A5A /* ios-wheelphone-library.bundle */,
-				7B51B2F2182901D400167A5A /* ios-wheelphone-library.framework */,
+				7B7E384A18634A1E002D7004 /* ios-wheelphone-library.bundle */,
+				7B7E384B18634A1E002D7004 /* ios-wheelphone-library.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -173,6 +176,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = AUDUUYW869;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WheelphoneBasic" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -195,9 +203,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B7E384C18634A1E002D7004 /* ios-wheelphone-library.bundle in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* WheelphoneBasicViewController.xib in Resources */,
 				7BD8343B16F08EA7000863FF /* down-arrow.png in Resources */,
+				7B7E384F18634C41002D7004 /* wheelphone-basic~iphone.png in Resources */,
 				7BD8343C16F08EA7000863FF /* left-arrow.png in Resources */,
 				7BD8343D16F08EA7000863FF /* right-arrow.png in Resources */,
 				7BD8343E16F08EA7000863FF /* stop.png in Resources */,
@@ -205,7 +215,6 @@
 				7BD8344116F0BD4C000863FF /* wheelphone-basic.png in Resources */,
 				7BD8344316F0BD8A000863FF /* wheelphone-logo.png in Resources */,
 				7BDF589216F2166300273D92 /* Default-568h@2x.png in Resources */,
-				7B51B2F3182901D400167A5A /* ios-wheelphone-library.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,7 +227,7 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* WheelphoneBasicAppDelegate.m in Sources */,
-				28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.m in Sources */,
+				28D7ACF80DDB3853001CB0EB /* WheelphoneBasicViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,17 +238,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefano Morgani";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../..\"",
+					"\\\\\\\"$(SRCROOT)/../..\\\\\\\"",
+					"/Users/stefano/Desktop/lavoro/wheelphone/wheelphone-applications/ios-applications/WheelphoneBasic",
+					"/Users/stefano/Desktop/lavoro/wheelphone/wheelphone-applications",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WheelphoneBasic_Prefix.pch;
 				INFOPLIST_FILE = "WheelphoneBasic-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = WheelphoneBasic;
+				PROVISIONING_PROFILE = "DC21C9BC-4AB8-4260-B112-2FC5152BFDC0";
 			};
 			name = Debug;
 		};
@@ -247,29 +261,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefano Morgani";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../..\"",
+					"\\\\\\\"$(SRCROOT)/../..\\\\\\\"",
+					"/Users/stefano/Desktop/lavoro/wheelphone/wheelphone-applications/ios-applications/WheelphoneBasic",
+					"/Users/stefano/Desktop/lavoro/wheelphone/wheelphone-applications",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WheelphoneBasic_Prefix.pch;
 				INFOPLIST_FILE = "WheelphoneBasic-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = WheelphoneBasic;
+				PROVISIONING_PROFILE = "DC21C9BC-4AB8-4260-B112-2FC5152BFDC0";
 			};
 			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Stefano Morgani (5QWJ4RGGU9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefano Morgani";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefano Morgani";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Wheelphone;
-				PROVISIONING_PROFILE = "426B3C55-6E4F-41FA-A3DA-052066CA427A";
+				PROVISIONING_PROFILE = "DC21C9BC-4AB8-4260-B112-2FC5152BFDC0";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -277,11 +299,14 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefano Morgani";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefano Morgani";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = Wheelphone;
 				PROVISIONING_PROFILE = "DC21C9BC-4AB8-4260-B112-2FC5152BFDC0";
 				SDKROOT = iphoneos;

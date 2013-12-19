@@ -15,10 +15,14 @@
 @synthesize txtRightSpeed;
 
 - (void)viewDidLoad {
-    
+    debug = false;
+    robot = [WheelphoneRobot new];
 }
 
 - (void)updateSpeed {
+    if(debug) {
+        printf("updateSpeed\n");
+    }
     if(lSpeed >= 0) {
         [robot setLeftSpeed:lSpeed-rotSpeed];
         [txtLeftSpeed setText:[NSString stringWithFormat:@"%d", lSpeed-rotSpeed]];
@@ -92,6 +96,9 @@
 }
 
 - (IBAction)stopTapped:(id)sender {
+    if(debug) {
+        printf("stopTapped\n");
+    }
     rotSpeed = 0;
     lSpeed = 0;
     rSpeed = 0;

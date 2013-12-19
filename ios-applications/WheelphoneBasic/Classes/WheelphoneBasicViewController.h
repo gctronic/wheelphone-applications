@@ -10,6 +10,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <ios-wheelphone-library/WheelphoneRobot.h>
 
+
 #define SPEED_STEP 10
 #define MAX_SPEED 350
 
@@ -20,6 +21,7 @@
     int rotSpeed;
     BOOL isAvoidingObstacles;
     BOOL isAvoidingCliff;
+    BOOL debug;
 }
 -(void)updateSpeed;
 @property (retain, nonatomic) IBOutlet UILabel *txtRightSpeed;
