@@ -21,6 +21,7 @@
     int commTimeout;
     int commTimeoutLimit;		// based on "handleCommandsToRobot" task (repeatedly scheduled at about 50 ms)
     BOOL isConnected;					// flag indicating if the robot is connected (and exchanging packets) with the phone
+    BOOL stopSent;
     
 	// ROBOT STATE (robot => phone)
 	int proxValues[4];                  // front proximity values (higher value means nearer object)
@@ -54,7 +55,6 @@
                                         // bit 3 => cliff avoidance On/Off
                                         // others bits not used
     char currFlagPhoneToRobot;
-    bool stopSent;
     int noStopCount;
     
 	// VARIOUS
