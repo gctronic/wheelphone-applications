@@ -1,5 +1,10 @@
 package com.wheelphone.navigator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -77,9 +82,22 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 
 	private boolean mMenuState = true;
 
+	private String logString;
+	private boolean debugUsbComm = false;
+
+	public void setWheelphoneRobot(WheelphoneRobot wr) {
+		mWheelphone = wr;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		if(debugUsbComm) {
+			logString = TAG + ": onCreateView";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}
 		View rootView = inflater.inflate(R.layout.fragment_navigator,
 				container, false);
 		//Read the stored preferences:
@@ -91,9 +109,6 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		mOutput = (TextView)rootView.findViewById(R.id.output);
 
 		//Start robot control:
-		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
-		mWheelphone.setUSBCommunicationTimeout(10000);
-		mWheelphone.startUSBCommunication();
 		//		mWheelphone.enableSoftAcceleration();
 		if (useSpeedControl) {
 			mWheelphone.enableSpeedControl();
@@ -358,15 +373,38 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		}
 	}
 
+	@Override
+	public void onStart() {
+		if(debugUsbComm) {
+			logString = TAG + ": onStart";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}
+		super.onStart();
+	}
+	
+	@Override
+	public void onStop() {
+		if(debugUsbComm) {
+			logString = TAG + ": onStop";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}
+		super.onStop();
+	}
 
 	@Override
 	public void onResume() {
+		if(debugUsbComm) {
+			logString = TAG + ": onResume";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}		
 	    Log.i(TAG, "Trying to load OpenCV library");
 	    if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_6, getActivity(), mLoaderCallback)) {
 	        Log.e(TAG, "Cannot connect to OpenCV Manager");
-	    }
-		
-		mWheelphone.resumeUSBCommunication();
+	    }	
+
 		if(mUseProximity)
 			mWheelphone.setWheelPhoneRobotListener(this);
 		
@@ -376,6 +414,11 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 
 	@Override
 	public void onPause() {		
+		if(debugUsbComm) {
+			logString = TAG + ": onPause";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		} 		
 		super.onPause();
 		
 //		mLogcatStreamer.stop();
@@ -384,8 +427,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 		mCameraHandler.setFrameProcessor(null);
 		//Stop robot before disconnecting:
 		setSpeed(0, 0);
-		mWheelphone.pauseUSBCommunication();
-
+		
 		// Store current colors:
 		storeCurrentColors();
 	}
@@ -435,7 +477,7 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 	}
 
 	private String getStatus(){
-		String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
+		String status = mWheelphone.isRobotConnected() ? "Connected" : "Disconnected";
 		return status + ". L: " + mLeftSpeed + ", R: " + mRightSpeed + ". " + mFrameProcessor.getTargetYDisplacement();
 	}
 
@@ -551,5 +593,44 @@ public class FragmentNavigator extends Fragment implements MotionTrackerListener
 //		Log.d(TAG, "V: " + mRangeSeekBarV.getSelectedMinValue() + ", " + mRangeSeekBarV.getSelectedMaxValue());
 
 		mCameraViewOverlay.updateTargetIdx(selectedColor);
+	}
+	
+	void appendLog(String fileName, String text, boolean clearFile)
+	{       
+	   File logFile = new File("sdcard/" + fileName);
+	   if (!logFile.exists()) {
+	      try
+	      {
+	         logFile.createNewFile();
+	      } 
+	      catch (IOException e)
+	      {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	   } else {
+		   if(clearFile) {
+			   logFile.delete();
+			   try {
+				   logFile.createNewFile();
+			   } catch (IOException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			   }
+		   }
+	   }
+	   try
+	   {
+	      //BufferedWriter for performance, true to set append to file flag
+	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+	      buf.append(text);
+	      buf.newLine(); 
+	      buf.close();
+	   }
+	   catch (IOException e)
+	   {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	   }
 	}
 }

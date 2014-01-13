@@ -18,6 +18,7 @@ import com.wheelphone.navigator.FragmentAbout;
 import com.wheelphone.navigator.FragmentNavigator;
 import com.wheelphone.navigator.FragmentPreferences;
 import com.wheelphone.util.Fullscreen;
+import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
 public class ActivityMain extends Activity {
 
@@ -29,7 +30,9 @@ public class ActivityMain extends Activity {
 	private Fullscreen mFullscreen;
 
 	private FragmentNavigator mFragmentNavigator;
-
+	
+	private WheelphoneRobot mWheelphone;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +49,9 @@ public class ActivityMain extends Activity {
 		setContentView(R.layout.activity_main);
 
 		mFragmentNavigator = new FragmentNavigator();
+		mWheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
+		mFragmentNavigator.setWheelphoneRobot(mWheelphone);
+		
 //		fragment.setRetainInstance(true);
 		getFragmentManager().beginTransaction().replace(R.id.frame_preview, mFragmentNavigator).commit();
 
@@ -54,6 +60,8 @@ public class ActivityMain extends Activity {
 		
 		mFullscreen = new Fullscreen(mContentView, mControlsView, getActionBar());
 
+
+		
 	}    
 	
 	@Override
@@ -103,6 +111,7 @@ public class ActivityMain extends Activity {
 	protected void onResume() {
 		super.onResume();
 		mFullscreen.resume();
+    	mWheelphone.startUSBCommunication();
 	}
 	
 	private  OnBackStackChangedListener mOnBackStackChangedListener = new OnBackStackChangedListener() {    
