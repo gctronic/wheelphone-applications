@@ -41,8 +41,7 @@ public class FragmentRecorder extends Fragment{
 
 		//Start robot control:
 		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
-		mWheelphone.startUSBCommunication();
-		
+	
 		readAndSetPreferences();
 		
 		mButton = (Button) getActivity().findViewById(R.id.button_start_stop);
@@ -93,7 +92,7 @@ public class FragmentRecorder extends Fragment{
 
 	@Override
 	public void onResume() {
-		mWheelphone.resumeUSBCommunication();
+		mWheelphone.startUSBCommunication();
 		super.onResume();
 	}
 
@@ -103,7 +102,7 @@ public class FragmentRecorder extends Fragment{
 		//Stop robot before disconnecting:
 		mWheelphone.setSpeed(0, 0);
 
-		mWheelphone.pauseUSBCommunication();
+		mWheelphone.closeUSBCommunication();
 	}
 
 
@@ -114,7 +113,7 @@ public class FragmentRecorder extends Fragment{
 	}
 
 	public void setSpeed(int leftSpeed, int rightSpeed) {
-		String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
+		String status = mWheelphone.isRobotConnected() ? "Connected" : "Disconnected";
 		showText(status + ". L: " + leftSpeed + ", R: " + rightSpeed);
 		mWheelphone.setSpeed(leftSpeed, rightSpeed);
 	}
