@@ -1,5 +1,9 @@
 package com.wheelphone.wheelphone;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot.WheelPhoneRobotListener;
@@ -13,6 +17,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,6 +37,8 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 	private Field[] raws = R.raw.class.getFields();
 	private Context context;
 	boolean getFirmwareFlag = true;
+	private String logString;
+	private boolean debugUsbComm = false;
 	
 	// Robot state
 	WheelphoneRobot wheelphone;
@@ -73,6 +80,13 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
+		if(debugUsbComm) {
+			logString = TAG + ": onCreate";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
       		        
@@ -191,27 +205,46 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 
 	@Override
 	public void onStart() {
-		super.onStart();
-		wheelphone.startUSBCommunication();
+		if(debugUsbComm) {
+			logString = TAG + ": onStart";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}		
+		super.onStart();	
 	}
 	
     @Override
     public void onResume() {
+		if(debugUsbComm) {
+			logString = TAG + ": onResume";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}    	
     	super.onResume();
-    	wheelphone.resumeUSBCommunication();
+    	wheelphone.startUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(this);
     }	
     
     @Override
     public void onStop() {
-    	super.onStop();
+		if(debugUsbComm) {
+			logString = TAG + ": onStop";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}    	
+    	super.onStop();    	
     	android.os.Process.killProcess(android.os.Process.myPid());
     }
     
     @Override
     public void onPause() {
+		if(debugUsbComm) {
+			logString = TAG + ": onPause";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}    	
     	super.onPause();
-    	wheelphone.pauseUSBCommunication();
+    	wheelphone.closeUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(null);
     }  
     
@@ -393,7 +426,7 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 		
 		leftMeasSpeed.setText(String.valueOf(wheelphone.getLeftSpeed()));
 		rightMeasSpeed.setText(String.valueOf(wheelphone.getRightSpeed()));				
-		if(wheelphone.isUSBConnected()) {
+		if(wheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
 		} else {
@@ -505,5 +538,44 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 		} // stay on table
 		
 	}      
+	
+	void appendLog(String fileName, String text, boolean clearFile)
+	{       
+	   File logFile = new File("sdcard/" + fileName);
+	   if (!logFile.exists()) {
+	      try
+	      {
+	         logFile.createNewFile();
+	      } 
+	      catch (IOException e)
+	      {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	   } else {
+		   if(clearFile) {
+			   logFile.delete();
+			   try {
+				   logFile.createNewFile();
+			   } catch (IOException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			   }
+		   }
+	   }
+	   try
+	   {
+	      //BufferedWriter for performance, true to set append to file flag
+	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+	      buf.append(text);
+	      buf.newLine(); 
+	      buf.close();
+	   }
+	   catch (IOException e)
+	   {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	   }
+	}
     
 }
