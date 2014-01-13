@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.wheelphone.pet.util.Fullscreen;
+import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 
 public class ActivityMain extends Activity {
 
@@ -23,6 +24,9 @@ public class ActivityMain extends Activity {
 
 	private Fullscreen mFullscreen;
 
+	private FragmentPet mFragmentPet;
+	private WheelphoneRobot mWheelphone;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,7 +39,11 @@ public class ActivityMain extends Activity {
 
 		setContentView(R.layout.activity_main);
 
-		getFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPet()).commit();
+		mFragmentPet = new FragmentPet();
+		mWheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
+		mFragmentPet.setWheelphoneRobot(mWheelphone);
+		
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, mFragmentPet).commit();
 
 		mContentView = findViewById(R.id.content_frame);
 		
@@ -81,6 +89,7 @@ public class ActivityMain extends Activity {
 	protected void onResume() {
 		super.onResume();
 		mFullscreen.resume();
+		mWheelphone.startUSBCommunication();
 	}
 	
 	private  OnBackStackChangedListener mOnBackStackChangedListener = new OnBackStackChangedListener() {

@@ -353,7 +353,7 @@ public class Behaviour implements SensorEventListener, FaceTracking.FaceTracking
 	};
 
 	private static String getStatus(){
-		String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
+		String status = mWheelphone.isRobotConnected() ? "Connected" : "Disconnected";
 		return status + ". L: " + mLeftSpeed + ", R: " + mRightSpeed + ". " + EXPRESSIONS_NAMES.get(mCurrentState);
 	}
 	

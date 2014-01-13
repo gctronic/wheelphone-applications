@@ -40,6 +40,10 @@ public class FragmentPet extends Fragment {
 	
 	private Behaviour mBehaviour;
 
+	public void setWheelphoneRobot(WheelphoneRobot wr) {
+		mWheelphone = wr;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -54,9 +58,6 @@ public class FragmentPet extends Fragment {
 		//FaceExpressionsView
 		mFaceExpression = (FaceExpressions)rootView.findViewById(R.id.face);
 
-		//Start robot control:
-		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
-		mWheelphone.startUSBCommunication();
 		readAndSetPreferences();
 
 		//Face tracking: 
@@ -101,7 +102,6 @@ public class FragmentPet extends Fragment {
 	public void onResume() {
 		super.onResume();
 		Log.d(TAG, "onResume");
-		mWheelphone.resumeUSBCommunication();
 		mBehaviour.resume();
 		//Start logcat streamer
 //		mLogcatStreamer = new LogcatStreamer();
@@ -113,7 +113,6 @@ public class FragmentPet extends Fragment {
 	public void onPause() {
 		Log.d(TAG, "onPause");
 		//Stop robot before disconnecting:
-		mWheelphone.pauseUSBCommunication();
 //		getActivity().stopService(speechIntent);
 		mBehaviour.pause();
 		//Stop logcat streamer
