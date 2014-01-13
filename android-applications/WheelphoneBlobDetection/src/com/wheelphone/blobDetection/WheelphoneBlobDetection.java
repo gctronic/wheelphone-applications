@@ -167,9 +167,6 @@ public class WheelphoneBlobDetection extends Activity implements WheelPhoneRobot
 	@Override
 	public void onStart() {
 		super.onStart();
-		
-		wheelphone.startUSBCommunication();
-	    
 		this.setTitle("Wheelphone blob following");
 		
 	}
@@ -191,7 +188,7 @@ public class WheelphoneBlobDetection extends Activity implements WheelPhoneRobot
 			ad.show();
 		}		
         
-    	wheelphone.resumeUSBCommunication();
+    	wheelphone.startUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(this);
 		
     }
@@ -206,7 +203,7 @@ public class WheelphoneBlobDetection extends Activity implements WheelPhoneRobot
     public void onPause() {	
     	super.onPause();
     	
-    	wheelphone.pauseUSBCommunication();
+    	wheelphone.closeUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(null);
     	
 		if (null != mView)
