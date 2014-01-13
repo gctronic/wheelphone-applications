@@ -59,7 +59,6 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
     	outputText = (TextView)findViewById(R.id.outputText);
     			
         mWheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
-        mWheelphone.startUSBCommunication();
         mWheelphone.enableSpeedControl();
         mWheelphone.disableSoftAcceleration();
         mWheelphone.setWheelPhoneRobotListener(this);
@@ -69,13 +68,13 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
     @Override
     public void onResume() {
     	super.onResume();
-    	mWheelphone.resumeUSBCommunication();
+    	mWheelphone.startUSBCommunication();
     }	
     
     @Override
     public void onPause() {
     	super.onPause();
-    	mWheelphone.pauseUSBCommunication();
+    	mWheelphone.closeUSBCommunication();
     }  
 
     public void calibrateSensors(View view) {
@@ -118,7 +117,7 @@ public class WheelphoneActivity extends Activity implements WheelPhoneRobotListe
 		
 		mReadLeftSpeed.setText(String.valueOf(mWheelphone.getLeftSpeed()));
 		mReadRightSpeed.setText(String.valueOf(mWheelphone.getRightSpeed()));				
-		if(mWheelphone.isUSBConnected()) {
+		if(mWheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
 		} else {
