@@ -32,7 +32,6 @@ public class FragmentFaceme extends Fragment{
 
 		//Start robot control:
 		mWheelphone = new WheelphoneRobot(getActivity().getApplicationContext(), getActivity().getIntent());
-		mWheelphone.startUSBCommunication();
 //		mWheelphone.enableSoftAcceleration();
 		mWheelphone.disableSoftAcceleration();
 		mWheelphone.enableSpeedControl();
@@ -41,7 +40,7 @@ public class FragmentFaceme extends Fragment{
 
 	@Override
 	public void onResume() {
-		mWheelphone.resumeUSBCommunication();
+		mWheelphone.startUSBCommunication();
 		super.onResume();
 	}
 
@@ -52,7 +51,7 @@ public class FragmentFaceme extends Fragment{
 		mFaceTracker.stopTracking();
 		mWheelphone.setSpeed(0, 0);
 
-		mWheelphone.pauseUSBCommunication();
+		mWheelphone.closeUSBCommunication();
 	}
 
 
@@ -63,7 +62,7 @@ public class FragmentFaceme extends Fragment{
 	}
 
 	public void setSpeed(int leftSpeed, int rightSpeed) {
-		String status = mWheelphone.isUSBConnected() ? "Connected" : "Disconnected";
+		String status = mWheelphone.isRobotConnected() ? "Connected" : "Disconnected";
 		showText(status + ". L: " + leftSpeed + ", R: " + rightSpeed);
 		mWheelphone.setSpeed(leftSpeed, rightSpeed);
 	}
