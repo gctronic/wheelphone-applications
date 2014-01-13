@@ -105,7 +105,6 @@ public class ActivityMain extends Activity implements SensorEventListener, Actio
 		wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
 
 //		wheelphone.enableSpeedControl();
-		wheelphone.startUSBCommunication();
 		wheelphone.enableSoftAcceleration();
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|
@@ -173,14 +172,14 @@ public class ActivityMain extends Activity implements SensorEventListener, Actio
 	public void onResume() {
 		super.onResume();
 		mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
-		wheelphone.resumeUSBCommunication();
+		wheelphone.startUSBCommunication();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		mSensorManager.unregisterListener(this);
-		wheelphone.pauseUSBCommunication();
+		wheelphone.closeUSBCommunication();
 	}
 
 	/* 
