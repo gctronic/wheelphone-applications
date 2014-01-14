@@ -125,7 +125,6 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);		
 		
         wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
-        wheelphone.setUSBCommunicationTimeout(5000);
                
         msgbox("calibration", "Place the robot with the right wheel next to the black line and press the calibrate button. Wait until the process is terminated.");
  
@@ -134,13 +133,12 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 	@Override
 	public void onStart() {
 		super.onStart();
-		wheelphone.startUSBCommunication();
 	}
 	
     @Override
     public void onResume() {
     	super.onResume();
-    	wheelphone.resumeUSBCommunication();
+    	wheelphone.startUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(this);
     }	
     
@@ -153,7 +151,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
     @Override
     public void onPause() {
     	super.onPause();
-    	wheelphone.pauseUSBCommunication();
+    	wheelphone.closeUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(null);
     }  
     
@@ -179,7 +177,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 			}
 		}
 				
-		if(wheelphone.isUSBConnected()) {
+		if(wheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
 		} else {
@@ -273,12 +271,22 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 		int i = 0;
 		
 		File logFile = new File("sdcard/calibData.csv");
-		try {
-			logFile.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if (!logFile.exists()) {
+			try {
+				logFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			logFile.delete();
+			try {
+				logFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
 
 		try {
 			//BufferedWriter for performance, true to set append to file flag
