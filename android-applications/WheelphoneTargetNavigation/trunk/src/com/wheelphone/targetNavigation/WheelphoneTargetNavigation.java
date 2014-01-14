@@ -822,7 +822,7 @@ public class WheelphoneTargetNavigation extends Activity implements OnSharedPref
         wheelphone.enableSpeedControl();   
         //wheelphone.disableSpeedControl();   
         wheelphone.enableSoftAcceleration();
-        wheelphone.setUSBCommunicationTimeout(10000);     
+        wheelphone.setCommunicationTimeout(10000);     
         
 		tts = new TextToSpeech(this, this);
 		
@@ -1024,8 +1024,6 @@ public class WheelphoneTargetNavigation extends Activity implements OnSharedPref
     public void onStart() {
     	super.onStart();
 
-    	wheelphone.startUSBCommunication();
-    	    	
     	// Lock screen
     	wl.acquire();
     	
@@ -1039,7 +1037,7 @@ public class WheelphoneTargetNavigation extends Activity implements OnSharedPref
     public void onResume() {
     	super.onResume();
 
-   		wheelphone.resumeUSBCommunication();    
+   		wheelphone.startUSBCommunication();    
    		wheelphone.setWheelPhoneRobotListener(this);
 
     	// Determines if user is connected to a wireless network & displays ip 
@@ -1069,7 +1067,7 @@ public class WheelphoneTargetNavigation extends Activity implements OnSharedPref
     public void onPause() {
     	super.onPause();
 
-    	wheelphone.pauseUSBCommunication();
+    	wheelphone.closeUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(null);
     	
     	CustomHttpServer.setScreenState(false);
@@ -1301,7 +1299,7 @@ public class WheelphoneTargetNavigation extends Activity implements OnSharedPref
 		//batteryValue.setText(String.valueOf(String.format("%.2f", wheelphone.getBatteryCharge())));
 		batteryValue.setText(String.valueOf(wheelphone.getBatteryCharge())+"%");
 		
-		if(wheelphone.isUSBConnected()) {
+		if(wheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
 		} else {
