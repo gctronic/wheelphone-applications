@@ -108,7 +108,7 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
    	
         wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
         wheelphone.enableSpeedControl();     
-        wheelphone.setUSBCommunicationTimeout(5000);
+        wheelphone.setCommunicationTimeout(5000);
 
     	txtConnected = (TextView)findViewById(R.id.txtConnection);
     	
@@ -175,10 +175,6 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	@Override
 	public void onStart() {
 		super.onStart();
-		if(!usbStarted) {
-			usbStarted = true;
-			wheelphone.startUSBCommunication();
-		}
 		
     	// Lock screen
     	wl.acquire();
@@ -189,7 +185,10 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 	@Override
 	public void onResume() {
 		super.onResume();
-		wheelphone.resumeUSBCommunication();
+		if(!usbStarted) {
+			usbStarted = true;
+			wheelphone.startUSBCommunication();
+		}
 		wheelphone.setWheelPhoneRobotListener(this);
 	}
   
@@ -303,7 +302,7 @@ public class WheelphoneROS extends RosActivity implements WheelPhoneRobotListene
 			batteryPub.updateData(batteryValue);
 		}
 
-		if(!wheelphone.isUSBConnected()) {
+		if(!wheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Robot disconnected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.red));
 		} else {
