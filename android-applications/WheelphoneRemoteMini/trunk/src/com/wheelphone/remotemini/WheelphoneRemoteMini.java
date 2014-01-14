@@ -20,6 +20,9 @@
 
 package com.wheelphone.remotemini;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Timer;
@@ -91,7 +94,7 @@ import android.widget.Toast;
 public class WheelphoneRemoteMini extends Activity implements OnSharedPreferenceChangeListener, WheelPhoneRobotListener {
     
 	// Various
-	private static String TAG = "Wheelphone";
+	private static String TAG = WheelphoneRemoteMini.class.getName();
 	Timer timerImg = new Timer();
 	boolean getFirmwareFlag = true;
 	private int firmwareVersion=0;
@@ -108,7 +111,9 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
 	public int imgState = IMG_NORMAL; 
     public Intent intent;
     boolean frontImageActivityStarted = false;
-    
+	private String logString;
+	private boolean debugUsbComm = false;
+	
     // UI
 	Button btnStart;		
     
@@ -626,6 +631,12 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
    }    
    
     public void onCreate(Bundle savedInstanceState) {
+		if(debugUsbComm) {
+			logString = TAG + ": onCreate";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}
+		
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
@@ -691,15 +702,13 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
     }
     
     public void onStart() {
+		if(debugUsbComm) {
+			logString = TAG + ": onStart";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}	
     	super.onStart();
-    	
-    	// when FrontImageActivity is started and the back button is pressed then this "onStart"
-    	// is called again and we don't want to restart twice the communication. Basically only at the 
-    	// first call to "onStart" we start the USB communication.
-    	if(!frontImageActivityStarted) {
-    		wheelphone.startUSBCommunication();
-    	}
-    	
+    	   	
     	// Lock screen
     	wl.acquire();
     	
@@ -720,15 +729,28 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
     }
     	
     public void onStop() {
+		if(debugUsbComm) {
+			logString = TAG + ": onStop";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}  
     	super.onStop();
     	wl.release();
     }
     
     public void onResume() {
+		if(debugUsbComm) {
+			logString = TAG + ": onResume";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}   
     	super.onResume();
     	
+    	// when FrontImageActivity is started and the back button is pressed then this "onResume"
+    	// is called again and we don't want to restart twice the communication. Basically only at the 
+    	// first call to "onStart" we start the USB communication.    	
     	if(!frontImageActivityStarted) { 
-    		wheelphone.resumeUSBCommunication();        		
+    		wheelphone.startUSBCommunication();        		
     	} 	    	
     	
 
@@ -750,11 +772,16 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
     }
     
     public void onPause() {
+		if(debugUsbComm) {
+			logString = TAG + ": onPause";
+			Log.d(TAG, logString);
+			appendLog("debugUsbComm.txt", logString, false);
+		}     	
     	super.onPause();
     	
-    	// do not pause the communication here because otherwise when "FrontImageActivity" is 
+    	// do not close the communication here because otherwise when "FrontImageActivity" is 
     	// started then the communication doens't work anymore!
-    	//wheelphone.pauseUSBCommunication();
+    	//wheelphone.closeUSBCommunication();  
     	
     	CustomHttpServer.setScreenState(false);
     	unregisterReceiver(wifiStateReceiver);
@@ -819,7 +846,7 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
 	        case R.id.quit:
 	        	// Quits Spydroid i.e. stops the HTTP server
 	        	if (httpServer != null) httpServer.stop();
-	            wheelphone.pauseUSBCommunication();
+	            wheelphone.closeUSBCommunication();
 	        	finish();	
 	            return true;
 	        default:
@@ -1320,5 +1347,44 @@ public class WheelphoneRemoteMini extends Activity implements OnSharedPreference
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }	
+    
+	void appendLog(String fileName, String text, boolean clearFile)
+	{       
+	   File logFile = new File("sdcard/" + fileName);
+	   if (!logFile.exists()) {
+	      try
+	      {
+	         logFile.createNewFile();
+	      } 
+	      catch (IOException e)
+	      {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	   } else {
+		   if(clearFile) {
+			   logFile.delete();
+			   try {
+				   logFile.createNewFile();
+			   } catch (IOException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			   }
+		   }
+	   }
+	   try
+	   {
+	      //BufferedWriter for performance, true to set append to file flag
+	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+	      buf.append(text);
+	      buf.newLine(); 
+	      buf.close();
+	   }
+	   catch (IOException e)
+	   {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	   }
+	}
     
 }
