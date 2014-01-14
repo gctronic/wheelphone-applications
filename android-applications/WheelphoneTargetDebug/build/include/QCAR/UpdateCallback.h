@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     UpdateCallback.h
 
 @brief
     Header file for UpdateCallback class.
+
 ==============================================================================*/
 #ifndef _QCAR_UPDATECALLBACK_H_
 #define _QCAR_UPDATECALLBACK_H_

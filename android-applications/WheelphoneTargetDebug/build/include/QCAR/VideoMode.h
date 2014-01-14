@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     VideoMode.h
 
 @brief
     Header file for VideoMode struct.
+
 ==============================================================================*/
 #ifndef _QCAR_VIDEOMODE_H_
 #define _QCAR_VIDEOMODE_H_

@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     MultiTarget.h
 
 @brief
     Header file for MultiTarget class.
+
 ==============================================================================*/
 #ifndef _QCAR_MULTITARGETHEADERFILE__
 #define _QCAR_MULTITARGETHEADERFILE__

@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     Area.h
 
 @brief
     Header file for Area class.
+
 ==============================================================================*/
 
 
@@ -28,7 +29,6 @@ class QCAR_API Area
 public:
     enum TYPE {
         RECTANGLE,
-        RECTANGLE_INT,
         INVALID
     };
 

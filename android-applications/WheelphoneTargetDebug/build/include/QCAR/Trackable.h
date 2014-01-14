@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     Trackable.h
 
 @brief
     Header file for Trackable class.
+
 ==============================================================================*/
 #ifndef _QCAR_TRACKABLE_H_
 #define _QCAR_TRACKABLE_H_
@@ -34,7 +35,6 @@ public:
         IMAGE_TARGET,       ///< A trackable of ImageTarget type
         MULTI_TARGET,       ///< A trackable of MultiTarget type
         MARKER,             ///< A trackable of Marker type
-        WORD,               ///< A trackable of Word type
     };
     
     /// Returns the type of 3D object (e.g. MARKER)

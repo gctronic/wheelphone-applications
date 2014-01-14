@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     VirtualButton.h
 
 @brief
     Header file for VirtualButton class.
+
 ==============================================================================*/
 #ifndef _QCAR_VIRTUALBUTTON_H_
 #define _QCAR_VIRTUALBUTTON_H_
@@ -72,9 +73,6 @@ public:
 
     /// Returns a unique id for this virtual button.
     virtual int getID() const = 0;
-
-protected:
-    virtual ~VirtualButton() {}
 };
 
 } // namespace QCAR

@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     Matrices.h
 
 @brief
     Header file for Matrix34F and Matrix44F structs.
+
 ==============================================================================*/
 #ifndef _QCAR_MATRIX_H_
 #define _QCAR_MATRIX_H_

@@ -661,7 +661,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
         wheelphone.enableSpeedControl();   
         //wheelphone.disableSpeedControl();   
         wheelphone.enableSoftAcceleration();
-        wheelphone.setUSBCommunicationTimeout(10000);     
+        wheelphone.setCommunicationTimeout(10000);     
 		
         tabHost=(TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
@@ -748,9 +748,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
     
     public void onStart() {
     	super.onStart();
-
-    	wheelphone.startUSBCommunication();
-    	    	
+   	    	
     	// Lock screen
     	wl.acquire();
     	
@@ -764,7 +762,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
     public void onResume() {
     	super.onResume();
 
-   		wheelphone.resumeUSBCommunication();    
+   		wheelphone.startUSBCommunication();    
    		wheelphone.setWheelPhoneRobotListener(this);
 
         // QCAR-specific resume operation:
@@ -789,7 +787,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
     public void onPause() {
     	super.onPause();
 
-    	wheelphone.pauseUSBCommunication();
+    	wheelphone.closeUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(null);
     	    	
 //        if (mGlView != null)
@@ -895,7 +893,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 		txtOrient0.setText(String.valueOf(String.format("%.2f", targetOrientation[mCurrentTargetId])));				
 		batteryValue.setText(String.valueOf(wheelphone.getBatteryCharge())+"%");
 		
-		if(wheelphone.isUSBConnected()) {
+		if(wheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
 		} else {

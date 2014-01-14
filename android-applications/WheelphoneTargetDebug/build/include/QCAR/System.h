@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     System.h
 
 @brief
-    System specific definitions.
+    Definitions of DLL Export MACROS.
+
 ==============================================================================*/
 #ifndef _QCAR_SYSTEM_H_
 #define _QCAR_SYSTEM_H_
@@ -42,24 +43,5 @@ Proprietary - QUALCOMM Austria Research Center GmbH.
 
 #endif
 
-
-// Platform defines
-#ifdef QCAR_IS_WINDOWS
-
-namespace QCAR
-{
-    typedef unsigned __int16 UInt16;
-}
-
-#else // !QCAR_IS_WINDOWS
-
-#include <stdio.h> 
-
-namespace QCAR
-{
-    typedef __uint16_t UInt16;
-}
-
-#endif
 
 #endif // _QCAR_SYSTEM_H_

@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     Image.h
 
 @brief
     Header file for Image class.
+
 ==============================================================================*/
 #ifndef _QCAR_IMAGE_H_
 #define _QCAR_IMAGE_H_
@@ -79,9 +80,6 @@ public:
 
     /// Provides read-only access to pixel data
     virtual const void* getPixels() const = 0;
-
-protected:
-    virtual ~Image() {}
 };
 
 } // namespace QCAR

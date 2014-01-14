@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     Tool.h
 
 @brief
     Header file for global Tool functions.
+
 ==============================================================================*/
 #ifndef _QCAR_TOOL_H_
 #define _QCAR_TOOL_H_
@@ -65,10 +66,6 @@ namespace Tool
     /// Multiplies two QCAR-style 4x4-matrices (row-major order)
     QCAR_API Matrix44F multiply(const Matrix44F& matLeft,
                                 const Matrix44F& matRight);
-
-    /// Multiplies 1 vector and 1 QCAR-style 4x4-matrix (row-major order)
-    QCAR_API Vec4F multiply(const Vec4F& vec,
-                            const Matrix44F& mat);
 
     /// Multiplies two GL-style matrices (col-major order)
     QCAR_API Matrix44F multiplyGL(const Matrix44F& matLeft,

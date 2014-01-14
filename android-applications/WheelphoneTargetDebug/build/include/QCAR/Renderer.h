@@ -1,13 +1,14 @@
 /*==============================================================================
-Copyright (c) 2010-2013 QUALCOMM Austria Research Center GmbH.
-All Rights Reserved.
-Proprietary - QUALCOMM Austria Research Center GmbH.
-
+            Copyright (c) 2010-2012 QUALCOMM Austria Research Center GmbH.
+            All Rights Reserved.
+            Qualcomm Confidential and Proprietary
+            
 @file 
     Renderer.h
 
 @brief
     Header file for Renderer class.
+
 ==============================================================================*/
 #ifndef _QCAR_RENDERER_H_
 #define _QCAR_RENDERER_H_
@@ -43,10 +44,6 @@ public:
     /// Marks the beginning of rendering for the current frame and returns the
     /// State object.
     virtual State begin() = 0;
-
-    /// Marks the beginning of rendering for the given frame. Use this to draw a
-    /// specific camera frame, rather than the latest available one.
-    virtual void begin(State state) = 0;
 
     /// Draws the video background
     /// This should only be called between a begin() and end() calls
