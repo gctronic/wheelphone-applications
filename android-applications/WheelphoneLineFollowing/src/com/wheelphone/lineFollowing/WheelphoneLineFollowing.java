@@ -55,6 +55,8 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
 	// various
 	private String TAG = WheelphoneLineFollowing.class.getName();
 	boolean getFirmwareFlag = true;
+	private String logString;
+	private boolean debug = false;
 	
 	// Robot state
 	WheelphoneRobot wheelphone;
@@ -87,51 +89,12 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
 	
 	// UI
 	TextProgressBar barGround0, barGround1, barGround2, barGround3;   
-		
-	public void appendLog(String text)
-	{       
-	   File logFile = new File("sdcard/log.file");
-	   if (!logFile.exists())
-	   {
-	      try
-	      {
-	         logFile.createNewFile();
-	      } 
-	      catch (IOException e)
-	      {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      }
-	   }
-	   try
-	   {
-	      //BufferedWriter for performance, true to set append to file flag
-	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
-	      buf.append(text);
-	      buf.newLine(); 
-	      buf.close();
-	   }
-	   catch (IOException e)
-	   {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	   }
-	}
 	
 	/** Called when the activity is first created. */
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	    
-		try {
-	        PackageManager manager = this.getPackageManager();
-	        PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-	        Log.d(TAG, "Info:" + info.packageName + "\n" + info.versionCode + "\n" + info.versionName); 
-		} catch (NameNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-            
+           
         setContentView(R.layout.main);
        	       
         barGround0 = (TextProgressBar) findViewById(R.id.barGround0);
@@ -192,15 +155,14 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
 	
 	@Override
 	public void onStart() {
-		super.onStart();
-		wheelphone.startUSBCommunication();	    
+		super.onStart();   
 		this.setTitle("Wheelphone Line Following");
 	}
 	
     @Override
     public void onResume() {
     	super.onResume();
-    	wheelphone.resumeUSBCommunication();
+    	wheelphone.startUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(this);      		
     }
     
@@ -223,7 +185,7 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
     public void onPause() {
     	Log.d("pause", "pause"); 
     	super.onPause();
-    	//wheelphone.pauseUSBCommunication();
+    	//wheelphone.closeUSBCommunication();
     	//wheelphone.setWheelPhoneRobotListener(null);
     }
     
@@ -299,7 +261,7 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
 		//		G1		G3
 		// G0				G2
 		
-		if(wheelphone.isUSBConnected()) {
+		if(wheelphone.isRobotConnected()) {
 		
 	    	TextView txtConnected;	
 	    	txtConnected = (TextView)findViewById(R.id.txtConnection);
@@ -466,8 +428,12 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
 	    	txtConnected.setText("Disconnected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.red));
 		}
-			
-		//appendLog("l=" + lSpeed + ", r=" + rSpeed + ", grounds:" + groundValues[0] + "," + groundValues[1] + "," + groundValues[3] + "," + groundValues[2] + "\n");
+		
+		if(debug) {
+			logString = "l=" + lSpeed + ", r=" + rSpeed + ", grounds:" + groundValues[0] + "," + groundValues[1] + "," + groundValues[3] + "," + groundValues[2] + "\n";
+			Log.d(TAG, logString);
+			appendLog("debug.csv", logString, false);
+		}
 
 		proxValues[0] = wheelphone.getFrontProx(0);
 		proxValues[1] = wheelphone.getFrontProx(1);
@@ -503,5 +469,43 @@ public class WheelphoneLineFollowing extends Activity implements WheelPhoneRobot
         dlgAlert.create().show();
     }
 	    
+	void appendLog(String fileName, String text, boolean clearFile)
+	{       
+	   File logFile = new File("sdcard/" + fileName);
+	   if (!logFile.exists()) {
+	      try
+	      {
+	         logFile.createNewFile();
+	      } 
+	      catch (IOException e)
+	      {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	   } else {
+		   if(clearFile) {
+			   logFile.delete();
+			   try {
+				   logFile.createNewFile();
+			   } catch (IOException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			   }
+		   }
+	   }
+	   try
+	   {
+	      //BufferedWriter for performance, true to set append to file flag
+	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+	      buf.append(text);
+	      buf.newLine(); 
+	      buf.close();
+	   }
+	   catch (IOException e)
+	   {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	   }
+	}
     
 }
