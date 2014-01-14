@@ -1,0 +1,2 @@
+- when the robot is disconnected the app should not react anymore (we're interacting with the robot not the phone...)
+- add the possibility to calibrate the sensors (i.e. if the sensors aren't well calibrated the app could start in "angry" mode and remains there...)

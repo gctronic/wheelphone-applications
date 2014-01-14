@@ -264,7 +264,6 @@ public class WheelphoneDocking extends Activity  implements TextToSpeech.OnInitL
 	public void onStart() {
 		super.onStart();
 		this.setTitle("Wheelphone blob docking");
-		wheelphone.startUSBCommunication();
 	}
 	
     private void startServers() {
@@ -299,7 +298,7 @@ public class WheelphoneDocking extends Activity  implements TextToSpeech.OnInitL
 
     	startServers();
 
-    	wheelphone.resumeUSBCommunication();
+    	wheelphone.startUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(this);
     	
 		if( (null != mView) && !mView.openCamera() ) {
@@ -328,7 +327,7 @@ public class WheelphoneDocking extends Activity  implements TextToSpeech.OnInitL
     public void onPause() {
     	super.onPause();
     	CustomHttpServer.setScreenState(false);    	
-    	wheelphone.pauseUSBCommunication();
+    	wheelphone.closeUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(null);
 		if (null != mView) {
 			mView.releaseCamera();

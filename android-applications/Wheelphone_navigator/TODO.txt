@@ -1,0 +1,3 @@
+- add the possibility to enable/disable soft acceleration in the settings
+- add the possibility to calibrate the sensors
+- after a while the app stop itself with Xperia Tipo (low power phone), especially when changing the color sliders...; could be related to "android:hardwareAccelerated"?

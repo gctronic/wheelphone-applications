@@ -1,0 +1,2 @@
+- add informations about topic subscribed and topic published
+- add informations about robot ip and computer ip (IP:PORT)

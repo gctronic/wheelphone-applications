@@ -1,0 +1,4 @@
+- no information about robot connection state at the beginning (until pressing start)
+- disconnect on start (with samsung galaxy s3 mini)
+- crash on start (with Xperia Tipo)
+- add information about where the video is saved and in which format (possibility to change the format)

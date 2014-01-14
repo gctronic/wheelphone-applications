@@ -1,0 +1,4 @@
+- visualize the battery value in voltage
+- add "marker size" in cm unit in the UI
+- handle robot connection status: robot connected (on Update) and disconnected (with a timer)
+- make the app working with or without the robot connected

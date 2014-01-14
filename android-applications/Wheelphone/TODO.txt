@@ -1,0 +1,2 @@
+- visualize the battery value in voltage
+- sensors values log (odometry values) seems strange...check them again

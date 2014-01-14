@@ -1,0 +1,2 @@
+- visualize the battery value in voltage
+- with Xperia Tipo (low power phone) when the blob tab (camera image) is selected the app stops itself (no crash)...too much resources used?

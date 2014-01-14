@@ -1,0 +1,3 @@
+- show information about the sensors in the html page
+- show information about the charge (charging, charged, battery value) in the html page
+- show IP of the robot even if the phone is acting as access point

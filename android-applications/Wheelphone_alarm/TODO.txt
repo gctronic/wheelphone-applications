@@ -1,0 +1,2 @@
+- add information about robot communication status (connected/disconnected)
+- add the possibility to emit actual alarms (choose menu?)
