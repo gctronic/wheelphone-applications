@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.wheelphone.remote"
+      android:versionCode="4"
+      android:versionName="1.0">
+      
+    <uses-sdk
+        android:minSdkVersion="12"
+        android:targetSdkVersion="17" />
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>   
+ 	<uses-feature android:name="android.hardware.camera" />
+ 	<uses-feature android:name="android.hardware.camera.autofocus" 
+ 	    android:required="false"/>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+
+    <application android:icon="@drawable/wheelphone_logo_remote" android:label="@string/app_name">
+        <activity android:screenOrientation="portrait" 
+                  android:name=".WheelphoneRemote"
+                  android:launchMode="singleInstance"
+                  android:theme="@android:style/Theme.Panel"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+			
+			<intent-filter>
+				<action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+			</intent-filter>
+			
+			<meta-data android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
+				android:resource="@xml/accessory_filter" />
+			            
+        </activity>
+        <activity android:name="com.google.ads.AdActivity"
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <activity android:name=".OptionsActivity"
+                  android:label="@string/options_activity_title">
+        </activity>
+        <activity android:name=".ClientActivity"
+                  android:screenOrientation="portrait"
+            	  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+                  android:label="@string/client_activity_title">
+        </activity>
+        
+        <uses-library android:name="com.android.future.usb.accessory" />
+    </application>
+
+</manifest>

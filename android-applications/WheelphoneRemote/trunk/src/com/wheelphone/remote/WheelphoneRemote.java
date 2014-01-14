@@ -73,7 +73,8 @@ public class WheelphoneRemote extends Activity implements OnSharedPreferenceChan
 	private static String TAG = WheelphoneRemote.class.getName();
 	Timer timer = new Timer(), timerImg = new Timer();
 	boolean getFirmwareFlag = true;
-
+	boolean optionsStarted = false;
+	
 	// motion
 	public static final int MIN_SPEED = -350;
 	public static final int MAX_SPEED = 350;
@@ -213,9 +214,7 @@ public class WheelphoneRemote extends Activity implements OnSharedPreferenceChan
     
     public void onStart() {
     	super.onStart();  	
-    	
-    	wheelphone.startUSBCommunication();
-    	
+
     	// Lock screen
     	wl.acquire();
     	
@@ -243,7 +242,9 @@ public class WheelphoneRemote extends Activity implements OnSharedPreferenceChan
     public void onResume() {
     	super.onResume();
     	
-    	wheelphone.resumeUSBCommunication();
+    	if(!optionsStarted) {
+    		wheelphone.startUSBCommunication();
+    	}
     	
     	// Determines if user is connected to a wireless network & displays ip 
     	if (!streaming) displayIpAddress();
@@ -296,12 +297,14 @@ public class WheelphoneRemote extends Activity implements OnSharedPreferenceChan
             startActivityForResult(intent, 0);
             return true;*/
         case R.id.options:
+        	optionsStarted = true;
             // Starts QualityListActivity where user can change the streaming quality
             intent = new Intent(this.getBaseContext(),OptionsActivity.class);
             startActivityForResult(intent, 0);
             return true;
         case R.id.quit:
         	// Quits Spydroid i.e. stops the HTTP server
+        	wheelphone.closeUSBCommunication();
         	if (httpServer != null) httpServer.stop();
         	finish();	
             return true;

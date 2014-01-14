@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="options">Options</string>
+    <string name="quit">Quit</string>
+    <string name="client">Client</string>
+    <string name="app_name">Wheelphone remote</string>
+    <string name="description">Capture live video and audio streaming from your smartphone with Wheelphone remote</string>
+    <string name="line1">In chrome or firefox type</string>
+    <string name="line2">Or in VLC open</string>
+    <string name="client_activity_title">Client</string>
+    <string name="options_activity_title">Settings</string>
+    <string name="warning">Turn the wifi on and join a network !</string>
+    <string name="streaming">Streaming !</string>
+    <string name="notification_title">Wheelphone remote</string>
+    <string name="notification_content">Beware ! Wheelphone remote is running ;)</string>
+    <string name="client0">Here you can play streams from another smartphone running Spydroid. Both smartphones obvioulsy have to be connected to the same wireless network !</string>
+    <string name="client1">Connect</string>
+</resources>
