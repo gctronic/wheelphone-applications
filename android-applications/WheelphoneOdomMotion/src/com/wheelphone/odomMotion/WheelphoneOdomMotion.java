@@ -129,14 +129,13 @@ public class WheelphoneOdomMotion extends Activity implements WheelPhoneRobotLis
 	
 	@Override
 	public void onStart() {
-		super.onStart();
-		wheelphone.startUSBCommunication();	    		
+		super.onStart();   		
 	}
 	
     @Override
     public void onResume() {
     	super.onResume();
-    	wheelphone.resumeUSBCommunication();
+    	wheelphone.startUSBCommunication();
     	wheelphone.setWheelPhoneRobotListener(this);      		
     }  
     
@@ -208,7 +207,7 @@ public class WheelphoneOdomMotion extends Activity implements WheelPhoneRobotLis
 		
 		// here you can insert behavior processed about every 50 ms (20 Hz)
 		
-		if(wheelphone.isUSBConnected()) {
+		if(wheelphone.isRobotConnected()) {
 	    	txtConnected.setText("Connected");
 	    	txtConnected.setTextColor(getResources().getColor(R.color.green));
 
