@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Device information"
+    android:id="@+id/deviceInfo"
+    android:background="#FF555555"
+    />
+        
+	<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="No device attached"
+    android:id="@+id/model"
+    />
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text=""
+    android:id="@+id/description"
+    android:visibility="gone"
+    />		
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text=""
+    android:id="@+id/version"
+    android:visibility="gone"
+    />	
+    
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Firmware information"
+    android:id="@+id/firmwareInfo"
+    android:background="#FF555555"
+    />
+    
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Firmware revision: "
+    android:id="@+id/revision"
+    />	
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Changelog: "
+    android:id="@+id/changelog"
+    />
+    
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text=""
+    android:id="@+id/empty"
+    />
+    
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Update status"
+    android:id="@+id/updateInfo"
+    android:background="#FF555555"
+    />
+    
+    <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text=""
+    android:id="@+id/updateStatus"
+    />
+    
+   	<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="..."
+    android:maxLines = "30"
+	android:scrollbars = "vertical"
+    android:id="@+id/debugView"
+    android:visibility="gone"
+    />
+    
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal|bottom"
+    >
+        
+	    <ImageView
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:adjustViewBounds="true"
+	        android:contentDescription="wheelphone"
+	        android:maxWidth="200dp"
+	        android:src="@drawable/ic_launcher" />
+
+	    <TextView  
+	    android:layout_width="150dp" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/weblink"
+	    android:gravity="center"
+	    />
+    </LinearLayout>    
+    
+</LinearLayout>
