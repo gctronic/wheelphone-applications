@@ -1,3 +1,5 @@
 - show information about the sensors in the html page
 - show information about the charge (charging, charged, battery value) in the html page
 - show IP of the robot even if the phone is acting as access point
+- audio stream seems not to work anymore...check
+- con Samsung Galaxy S3 mini l'immagine non viene trasferita sul PC a meno di aprire l'app camera prima...come mai?
