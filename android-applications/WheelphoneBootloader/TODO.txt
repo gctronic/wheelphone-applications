@@ -1,3 +1,4 @@
 - testare in telefono Huawei
 - aggiungere informazioni riguardo al firmware corrente sul robot
   - bisogna modificare il firmware del robot in modo che vada a scrivere la revision su una determinata posizione in flash e modificare il bootloader in modo che vada a leggere quella posizione in memoria e aggiorni la "version" di conseguenza
+  - un'altra opzione è salvare la data corrente di quando si fa l'update nell'applicazione WheelphoneBootloader e poi fare il confronto in automatico con quello che c'è online in base all'ultima data

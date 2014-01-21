@@ -527,7 +527,10 @@ public class Bootloader extends Activity {
 				Vector<VersionInfo> versions = parser.GetResults();
 
 				view = (TextView) findViewById(R.id.revision);
-				view.setText("Firmware " + versions.elementAt(0).getURL().split("-")[2]);
+				String[] temp = versions.elementAt(0).getURL().split("-");
+				view.setText("Firmware " + temp[2]);
+				temp = temp[3].split("\\.");
+				view.setText(view.getText() + " of " + temp[0] + "/" + temp[1] + "/" + temp[2] + " (dd/mm/yy)");
 				view = (TextView) findViewById(R.id.changelog);
 				view.setText("Changelog: " + versions.elementAt(0).getChangeLog());
 
