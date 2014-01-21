@@ -1,0 +1,3 @@
+- testare in telefono Huawei
+- aggiungere informazioni riguardo al firmware corrente sul robot
+  - bisogna modificare il firmware del robot in modo che vada a scrivere la revision su una determinata posizione in flash e modificare il bootloader in modo che vada a leggere quella posizione in memoria e aggiorni la "version" di conseguenza

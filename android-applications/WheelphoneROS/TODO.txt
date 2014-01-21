@@ -1,2 +1,15 @@
 - add informations about topic subscribed and topic published
 - add informations about robot ip and computer ip (IP:PORT)
+- ros odometry:
+  - increase arrow resolution in rviz
+  - how to see current odometry raw values in rviz? otherwise from terminal => command
+  - easy way to setup speed (from rviz is possible? otherwise from terminal => command)
+  - rotation it's a problem...error increase fast
+  - add uncertainty in rviz
+  - visualize informations about IR sensors in rviz
+- re-localize with targets
+- make the application termination more intuitive/easier (avoid to use notification bar)
+- make svn rosjava-tf
+- analyze in detail why "odom" publisher takes 500 ms to publish...where it takes much time exactly?
+- use updated libraries (rosjava, android core) to see if there are some improvements related to delays
+
