@@ -24,7 +24,7 @@ public class FragmentSettings extends Fragment {
 	private static final String TAG = FragmentSettings.class.getName();
 	private static SharedPreferences sharedPrefs;
 	private String logString;
-	private boolean debug = true;
+	private boolean debug = false;
 	
 
 	@Override

@@ -142,54 +142,6 @@ public class ActivityMain extends Activity implements SensorEventListener, Wheel
 
 		visualizeSettings();
 
-//		Intent i = getIntent();
-//		if (i.hasExtra("start_alarm")){
-//			
-//			if(debug) {
-//				logString = TAG + ": ring alarm intent";
-//				Log.d(TAG, logString);
-//				appendLog("debug.txt", logString, false);
-//			}
-//			
-//			//Toast.makeText(this, "RING RING !!!!!!!!!!", Toast.LENGTH_LONG).show(); // For example
-//			Log.d(TAG, "RING RING!!!!");
-//
-//			final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//			int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
-//			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, maxVolume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE); 
-//			audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);		
-//
-////			Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-////			mRingtone = RingtoneManager.getRingtone(getApplicationContext(), alarmSound);
-////			mRingtone.setStreamType(RingtoneManager.TYPE_ALARM);
-////			mRingtone.play();
-////			
-////			long[] pattern = {0, 500, 500};
-////			mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-////			mVibrator.vibrate(pattern, 1);			
-//			
-//			currSpeed = runningSpeed;
-//			if(debug) {
-//				logString = TAG + ": curr speed = " + currSpeed;
-//				Log.d(TAG, logString);
-//				appendLog("debug.txt", logString, false);
-//			}
-//			
-//			wheelphone.setSpeed(currSpeed, currSpeed);			
-//			
-//			//Set Alarm fragment:
-//			visualizeAlarm();
-//
-//			//Remove from the preferences the current alarm time
-//			SharedPreferences.Editor editor = sharedPrefs.edit();
-//			editor.putLong("prefAlarmTime", 0);
-//			editor.commit();	
-//			
-//			isRinging = true;
-//		} else {
-//			wheelphone.startUSBCommunication();
-//		}
-
 		// Get an instance of the sensor service, and use that to get an instance of
 		// a particular sensor.
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
