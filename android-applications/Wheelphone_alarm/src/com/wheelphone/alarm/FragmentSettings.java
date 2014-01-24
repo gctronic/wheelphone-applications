@@ -23,11 +23,20 @@ import android.view.ViewGroup;
 public class FragmentSettings extends Fragment {
 	private static final String TAG = FragmentSettings.class.getName();
 	private static SharedPreferences sharedPrefs;
-
+	private String logString;
+	private boolean debug = true;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		if(debug) {
+			logString = TAG + ": onCreateView()";
+			Log.d(TAG, logString);
+			ActivityMain.appendLog("debug.txt", logString, false);
+		}
+		
 		View v = inflater.inflate(R.layout.fragment_settings, container, false);
 
 		FragmentManager fragmentManager = getFragmentManager();
@@ -58,9 +67,18 @@ public class FragmentSettings extends Fragment {
 	}
 
 	public static class WakeUpConfiguration extends PreferenceFragment implements OnSharedPreferenceChangeListener{
-
+		private static final String TAG = WakeUpConfiguration.class.getName();
+		private String logString;
+		private boolean debug = true;
+		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
+			if(debug) {
+				logString = TAG + ": onCreate()";
+				Log.d(TAG, logString);
+				ActivityMain.appendLog("debug.txt", logString, false);
+			}
+			
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.settings);
 
@@ -69,6 +87,7 @@ public class FragmentSettings extends Fragment {
 			//Set current setting values to the presented interface
 			updatePreferenceSummary(sharedPrefs, "prefAlarmTime");
 			updatePreferenceSummary(sharedPrefs, "prefRunningSpeed");	
+			updatePreferenceSummary(sharedPrefs, "prefEscapeTimeout");
 		}
 
 		protected void updateAlarmSummary(){
@@ -104,6 +123,11 @@ public class FragmentSettings extends Fragment {
 			Preference p = findPreference(key);
 			if (p instanceof EditTextPreference) {
 				p.setSummary(sharedPrefs.getString(key, ""));
+				if(key.equals("prefRunningSpeed")) {
+					ActivityMain.runningSpeed = Integer.valueOf(sharedPrefs.getString(key, ""));
+				} else if(key.equals("prefEscapeTimeout")) {
+					ActivityMain.mEscapeTimeoutSec = Integer.valueOf(sharedPrefs.getString(key, "")); 
+				}
 			}
 			if (key.equals("prefAlarmTime")){
 				Long alarm = sharedPrefs.getLong("prefAlarmTime", 0);
@@ -122,12 +146,22 @@ public class FragmentSettings extends Fragment {
 
 		@Override
 		public void onResume() {
+			if(debug) {
+				logString = TAG + ": onResume()";
+				Log.d(TAG, logString);
+				ActivityMain.appendLog("debug.txt", logString, false);
+			}
 			super.onResume();
 			getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		}
 
 		@Override
 		public void onPause() {
+			if(debug) {
+				logString = TAG + ": onPause()";
+				Log.d(TAG, logString);
+				ActivityMain.appendLog("debug.txt", logString, false);
+			}
 			super.onPause();
 			getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 		}

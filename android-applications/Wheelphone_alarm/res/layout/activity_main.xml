@@ -1,7 +1,44 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" > -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/container"
+    >    
+            
+        <TextView
+			android:id="@+id/txtConnection"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical|center_horizontal"
+			android:text="@string/robotDisconnected"
+			android:textColor="@color/red"
+			android:textSize="18sp"
+			android:textStyle="bold" />  
+			
+        <TextView
+            android:id="@+id/txtRobotInCharge"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/notInCharge"
+            android:textSize="18sp" 
+            android:textStyle="bold"/>
+                       
+		<Button
+			android:id="@+id/btnCalibrate"
+			android:layout_width="fill_parent"
+			android:layout_height="40dp"
+			android:onClick="calibrateSensors"
+			android:text="@string/calibration" />
+
+    </LinearLayout>
+    <!-- </FrameLayout> -->

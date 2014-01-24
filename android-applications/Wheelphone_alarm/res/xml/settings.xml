@@ -5,11 +5,17 @@
 
     <PreferenceCategory android:title="@string/settings_desc" >
         <EditTextPreference
-            android:defaultValue="20"
+            android:defaultValue="250"
             android:inputType="number"
             android:key="prefRunningSpeed"
             android:title="@string/pref_set_running_speed" />
 
+        <EditTextPreference
+            android:defaultValue="1"
+            android:inputType="number"
+            android:key="prefEscapeTimeout"
+            android:title="@string/pref_set_escape_timeout" />        
+        
         <Preference
             android:key="prefAlarmTime"
             android:summary="@string/not_set"

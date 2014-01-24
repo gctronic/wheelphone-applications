@@ -1,2 +1,6 @@
-- add information about robot communication status (connected/disconnected)
-- add the possibility to emit actual alarms (choose menu?)
+- aggiungere comportamento per farlo rimanere in carica (se per caso dovesse uscire dalla carica)
+- aggiungere possibilità di abilitare cliff avoidance (per farlo girare sul comodino)
+- aggiungere possibilità di sceglire modalità di spegnimento della sveglia (button press, lift robot up, ...)
+- aggiungere random flash
+- aggiungere possibilità di abilitare/disabilitare fotografia quando si stoppa la sveglia (front camera)
+- aggiungere possibilità di abilitare/disabilitare post della foto su facebook (o altri soacial networks)
