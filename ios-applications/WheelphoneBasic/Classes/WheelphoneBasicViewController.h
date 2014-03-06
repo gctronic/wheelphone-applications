@@ -34,6 +34,7 @@
 - (IBAction)calibrateTapped:(id)sender;
 - (IBAction)avoidObstacleTapped:(id)sender;
 - (IBAction)avoidCliffTapped:(id)sender;
+@property (retain, nonatomic) IBOutlet UILabel *txtCommState;
 
 @end
 

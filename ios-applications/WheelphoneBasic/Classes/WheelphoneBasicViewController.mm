@@ -13,10 +13,13 @@
 
 @synthesize txtLeftSpeed;
 @synthesize txtRightSpeed;
+@synthesize txtCommState;
 
 - (void)viewDidLoad {
     debug = false;
     robot = [WheelphoneRobot new];
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(robotCommStateNotification:) name: @"WPCommStateUpdate" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(robotUpdateNotification:) name: @"WPUpdate" object: nil];
 }
 
 - (void)updateSpeed {
@@ -139,7 +142,28 @@
 - (void)dealloc {
     [txtLeftSpeed release];
     [txtRightSpeed release];
+    [txtCommState release];
     [super dealloc];
+}
+
+-(void)robotUpdateNotification: (NSNotification*)notification {
+    
+    //printf("sensors update\n");
+    
+}
+
+-(void)robotCommStateNotification: (NSNotification*)notification {
+    
+    //printf("comm state update\n");
+    
+    if([robot isRobotConnected]) {
+        [txtCommState setText:@"Connected"];
+        [txtCommState setTextColor:[UIColor greenColor]];
+    } else {
+        [txtCommState setText:@"Disconnected"];
+        [txtCommState setTextColor:[UIColor redColor]];
+    }
+    
 }
 
 
