@@ -54,7 +54,7 @@
 - (void)viewDidLoad
 {
     
-    printf("FirstViewController didLoad\n");
+    //printf("FirstViewController didLoad\n");
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -86,7 +86,15 @@
     
     threshold.delegate = self;
     lineLostTx.delegate = self;
-    lineSpeedTxt.delegate = self;    
+    lineSpeedTxt.delegate = self;
+
+//    int loopCount=0;
+//    while (1) {
+//        //NSLog(@"enable OA = %d", loopCount++);
+//        if([robot enableObstacleAvoidance] == 0) {
+//            break;
+//        }
+//    }
     
 }
 
@@ -104,34 +112,34 @@
     
     if(isFollowing) {
         isFollowing = false;
-        [btnFollowing setTitle:@"Start line following" forState:UIControlStateNormal];
+        [btnFollowing setBackgroundColor:[UIColor grayColor]];
     } else {
         isFollowing = true;
         globalState = LINE_SEARCH;
-        [btnFollowing setTitle:@"Stop line following" forState:UIControlStateNormal];
+        [btnFollowing setBackgroundColor:[UIColor greenColor]];
     }
     
 }
 - (IBAction)cliffDetectionPressed:(UIButton *)sender {
     if(isCliffDetecting) {
         isCliffDetecting = false;
-        [btnCliffDetection setTitle:@"Cliff detection ON" forState:UIControlStateNormal];
+        [btnCliffDetection setBackgroundColor:[UIColor grayColor]];
     } else {
         isCliffDetecting = true;
         globalState = MOVE_AROUND;
-        [btnCliffDetection setTitle:@"Cliff detection OFF" forState:UIControlStateNormal];
+        [btnCliffDetection setBackgroundColor:[UIColor greenColor]];
     }
 }
 
 - (IBAction)stayOnTablePressed:(UIButton *)sender {
     if(stayingOnTable) {
         stayingOnTable = false;
-        [btnStayOnTable setTitle:@"Start stay on the table" forState:UIControlStateNormal];
+        [btnStayOnTable setBackgroundColor:[UIColor grayColor]];
     } else {
         stayingOnTable = true;
         globalState = ENABLE_OBSTACLE_AVOIDANCE;
         initCounter = 20;
-        [btnStayOnTable setTitle:@"Stop stay on the table" forState:UIControlStateNormal];
+        [btnStayOnTable setBackgroundColor:[UIColor greenColor]];
     }
 }
 
@@ -159,8 +167,8 @@
         switch (textField.tag) {
             case 0:
                 if ([textField.text isEqualToString:@""]) {
-                    [textField setText:[NSString stringWithFormat:@"%d",180]];
-                    groundThreshold = 180;
+                    [textField setText:[NSString stringWithFormat:@"%d",INIT_GROUND_THR]];
+                    groundThreshold = INIT_GROUND_THR;
                     return;
                 }
                 groundThreshold = [textField.text intValue];
@@ -272,20 +280,57 @@
     }
 }
 
+- (void)checkMaxProx {
+    maxSensorValue = robProxValues[0];
+    maxSensor = PROX_LEFT;
+    if(robProxValues[1] > maxSensorValue) {
+        maxSensorValue = robProxValues[1];
+        maxSensor = PROX_CENTER_LEFT;
+    }
+    if(robProxValues[2] > maxSensorValue) {
+        maxSensorValue = robProxValues[2];
+        maxSensor = PROX_CENTER_RIGHT;
+    }
+    if(robProxValues[3] > maxSensorValue) {
+        maxSensorValue = robProxValues[3];
+        maxSensor = PROX_RIGHT;
+    }
+}
+
 - (void)executeBehaviors {
-    
+
     if(isFollowing) {
+        
+        [robot disableCliffAvoidance];
         
         // ground sensors position:
         //      G1  G2
         // G0           G3
         
-        // robot->getGroundProxs(robGroundValues);  // done in updateUI()
-        
         if(globalState == LINE_SEARCH) {
             
-            lSpeed = desiredSpeed; // move around
-            rSpeed = desiredSpeed;
+            if(rotationAfterObstacleCount > 0) {
+                rotationAfterObstacleCount--;
+                switch(maxSensor) {
+                    case PROX_LEFT:
+                    case PROX_CENTER_LEFT:
+                        lSpeed = 20;
+						rSpeed = -20;
+                        [imageState setImage:imgDriveRight];
+                        break;
+                        
+                    case PROX_RIGHT:
+                    case PROX_CENTER_RIGHT:
+						lSpeed = -20;
+						rSpeed = 20;
+                        [imageState setImage:imgDriveLeft];
+                        break;
+                        
+                }
+            } else {
+                lSpeed = desiredSpeed; // move around
+                rSpeed = desiredSpeed;
+            }
             
             if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
                 lineFound++;
@@ -300,30 +345,15 @@
             [behaviorStat setText:[NSString stringWithFormat:@"LINE SEARCH (%d,%d)", lSpeed, rSpeed]];
             
             if(robProxValues[0]>=OBJECT_THR || robProxValues[1]>=OBJECT_THR || robProxValues[2]>=OBJECT_THR || robProxValues[3]>=OBJECT_THR) {
-                stopAvoidTime = [NSDate date];
-                avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-                if(avoidTime < 1) {   // if an object is encountered soon (within 0.5 seconds) then we can suppose
-                                        // this is the same object as before still not overcome
-                    sameObjDetectCount++;
-                } else {
-                    sameObjDetectCount = 0;
+                [robot enableObstacleAvoidance];
+                [self checkMaxProx];
+                enabledOA = true;
+            } else {
+                [robot disableObstacleAvoidance];
+                if(enabledOA) {
+                    enabledOA = false;
+                    rotationAfterObstacleCount = 10;
                 }
-                printf("avoid time = %f\n", avoidTime);
-                printf("sameObjCount = %d\n", sameObjDetectCount);
-                if(sameObjDetectCount >= 4) {   // if after four times the same object cannot be overcome it means the
-                                                // robot is somehow blocked, thus pivot turn
-                    lSpeed = -desiredSpeed;
-                    rSpeed = desiredSpeed;
-                    globalState = PIVOT_ROTATION;
-                    globalStatePrev = LINE_SEARCH;
-                    
-                } else {
-                    lSpeed = desiredSpeed*2;
-                    rSpeed = desiredSpeed*2;
-                    globalState = AVOID_OBJECT;
-                    globalStatePrev = LINE_SEARCH;
-                }               
-                startAvoidTime = [NSDate date];
             }
             
         } else if(globalState == LINE_FOLLOW) {
@@ -337,131 +367,58 @@
             } else {
                 outOfLine = 0;
             }
-            /*
-            lSpeed = -(groundThreshold-robGroundValues[0])/10 - (groundThreshold-robGroundValues[1])/5 + (groundThreshold-robGroundValues[2])/5 + (groundThreshold-robGroundValues[3])/10 + desiredSpeed;
-            rSpeed = (groundThreshold-robGroundValues[0])/10 + (groundThreshold-robGroundValues[1])/5 - (groundThreshold-robGroundValues[2])/5 - (groundThreshold-robGroundValues[3])/10 + desiredSpeed;
-            */
             
-            if(robGroundValues[0]<groundThreshold && robGroundValues[1]>groundThreshold && robGroundValues[2]>groundThreshold && robGroundValues[3]>groundThreshold) { // left ground inside line, turn left
-                lSpeed = 0;
-                rSpeed = desiredSpeed*4;
-                if(rSpeed > MAX_SPEED) {
-                    rSpeed = MAX_SPEED;
+            if(rotationAfterObstacleCount > 0) {
+                rotationAfterObstacleCount--;
+                switch(maxSensor) {
+                    case PROX_LEFT:
+                    case PROX_CENTER_LEFT:
+                        lSpeed = 20;
+						rSpeed = -20;
+                        [imageState setImage:imgDriveRight];
+                        break;
+                        
+                    case PROX_RIGHT:
+                    case PROX_CENTER_RIGHT:
+						lSpeed = -20;
+						rSpeed = 20;
+                        [imageState setImage:imgDriveLeft];
+                        break;
+                        
                 }
-            } else if(robGroundValues[3]<groundThreshold && robGroundValues[0]>groundThreshold && robGroundValues[1]>groundThreshold && robGroundValues[2]>groundThreshold) {        // right ground inside line, turn right
-                lSpeed = desiredSpeed*4;
-                rSpeed = 0;
-                if(lSpeed > MAX_SPEED) {
-                    lSpeed = MAX_SPEED;
-                }
-            } else if(robGroundValues[1]>groundThreshold) { // we are on the black line but pointing out to the left => turn right
-                tempSpeed = (robGroundValues[1]-groundThreshold);
-                if(tempSpeed > MAX_SPEED) {
-                    tempSpeed = MAX_SPEED;
-                }
-                if(tempSpeed < minSpeedLineFollow) {
-                    tempSpeed = minSpeedLineFollow;
-                }
-                lSpeed = tempSpeed;
-                rSpeed = 0;
-                //lSpeed = desiredSpeed+tempSpeed;
-                //rSpeed = 0;
-
-            } else if(robGroundValues[2]>groundThreshold) { // we are on the black line but pointing out to the right => turn left
-                tempSpeed = (robGroundValues[2]-groundThreshold);
-                if(tempSpeed > MAX_SPEED) {
-                    tempSpeed = MAX_SPEED;
-                }
-                if(tempSpeed < minSpeedLineFollow) {
-                    tempSpeed = minSpeedLineFollow;
-                }
-                lSpeed = 0;
-                rSpeed = tempSpeed;
-                //lSpeed = 0;
-                //rSpeed = desiredSpeed+tempSpeed;
-
-            } else {        // within the line
-                lSpeed = desiredSpeed;
-                rSpeed = desiredSpeed;
+            } else {
+                lSpeed = -(groundThreshold-robGroundValues[0])/(300/desiredSpeed) - (groundThreshold-robGroundValues[1])/(300*2/desiredSpeed) + (groundThreshold-robGroundValues[2])/(300*2/desiredSpeed) + (groundThreshold-robGroundValues[3])/(300/desiredSpeed) + desiredSpeed;
+                rSpeed = (groundThreshold-robGroundValues[0])/(300/desiredSpeed) + (groundThreshold-robGroundValues[1])/(300*2/desiredSpeed) - (groundThreshold-robGroundValues[2])/(300*2/desiredSpeed) - (groundThreshold-robGroundValues[3])/(300/desiredSpeed) + desiredSpeed;
             }
-            
             /*
-            if(lSpeed > maxSpeed) {
-                lSpeed = maxSpeed;
-            }
-            if(lSpeed < -maxSpeed) {
-                lSpeed = -maxSpeed;
-            }
-            if(rSpeed > maxSpeed) {
-                rSpeed = maxSpeed;
-            }
-            if(rSpeed < -maxSpeed) {
-                rSpeed = -maxSpeed;
-            }
-            */
+             lSpeed = -(groundThreshold-robGroundValues[0])/5 - (groundThreshold-robGroundValues[1])/10 + (groundThreshold-robGroundValues[2])/10 + (groundThreshold-robGroundValues[3])/5 + desiredSpeed;
+             rSpeed = (groundThreshold-robGroundValues[0])/5 + (groundThreshold-robGroundValues[1])/10 - (groundThreshold-robGroundValues[2])/10 - (groundThreshold-robGroundValues[3])/5 + desiredSpeed;
+             */
             
             [behaviorStat setText:[NSString stringWithFormat:@"LINE FOLLOW (%d,%d)", lSpeed, rSpeed]];
             
             if(robProxValues[0]>=OBJECT_THR || robProxValues[1]>=OBJECT_THR || robProxValues[2]>=OBJECT_THR || robProxValues[3]>=OBJECT_THR) {
-                stopAvoidTime = [NSDate date];
-                avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-                if(avoidTime < 1) {   // if an object is encountered soon (within 0.5 seconds) then we can suppose
-                                        // this is the same object as before still not overcome
-                    sameObjDetectCount++;
-                } else {
-                    sameObjDetectCount = 0;
+                [robot enableObstacleAvoidance];
+                [self checkMaxProx];
+                enabledOA = true;
+            } else {
+                [robot disableObstacleAvoidance];
+                if(enabledOA) {
+                    enabledOA = false;
+                    rotationAfterObstacleCount = 10;
                 }
-                if(sameObjDetectCount >= 4) {   // if after four times the same object cannot be overcome it means the
-                                                // robot is somehow blocked, thus pivot turn
-                    lSpeed = -desiredSpeed;
-                    rSpeed = desiredSpeed;
-                    globalState = PIVOT_ROTATION;
-                    globalStatePrev = LINE_SEARCH;
-                } else {
-                    lSpeed = desiredSpeed*2;
-                    rSpeed = desiredSpeed*2;
-                    globalState = AVOID_OBJECT;
-                    globalStatePrev = LINE_FOLLOW;
-                }                
-                startAvoidTime = [NSDate date];
             }
             
-        } else if(globalState == AVOID_OBJECT) {
-            [behaviorStat setText:@"AVOID OBJECT"];
-            stopAvoidTime = [NSDate date];
-            avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-            if(avoidTime >= 4) {
-                globalState = LINE_SEARCH;
-                globalStatePrev = AVOID_OBJECT;
-                startAvoidTime = [NSDate date];
-            }
-        } else if(globalState == PIVOT_ROTATION) {
-            [behaviorStat setText:@"PIVOT ROTATION"];
-            stopAvoidTime = [NSDate date];
-            avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-            if(avoidTime >= 4) {
-                globalState = LINE_SEARCH;
-                globalStatePrev = PIVOT_ROTATION;
-            }
         }
         
-        //if((lSpeed!=lSpeedPrev) || (rSpeed!=rSpeedPrev)) {
-        if((lSpeed==0 && lSpeedPrev>0) || (rSpeed==0 && rSpeedPrev>0)) {
-            rSpeedPrev = rSpeed;
-            lSpeedPrev = lSpeed;
-            lSpeed = 0;
-            rSpeed = 0;
-        } else {
-            rSpeedPrev = rSpeed;
-            lSpeedPrev = lSpeed;
-        }
-        
-    } else if(isCliffDetecting) {
+    } else if(isCliffDetecting) {   // stay on the table implemented on the phone side
 
         if([robot isCalibrating]) {
             return;
         }
-			
+
+        [robot disableCliffAvoidance];
+        
         if(globalState == MOVE_AROUND) {
             lSpeed = desiredSpeed;
             rSpeed = desiredSpeed;
@@ -469,6 +426,8 @@
 				
             if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
             
+                [imageState setImage:imgDriveFear];
+                
                 minSensorValue = robGroundValues[0];
                 minSensor = GROUND_LEFT;
                 if(robGroundValues[1] < minSensorValue) {
@@ -488,43 +447,23 @@
                 rSpeed = -30;
                 globalState = COME_BACK;
                 moveBackCounter = 0;
-                //[robot disableObstacleAvoidance];
+                [robot disableObstacleAvoidance];
                 
                 [behaviorStat setText:[NSString stringWithFormat:@"CLIFF DETECTED (%d,%d)", lSpeed, rSpeed]];
                 
             }
             
             if(robProxValues[0]>=OBJECT_THR || robProxValues[1]>=OBJECT_THR || robProxValues[2]>=OBJECT_THR || robProxValues[3]>=OBJECT_THR) {
-                stopAvoidTime = [NSDate date];
-                avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-                if(avoidTime < 1) {   // if an object is encountered soon (within 0.5 seconds) then we can suppose
-                    // this is the same object as before still not overcome
-                    sameObjDetectCount++;
-                } else {
-                    sameObjDetectCount = 0;
-                }
-                printf("avoid time = %f\n", avoidTime);
-                printf("sameObjCount = %d\n", sameObjDetectCount);
-                if(sameObjDetectCount >= 4) {   // if after four times the same object cannot be overcome it means the
-                    // robot is somehow blocked, thus pivot turn
-                    lSpeed = -desiredSpeed;
-                    rSpeed = desiredSpeed;
-                    globalState = PIVOT_ROTATION_2;
-                    globalStatePrev = MOVE_AROUND;
-                    
-                } else {
-                    lSpeed = desiredSpeed*2;
-                    rSpeed = desiredSpeed*2;
-                    globalState = AVOID_OBJECT_2;
-                    globalStatePrev = MOVE_AROUND;
-                }
-                startAvoidTime = [NSDate date];
+                [robot enableObstacleAvoidance];
+
+            } else {
+                [robot disableObstacleAvoidance];
             }
             
         } else if(globalState == COME_BACK) {
 				
             moveBackCounter++;
-            if(moveBackCounter >= 11) {	// about 750 msec
+            if(moveBackCounter >= 20) {	// about 750 msec
                 stoppedCounter = 0;
                 lSpeed = 0;
                 rSpeed = 0;
@@ -536,19 +475,21 @@
         } else if(globalState == STOPPED) {
             
             stoppedCounter++;
-            if(stoppedCounter >= 5) {
+            if(stoppedCounter >= 1) {
                 rotateCounter = 0;
                 switch(minSensor) {
                     case GROUND_LEFT:
                     case GROUND_CENTER_LEFT:
                         lSpeed = 20;
 						rSpeed = -20;
+                        [imageState setImage:imgDriveRight];
                         break;
                         
                     case GROUND_RIGHT:
                     case GROUND_CENTER_RIGHT:
 						lSpeed = -20;
 						rSpeed = 20;
+                        [imageState setImage:imgDriveLeft];
                         break;
                         
                 }
@@ -562,40 +503,14 @@
             if(rotateCounter >= 16) {
                 globalState = MOVE_AROUND;
                 //[robot enableObstacleAvoidance];
+                [imageState setImage:imgDriveNormal];
             }
             
             [behaviorStat setText:[NSString stringWithFormat:@"ROTATE (%d,%d)", lSpeed, rSpeed]];
-            
-        } else if(globalState == AVOID_OBJECT_2) {
-            [behaviorStat setText:@"AVOID OBJECT"];
-            stopAvoidTime = [NSDate date];
-            avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-            if(avoidTime >= 4) {
-                globalState = MOVE_AROUND;
-                globalStatePrev = AVOID_OBJECT_2;
-                startAvoidTime = [NSDate date];
-            }
-            if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
-                globalState = MOVE_AROUND;
-                lSpeed = 0;
-                rSpeed = 0;
-            }
-        } else if(globalState == PIVOT_ROTATION_2) {
-            [behaviorStat setText:@"PIVOT ROTATION"];
-            stopAvoidTime = [NSDate date];
-            avoidTime = [stopAvoidTime timeIntervalSinceDate:startAvoidTime];
-            if(avoidTime >= 4) {
-                globalState = MOVE_AROUND;
-                globalStatePrev = PIVOT_ROTATION_2;
-            }
-            if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
-                globalState = MOVE_AROUND;
-                lSpeed = 0;
-                rSpeed = 0;
-            }
         }
         
-        /*}
+        
+        /*
         
         if(robGroundValues[0]<groundThreshold || robGroundValues[1]<groundThreshold || robGroundValues[2]<groundThreshold || robGroundValues[3]<groundThreshold) {
             lSpeed = 0;
@@ -608,7 +523,7 @@
         }
         */
             
-    } else if(stayingOnTable) {
+    } else if(stayingOnTable) { // onboard stay on the table
         
         if([robot isCalibrating]) {
             return;
@@ -616,34 +531,20 @@
         
         if(globalState == ENABLE_OBSTACLE_AVOIDANCE) {
             [robot enableObstacleAvoidance];
-            globalState = CHECK_OA_ENABLED;
+            globalState = ENABLE_CLIFF_AVOIDANCE;
+//            if([robot enableObstacleAvoidance] == 0) {
+//                globalState = ENABLE_CLIFF_AVOIDANCE;
+//            }
             robotStoppedCounter = 0;
             [behaviorStat setText:[NSString stringWithFormat:@"ENABLE OA"]];
-        } else if(globalState == CHECK_OA_ENABLED) {
-            robotStoppedCounter++;
-            if(robotStoppedCounter >= 5) {
-                if([robot isObstacleAvoidanceEnabled]) {
-                    globalState = ENABLE_CLIFF_AVOIDANCE;
-                } else {
-                    globalState = ENABLE_OBSTACLE_AVOIDANCE;
-                }
-            }
-            [behaviorStat setText:[NSString stringWithFormat:@"CHECK OA"]];
         } else if(globalState == ENABLE_CLIFF_AVOIDANCE) {
             [robot enableCliffAvoidance];
-            globalState = CHECK_CA_ENABLED;
+            globalState = MOVE_AROUND;
+//            if([robot enableCliffAvoidance] == 0) {
+//                globalState = MOVE_AROUND;
+//            }
             robotStoppedCounter = 0;
             [behaviorStat setText:[NSString stringWithFormat:@"ENABLE CA"]];
-        } else if(globalState == CHECK_CA_ENABLED) {
-            robotStoppedCounter++;
-            if(robotStoppedCounter >= 5) {
-                if([robot isCliffAvoidanceEnabled]) {
-                    globalState = MOVE_AROUND;
-                } else {
-                    globalState = ENABLE_CLIFF_AVOIDANCE;
-                }
-            }
-            [behaviorStat setText:[NSString stringWithFormat:@"CHECK CA"]];
         } else if(globalState == MOVE_AROUND) {
             lSpeed = desiredSpeed;
             rSpeed = desiredSpeed;
@@ -697,24 +598,15 @@
             
             stoppedCounter++;
             if(stoppedCounter >= 5) {
-                globalState = CHECK_CA_DISABLED;
                 [robot disableCliffAvoidance];	// disable cliff avoidance to let the robot move backward
-            }
-            [behaviorStat setText:[NSString stringWithFormat:@"STOPPED2 (%d,%d)", lSpeed, rSpeed]];
-            
-        } else if(globalState == DISABLE_CLIFF_AVOIDANCE) {
-            [robot disableCliffAvoidance];
-            globalState = CHECK_CA_DISABLED;
-        } else if(globalState == CHECK_CA_DISABLED) {
-            if([robot isCliffAvoidanceEnabled] == false) {
                 globalState = COME_BACK;
                 lSpeed = -30;
                 rSpeed = -30;
-            } else {
-                globalState = DISABLE_CLIFF_AVOIDANCE;
+                moveBackCounter = 0;
             }
-        } else if(globalState == COME_BACK) {
+            [behaviorStat setText:[NSString stringWithFormat:@"STOPPED2 (%d,%d)", lSpeed, rSpeed]];
             
+        } else if(globalState == COME_BACK) {
             moveBackCounter++;
             if(moveBackCounter >= 11) {	// about 750 msec
                 stoppedCounter = 0;
@@ -778,7 +670,7 @@
 #pragma mark Initialization routines
 - (void)awakeFromNib {
     
-    NSLog(@"awakeFromNib called!");
+    //NSLog(@"awakeFromNib called!");
     
 	robot = [WheelphoneRobot new];
     
@@ -802,9 +694,12 @@
     isNearObject = false;
     stayingOnTable = false;
     
-    [robot enableObstacleAvoidance];
-    
 }
 
+
+- (IBAction)micGainChanged:(UISlider *)sender {
+    CGFloat gain = sender.value;
+    [robot setMicGain:gain];
+}
 
 @end

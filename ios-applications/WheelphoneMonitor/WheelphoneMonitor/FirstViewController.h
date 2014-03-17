@@ -19,11 +19,11 @@
 #define LINE_FOLLOW 1
 #define AVOID_OBJECT 2
 #define PIVOT_ROTATION 3
-#define INIT_GROUND_THR 180
-#define INIT_SPEED 60
+#define INIT_GROUND_THR 140
+#define INIT_SPEED 50
 #define INIT_LOST_THR 15
 #define MAX_SPEED 350
-#define OBJECT_THR 35
+#define OBJECT_THR 200 //256 //35
 
 // stay on the table using sensors information
 #define MOVE_AROUND 0
@@ -36,6 +36,10 @@
 #define GROUND_CENTER_LEFT 1
 #define GROUND_CENTER_RIGHT 2
 #define GROUND_RIGHT 3
+#define PROX_LEFT 0
+#define PROX_CENTER_LEFT 1
+#define PROX_CENTER_RIGHT 2
+#define PROX_RIGHT 3
 
 // stay on the table using onboard behavior
 #define ENABLE_OBSTACLE_AVOIDANCE 6
@@ -97,6 +101,10 @@
     int robFlagsRobotToPhone;
     int robLeftSpeed;
     int robRightSpeed;
+    int maxSensorValue;
+    int maxSensor;
+    bool enabledOA;
+    int rotationAfterObstacleCount;
 
 }
 
@@ -142,6 +150,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCliffDetection;
 @property (weak, nonatomic) IBOutlet UIButton *btnStayOnTable;
 @property (weak, nonatomic) IBOutlet UIImageView *imageState;
+- (IBAction)micGainChanged:(UISlider *)sender;
 
 
 @end

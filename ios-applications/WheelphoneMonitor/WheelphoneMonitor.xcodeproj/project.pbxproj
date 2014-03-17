@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B0A1ED518CF4E3D005F65AB /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B0A1ED318CF4E3D005F65AB /* ios-wheelphone-library.bundle */; };
+		7B0A1ED618CF4E3D005F65AB /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B0A1ED418CF4E3D005F65AB /* ios-wheelphone-library.framework */; };
 		7B1C270C184E81F100DD47B4 /* wheelphone-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C270B184E81F100DD47B4 /* wheelphone-logo.png */; };
 		7B1C2711184E985F00DD47B4 /* drive_00.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C270D184E985F00DD47B4 /* drive_00.png */; };
 		7B1C2712184E985F00DD47B4 /* drive_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C270E184E985F00DD47B4 /* drive_01.png */; };
@@ -20,8 +22,6 @@
 		7B7E3842186328D9002D7004 /* wheelphone-monitor-114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B7E383F186328D9002D7004 /* wheelphone-monitor-114x114.png */; };
 		7B7E3843186328D9002D7004 /* wheelphone-monitor-120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B7E3840186328D9002D7004 /* wheelphone-monitor-120x120.png */; };
 		7B7E384518632B15002D7004 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B7E384418632B15002D7004 /* Images.xcassets */; };
-		7B7E385E187C57E7002D7004 /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B7E385C187C57E7002D7004 /* ios-wheelphone-library.bundle */; };
-		7B7E385F187C57E7002D7004 /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7E385D187C57E7002D7004 /* ios-wheelphone-library.framework */; };
 		7BAB018C17420979003BF1A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB018B17420979003BF1A0 /* UIKit.framework */; };
 		7BAB018E17420979003BF1A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB018D17420979003BF1A0 /* Foundation.framework */; };
 		7BAB019017420979003BF1A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAB018F17420979003BF1A0 /* CoreGraphics.framework */; };
@@ -43,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B0A1ED318CF4E3D005F65AB /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
+		7B0A1ED418CF4E3D005F65AB /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ios-wheelphone-library.framework"; sourceTree = "<group>"; };
 		7B1C270B184E81F100DD47B4 /* wheelphone-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo.png"; sourceTree = "<group>"; };
 		7B1C270D184E985F00DD47B4 /* drive_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive_00.png; sourceTree = "<group>"; };
 		7B1C270E184E985F00DD47B4 /* drive_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive_01.png; sourceTree = "<group>"; };
@@ -56,8 +58,6 @@
 		7B7E383F186328D9002D7004 /* wheelphone-monitor-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-monitor-114x114.png"; sourceTree = "<group>"; };
 		7B7E3840186328D9002D7004 /* wheelphone-monitor-120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-monitor-120x120.png"; sourceTree = "<group>"; };
 		7B7E384418632B15002D7004 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7B7E385C187C57E7002D7004 /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
-		7B7E385D187C57E7002D7004 /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ios-wheelphone-library.framework"; sourceTree = "<group>"; };
 		7BAB018817420979003BF1A0 /* WPMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WPMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BAB018B17420979003BF1A0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7BAB018D17420979003BF1A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -95,7 +95,7 @@
 				7BAB01E5174213B7003BF1A0 /* CoreFoundation.framework in Frameworks */,
 				7BAB01E31742139C003BF1A0 /* AudioToolbox.framework in Frameworks */,
 				7BAB01E117421378003BF1A0 /* CoreAudio.framework in Frameworks */,
-				7B7E385F187C57E7002D7004 /* ios-wheelphone-library.framework in Frameworks */,
+				7B0A1ED618CF4E3D005F65AB /* ios-wheelphone-library.framework in Frameworks */,
 				7BAB018C17420979003BF1A0 /* UIKit.framework in Frameworks */,
 				7BAB018E17420979003BF1A0 /* Foundation.framework in Frameworks */,
 				7BAB019017420979003BF1A0 /* CoreGraphics.framework in Frameworks */,
@@ -125,8 +125,8 @@
 		7BAB018A17420979003BF1A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7B7E385C187C57E7002D7004 /* ios-wheelphone-library.bundle */,
-				7B7E385D187C57E7002D7004 /* ios-wheelphone-library.framework */,
+				7B0A1ED318CF4E3D005F65AB /* ios-wheelphone-library.bundle */,
+				7B0A1ED418CF4E3D005F65AB /* ios-wheelphone-library.framework */,
 				7B7B3DDD1817D27100D8D4FC /* OpenAL.framework */,
 				7B7B3DD51817B42600D8D4FC /* MediaPlayer.framework */,
 				7B6E0E5C1806E5B900063EFA /* AVFoundation.framework */,
@@ -248,7 +248,7 @@
 				7BAB01A517420979003BF1A0 /* MainStoryboard_iPhone.storyboard in Resources */,
 				7B1C2714184E985F00DD47B4 /* drive_sx.png in Resources */,
 				7BAB01AD17420979003BF1A0 /* first.png in Resources */,
-				7B7E385E187C57E7002D7004 /* ios-wheelphone-library.bundle in Resources */,
+				7B0A1ED518CF4E3D005F65AB /* ios-wheelphone-library.bundle in Resources */,
 				7BAB01AF17420979003BF1A0 /* first@2x.png in Resources */,
 				7BAB01B417420979003BF1A0 /* second.png in Resources */,
 				7B1C2713184E985F00DD47B4 /* drive_dx.png in Resources */,
@@ -366,6 +366,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/../..\\\"",
@@ -376,6 +377,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "WheelphoneMonitor/WheelphoneMonitor-Info.plist";
 				PRODUCT_NAME = WPMonitor;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -386,6 +388,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/../..\\\"",
@@ -396,6 +399,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "WheelphoneMonitor/WheelphoneMonitor-Info.plist";
 				PRODUCT_NAME = WPMonitor;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

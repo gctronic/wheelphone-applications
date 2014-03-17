@@ -14,8 +14,7 @@
 {
     // Override point for customization after application launch.
     
-    NSLog(@"Application started!");
-    printf("ciao bello!");
+    //NSLog(@"Application started!");
     
     [UIApplication sharedApplication].idleTimerDisabled=YES;
     
