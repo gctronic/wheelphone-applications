@@ -1,6 +1,12 @@
 
 package com.wheelphone.targetDebug;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -10,6 +16,8 @@ import com.wheelphone.wheelphonelibrary.WheelphoneRobot;
 import com.wheelphone.wheelphonelibrary.WheelphoneRobot.WheelPhoneRobotListener;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.MemoryInfo;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -20,6 +28,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -49,12 +58,17 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 	boolean getFirmwareFlag = true;
 	private PowerManager.WakeLock wl;
 	private int lSpeedTemp=0, rSpeedTemp=0;
-	public long startTime=0, endTime=0;
-	public int procTime=0, minProcTime=1000, maxProcTime=0, procTimeResetCounter=0;
+	public long startTime=0, endTime=0, updateTime=0, timeSum=0;
+	public int sumCounter=0;
+	public int procTime=0, minProcTime=1000, maxProcTime=0, procTimeResetCounter=0, avgTime=0;
 	public boolean startFlag=true;
 	public int camOffset = 0;
 	public boolean takeScreenshot=false;
 	Context context;
+	RandomAccessFile reader;
+	long currIdle, currCpu, lastIdle, lastCpu;
+	float cpuUsage = 0, ramUsage = 0, totalRam = 0;
+	DecimalFormat form = new DecimalFormat("0.00");
 	
 	// Robot state
 	WheelphoneRobot wheelphone;
@@ -62,13 +76,13 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 	private int firmwareVersion=0;
 	
 	// target detection
-	public static final int NUM_TARGETS = 4;	
+	public static final int NUM_TARGETS = 50;	
 	public int[] targetX = new int[NUM_TARGETS];		// x coordinate on the screen of the target
 	public int[] lastTargetX = new int[NUM_TARGETS];
 	public int[] targetY = new int[NUM_TARGETS];
 	public float[] targetOrientation = new float[NUM_TARGETS];	// orientation of the robot/camera
 	public float[] targetDist = new float[NUM_TARGETS];
-	public float[] targetPoseX = new float[NUM_TARGETS];	// x coordinate (position) of the target with respect to the camera frame
+	public float[] targetPoseY = new float[NUM_TARGETS];	// x coordinate (position) of the target with respect to the camera frame
 	public float[] targetPoseZ = new float[NUM_TARGETS];
 	public float[] angleTargetRobot = new float[NUM_TARGETS];	// angle between the robot and the target, independent from robot orientation
 	public static final int NO_INFO = 0;    
@@ -85,8 +99,10 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 	// UI
 	TabSpec spec1, spec2;
 	TabHost tabHost;
-	TextView txtX0, txtY0, txtd0, txtOrient0; 
+	TextView txtX0, txtY0, txtd0, txtRobotOrient, txtRobotTargetAngle; 
 	TextView minTime, maxTime;
+	TextView currTimeTxt, avgTimeTxt;
+	TextView cpuUsageTxt, ramUsageTxt;
 	TextView txtMarkerId;
 	private TextView batteryValue;
 	private EditText leftSpeed, rightSpeed;
@@ -152,16 +168,25 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 			WheelphoneTargetDebug.this.runOnUiThread(new Runnable() {                  
 				//@Override                 
 				public void run() {
+					/*
 					getTrackInfo();
 					txtd0.setText(String.valueOf(String.format("%.4f", targetOrientation[0]))); //targetDist[0])));
-					txtX0.setText(String.valueOf(targetPoseX[0])); //targetX[0]));
+					txtX0.setText(String.valueOf(targetPoseY[0])); //targetX[0]));
 					txtY0.setText(String.valueOf(targetPoseZ[0])); //targetY[0]));
-					txtOrient0.setText(String.valueOf(String.format("%.4f", angleTargetRobot[0]))); //targetOrientation[0])));
+					txtOrient0.setText(String.valueOf(String.format("%.4f", angleTargetRobot[0]))); //targetOrientation[0])));					
 					float currentAbsoluteOrientation = (0 + (int)targetOrientation[1] + 180)%360; // ID + orientation + 180
+					*/
 					//robotX.setText(String.valueOf(0+(int)(Math.cos(targetOrientation[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0)));
 					//robotY.setText(String.valueOf(100+(int)(Math.sin(targetOrientation[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0)));
 					//robotTheta.setText(String.valueOf((int)currentAbsoluteOrientation));
 					//fpv.updateRobotInfo(0+(int)(Math.cos(angleTargetRobot[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0), 100-(int)(Math.sin(angleTargetRobot[1]*Math.PI/180.0)*targetDist[1]*16.0/50.0), (int)currentAbsoluteOrientation);
+					
+					minTime.setText(String.valueOf(minProcTime));
+					maxTime.setText(String.valueOf(maxProcTime));
+					currTimeTxt.setText(String.valueOf(procTime));									
+					currTimeTxt.setText(String.valueOf(avgTime));
+					cpuUsageTxt.setText(String.valueOf(form.format(cpuUsage)));
+					ramUsageTxt.setText(String.valueOf(form.format(ramUsage)));					
 				}
 			});         
 		}    
@@ -462,6 +487,8 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
                     mFocusMode = FOCUS_MODE_NORMAL;
                     setFocusMode(mFocusMode);
                 }
+                
+                getTrackInfo();
 
                 break;
 
@@ -521,6 +548,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 
         mRenderer = new FrameMarkersRenderer();
         mRenderer.setReference(this);
+        mRenderer.setHandler(handler);
         mGlView.setRenderer(mRenderer);
 
         mGlView.setOnClickListener(new OnClickListener(){
@@ -573,64 +601,175 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
    use for rendering. */
    private void loadTextures()
    {
-       mTextures.add(Texture.loadTextureFromApk("letter_Q.png", getAssets()));
-       mTextures.add(Texture.loadTextureFromApk("letter_C.png", getAssets()));
-       mTextures.add(Texture.loadTextureFromApk("letter_A.png", getAssets()));
-       mTextures.add(Texture.loadTextureFromApk("letter_R.png", getAssets()));
+	   int i = 0;
+	   for(i=0; i<NUM_TARGETS; i++) {
+		   mTextures.add(Texture.loadTextureFromApk("letter_Q.png", getAssets()));
+	   }
+	   
+//	   mTextures.add(Texture.loadTextureFromApk("letter_Q.png", getAssets()));	   
+//       mTextures.add(Texture.loadTextureFromApk("letter_C.png", getAssets()));
+//       mTextures.add(Texture.loadTextureFromApk("letter_A.png", getAssets()));
+//       mTextures.add(Texture.loadTextureFromApk("letter_R.png", getAssets()));
+	   
    }
    
-   public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z, float tpx, float tpz) {
-       // We use a handler because this thread cannot change the UI
-       Message message = new Message();
-       message.obj = String.valueOf(i1) + ", " + String.valueOf(i2);
-       
-       targetX[markerId] = i1;
-       targetY[markerId] = i2;
-       targetOrientation[markerId] = (float) ((Math.asin(z)/Math.PI)*180.0);
-       targetDist[markerId] = dist;
-       targetPoseX[markerId] = tpx;
-       targetPoseZ[markerId] = tpz;
-       angleTargetRobot[markerId] = (float) ((Math.atan2(tpx, tpz)/Math.PI)*180.0) + targetOrientation[markerId];       
-       
-       Log.d(TAG, "detected=" + detected + "(" + markerId + ")" + ", x=" + i1 + ", y=" + i2 + ", dist=" + dist + "angle=" + ((Math.asin(z)/Math.PI)*180.0) + " (z=" + z + "), h=" + mScreenHeight + ", w=" + mScreenWidth + "\n");
-       Log.d(TAG, "target x=" + tpx + ", target z=" + tpz + ", angle target robot=" + angleTargetRobot[markerId]);
-       //Log.d(TAG, "x=" + x + ", y=" + y + ", z=" + z + "\n");
-       //Log.d(TAG, "sin(x)=" + Math.sin(x)/Math.PI*180.0 + ", cos(x)=" + Math.cos(x)/Math.PI*180.0 + "\n");
-       //Log.d(TAG, "sin(y)=" + Math.sin(y)/Math.PI*180.0 + ", cos(y)=" + Math.cos(y)/Math.PI*180.0 + "\n");
-       //Log.d(TAG, "sin(z)=" + Math.sin(z)/Math.PI*180.0 + ", cos(z)=" + Math.cos(z)/Math.PI*180.0 + "\n");         
-    		   
-	   	if(!detected) {	
-	   		targetDetectedInfo[markerId] = NO_TARGET_FOUND;
-		} else { 
-			targetDetectedInfo[markerId] = TARGET_FOUND;	
-			mCurrentTargetId = markerId;			
-		}
-	   	
-	   	
-	   	if(markerId==mCurrentTargetId) {
-	   		if(targetDetectedInfo[mCurrentTargetId]==TARGET_FOUND) {
-	   			txtMarkerId.setText(String.valueOf(mCurrentTargetId));
-			   	if(startFlag) {
-			   		startFlag = false;
-			   		startTime = System.currentTimeMillis();	   				 
-			   	} else {
-			   		startFlag = true;
-			   		endTime = System.currentTimeMillis();
-			   		procTime = (int)(endTime - startTime);
-			   		if(minProcTime > procTime) {
-			   			minProcTime = procTime;
-			   		}
-			   		if(maxProcTime < procTime) {
-			   			maxProcTime = procTime;
-			   		}
-			   	}
-		   	} else {
-		   		txtMarkerId.setText(String.valueOf(-1));
-		   		minProcTime = 1000;
-		   		maxProcTime = 0;
-		   	}
-	   	}
 
+   private void readCpuStat() {
+	   
+	   try {
+		   
+		   reader.seek(0);
+		   
+		   String load = reader.readLine();
+		   
+		   String[] toks = load.split(" ");
+		   currIdle = Long.parseLong(toks[5]);
+		   currCpu = Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[4])
+	              + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
+		   
+		   cpuUsage = (float)(currCpu - lastCpu) / ((currCpu + currIdle) - (lastCpu + lastIdle)); // delta Cpu / delta Tot
+
+		   lastIdle = currIdle;
+		   lastCpu = currCpu;
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+   }    
+   
+   public void getTotalMemory() {
+	    String str1 = "/proc/meminfo";
+	    String str2="";
+	    String[] arrayOfString;
+	    //long initial_memory = 0, free_memory = 0;
+	    try {
+	        FileReader localFileReader = new FileReader(str1);
+	        BufferedReader localBufferedReader = new BufferedReader(
+	            localFileReader, 8192);
+	        for (int i = 0; i < 2; i++) {
+	            str2 =str2+" "+ localBufferedReader.readLine();// meminfo  //THIS WILL READ meminfo AND GET BOTH TOT MEMORY AND FREE MEMORY eg-: Totalmemory 12345 KB //FREEMEMRY: 1234 KB  
+	        }
+	        arrayOfString = str2.split("\\s+");
+	        for (String num : arrayOfString) {
+	            Log.i(str2, num + "\t");
+	        }
+	        // total Memory
+	        totalRam = (float)Integer.valueOf(arrayOfString[2]).intValue()/1024;
+	        //free_memory = Integer.valueOf(arrayOfString[5]).intValue();
+
+	        localBufferedReader.close();
+	    } catch (IOException e) {
+	    }
+	}  
+   
+   void readMemStat() {
+	   ActivityManager actManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+	   MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+	   actManager.getMemoryInfo(memInfo);
+	   //long totalMemory = memInfo.totalMem;	// valid only from api 16
+	   long availableMegs = memInfo.availMem / 1048576L; // to transforms in MB
+	   ramUsage = (float)availableMegs/totalRam;
+   }
+   
+   // Handler for receiving messages from FrameMarkersRenderer
+   private Handler handler = new Handler() {
+	   
+	   @Override
+	   public void handleMessage(Message msg) {
+		   
+		   if(msg.what==0) {
+		   
+			   int markerId = msg.getData().getInt("markerId");
+		       boolean detected = msg.getData().getBoolean("detected");
+		       
+		       targetX[markerId] = msg.getData().getInt("xScreenCoord");
+		       targetY[markerId] = msg.getData().getInt("yScreenCoord");
+		       targetOrientation[markerId] = (float) ((Math.asin(msg.getData().getFloat("robOrient"))/Math.PI)*180.0);
+		       targetDist[markerId] = msg.getData().getFloat("dist");
+		       targetPoseY[markerId] = msg.getData().getFloat("targetPosY");
+		       targetPoseZ[markerId] = msg.getData().getFloat("targetPosZ");
+		       angleTargetRobot[markerId] = (float) ((Math.atan2(targetPoseY[markerId], targetPoseZ[markerId])/Math.PI)*180.0) + targetOrientation[markerId];       
+		       
+		       //Log.d(TAG, "detected=" + detected + "(" + markerId + ")" + ", x=" + targetX[markerId] + ", y=" + targetY[markerId] + ", dist=" + targetDist[markerId] + ", robOrient=" + targetOrientation[markerId] + ", h=" + mScreenHeight + ", w=" + mScreenWidth + "\n");
+		       //Log.d(TAG, "target y=" + targetPoseY[markerId] + ", target z=" + targetPoseZ[markerId] + ", angle target robot=" + angleTargetRobot[markerId]);
+	
+			   	if(!detected) {	
+			   		targetDetectedInfo[markerId] = NO_TARGET_FOUND;
+				} else { 
+					targetDetectedInfo[markerId] = TARGET_FOUND;	
+					mCurrentTargetId = markerId;			
+				}
+			   	
+			   	// visualize the current detetected marker id and related informations
+			   	if(markerId==mCurrentTargetId) {
+			   		if(targetDetectedInfo[mCurrentTargetId]==TARGET_FOUND) {
+			   			txtMarkerId.setText(String.valueOf(mCurrentTargetId));
+				   	} else {
+				   		txtMarkerId.setText(String.valueOf(-1));
+				   	}
+					txtX0.setText(String.valueOf(targetX[mCurrentTargetId]));
+					txtY0.setText(String.valueOf(targetY[mCurrentTargetId]));
+					txtd0.setText(String.valueOf(String.format("%.2f", targetDist[mCurrentTargetId])));
+					txtRobotOrient.setText(String.valueOf(String.format("%.2f", targetOrientation[mCurrentTargetId])));
+					txtRobotTargetAngle.setText(String.valueOf(String.format("%.2f", angleTargetRobot[mCurrentTargetId])));
+			   	}			   	
+
+			   	
+				if(mAppStatus == APPSTATUS_CAMERA_RUNNING && markerId==(NUM_TARGETS-1)) {
+					endTime = System.currentTimeMillis();
+					procTime = (int)(endTime - startTime);
+					if(minProcTime > procTime) {
+						minProcTime = procTime;
+					}
+					if(maxProcTime < procTime) {
+						maxProcTime = procTime;
+					}					
+					minTime.setText(String.valueOf(minProcTime));
+					maxTime.setText(String.valueOf(maxProcTime));
+					currTimeTxt.setText(String.valueOf(procTime));					
+					timeSum += procTime;		
+					sumCounter++;
+					if((endTime-updateTime) >= 5000) {
+						maxProcTime = 0;
+						minProcTime = 1000;
+						avgTime = (int) ((float)timeSum/(float)sumCounter);
+						avgTimeTxt.setText(String.valueOf(avgTime));
+						timeSum = 0;						
+						updateTime = System.currentTimeMillis();
+						sumCounter = 0;
+						readCpuStat();
+						readMemStat();
+						cpuUsageTxt.setText(String.valueOf(form.format(cpuUsage)));
+						ramUsageTxt.setText(String.valueOf(form.format(ramUsage)));
+						
+					}
+					startTime = System.currentTimeMillis();
+					getTrackInfo();
+				}	  	
+				
+		   }
+		   
+	   }
+	   
+   };
+   
+   public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z, float tpy, float tpz) {
+
+	   	Message msg = new Message();
+	   	Bundle bundle = new Bundle();
+	   	bundle.putInt("markerId", markerId);
+	   	bundle.putBoolean("detected", detected);
+	   	bundle.putInt("xScreenCoord", i1);
+	   	bundle.putInt("yScreenCoord", i2);
+	   	bundle.putFloat("dist", dist);
+	   	bundle.putFloat("robOrient", z);
+	   	bundle.putFloat("targetPosY", tpy);
+	   	bundle.putFloat("targetPosZ", tpz);
+	   	msg.setData(bundle);
+	   	msg.what = 0;
+	   	handler.sendMessage(msg);	 // use the handler to let the "getTrackInfo" terminate before starting a new request (that is a new call to "getTrackInfo")
+  	
    }   
    
     public void onCreate(Bundle savedInstanceState) {
@@ -676,27 +815,12 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
         for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
             tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight()*7/100; // 7% of total screen height
         }  
-        
-        SeekBar seekbar = (SeekBar) findViewById(R.id.camOffset);
-        seekbar.setMax(mScreenWidth);
-        seekbar.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
-        	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        		// TODO Auto-generated method stub
-                camOffset = progress - mScreenWidth/2;
-        	}
-        	public void onStartTrackingTouch(SeekBar seekBar) {
-        		// TODO Auto-generated method stub
-        	}
-        	public void onStopTrackingTouch(SeekBar seekBar) {
-        		// TODO Auto-generated method stub
-        	}
-        });
-        seekbar.setProgress(mScreenWidth/2);
-        	
+               	
         txtX0 = (TextView)findViewById(R.id.X0);
         txtY0 = (TextView)findViewById(R.id.Y0);
         txtd0 = (TextView)findViewById(R.id.d0);
-        txtOrient0 = (TextView)findViewById(R.id.orient0);
+        txtRobotOrient = (TextView)findViewById(R.id.robotOrient);
+        txtRobotTargetAngle = (TextView)findViewById(R.id.robotTargetAngle);
         batteryValue = (TextView)findViewById(R.id.batteryLevel);
         txtConnected = (TextView)findViewById(R.id.txtConnection);
         
@@ -706,6 +830,12 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 
         minTime = (TextView)findViewById(R.id.minTime);
         maxTime = (TextView)findViewById(R.id.maxTime);
+        
+        cpuUsageTxt = (TextView)findViewById(R.id.cpuUsage);
+        ramUsageTxt = (TextView)findViewById(R.id.ramUsage);
+        
+        currTimeTxt = (TextView)findViewById(R.id.currTime);
+        avgTimeTxt = (TextView)findViewById(R.id.avgTime);
         
         txtMarkerId = (TextView)findViewById(R.id.markerId);
         
@@ -741,9 +871,17 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
             }                      
         });
 		
+        try {
+			reader = new RandomAccessFile("/proc/stat", "r");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        getTotalMemory();
+        
         // for testing target detection without robot
         //timer = new Timer();                               
-        //timer.schedule(new trackerTask(), 0, 500); 
+        //timer.schedule(new trackerTask(), 0, 100); 
     }
     
     public void onStart() {
@@ -757,6 +895,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
     public void onStop() {
     	super.onStop();
     	wl.release();
+    	
     }
     
     public void onResume() {
@@ -839,6 +978,13 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
         
         timer.cancel();
         
+        try {
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         System.gc();
         
     }
@@ -886,11 +1032,7 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 					}
 			}
 		}
-				
-		txtX0.setText(String.valueOf(targetX[mCurrentTargetId]));
-		txtY0.setText(String.valueOf(targetY[mCurrentTargetId]));
-		txtd0.setText(String.valueOf(String.format("%.2f", targetDist[mCurrentTargetId])));
-		txtOrient0.setText(String.valueOf(String.format("%.2f", targetOrientation[mCurrentTargetId])));				
+							
 		batteryValue.setText(String.valueOf(wheelphone.getBatteryCharge())+"%");
 		
 		if(wheelphone.isRobotConnected()) {
@@ -899,16 +1041,6 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 		} else {
 			txtConnected.setText("Disconnected");
 			txtConnected.setTextColor(getResources().getColor(R.color.red));
-		}
-		
-		
-		minTime.setText(String.valueOf(minProcTime));
-		maxTime.setText(String.valueOf(maxProcTime));
-		procTimeResetCounter++;
-		if(procTimeResetCounter >= 200) {
-			minProcTime = 1000;
-			maxProcTime = 0;
-			procTimeResetCounter = 0;
 		}
 		
 		if(wheelphone.getBatteryRaw() <= 30) {
@@ -928,10 +1060,6 @@ public class WheelphoneTargetDebug extends Activity implements OnSharedPreferenc
 		
 		if(wheelphone.isCalibrating()) {
 			return;
-		}
-		
-		if(mAppStatus == APPSTATUS_CAMERA_RUNNING) {
-			getTrackInfo();
 		}
 		
 		//TextView txtStatus;

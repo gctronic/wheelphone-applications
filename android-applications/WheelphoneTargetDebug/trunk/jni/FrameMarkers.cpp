@@ -75,6 +75,7 @@ QCAR::Matrix44F projectionMatrix;
 static const float kLetterScale        = 25.0f;
 static const float kLetterTranslate    = 25.0f;
 
+#define NUM_TARGETS 50
 
 JNIEXPORT void JNICALL
 Java_com_wheelphone_targetDebug_WheelphoneTargetDebug_setActivityPortraitMode(JNIEnv *, jobject, jboolean isPortrait)
@@ -87,7 +88,10 @@ JNIEXPORT int JNICALL
 Java_com_wheelphone_targetDebug_WheelphoneTargetDebug_initTracker(JNIEnv *, jobject)
 {
     LOG("Java_com_qualcomm_QCARSamples_FrameMarkers_FrameMarkers_initTracker");
-    
+
+	int i=0;
+	char name[9];
+   
     // Initialize the marker tracker:
     QCAR::TrackerManager& trackerManager = QCAR::TrackerManager::getInstance();
     QCAR::Tracker* trackerBase = trackerManager.initTracker(QCAR::Tracker::MARKER_TRACKER);
@@ -98,7 +102,16 @@ Java_com_wheelphone_targetDebug_WheelphoneTargetDebug_initTracker(JNIEnv *, jobj
         return 0;
     }
     
-    if (!markerTracker->createFrameMarker(0, "MarkerQ", QCAR::Vec2F(50,50)))
+	for(i=0; i<NUM_TARGETS; i++) {
+		sprintf(name, "marker%2d", i);
+		if (!markerTracker->createFrameMarker(i, name, QCAR::Vec2F(50,50)))	// id, name, size
+    		{
+        		LOG("Failed to create frame marker Q.");
+    		}
+	}
+
+/*
+    if (!markerTracker->createFrameMarker(0, "MarkerQ", QCAR::Vec2F(50,50)))	// id, name, size
     {
         LOG("Failed to create frame marker Q.");
     }
@@ -114,6 +127,7 @@ Java_com_wheelphone_targetDebug_WheelphoneTargetDebug_initTracker(JNIEnv *, jobj
     {
         LOG("Failed to create frame marker R.");
     }
+*/
     
     LOG("Successfully initialized MarkerTracker.");
 
@@ -252,6 +266,7 @@ Java_com_wheelphone_targetDebug_FrameMarkersRenderer_renderFrame(JNIEnv *env, jo
 
         switch (marker.getMarkerId())
         {
+/*
         case 0:
             vertices = &QobjectVertices[0];
             normals = &QobjectNormals[0];
@@ -273,12 +288,20 @@ Java_com_wheelphone_targetDebug_FrameMarkersRenderer_renderFrame(JNIEnv *env, jo
             texCoords = &AobjectTexCoords[0];
             numIndices = NUM_A_OBJECT_INDEX;
             break;
-        default:
+        case 3:
             vertices = &RobjectVertices[0];
             normals = &RobjectNormals[0];
             indices = &RobjectIndices[0];
             texCoords = &RobjectTexCoords[0];
             numIndices = NUM_R_OBJECT_INDEX;
+            break;
+*/
+        default:
+            vertices = &QobjectVertices[0];
+            normals = &QobjectNormals[0];
+            indices = &QobjectIndices[0];
+            texCoords = &QobjectTexCoords[0];
+            numIndices = NUM_Q_OBJECT_INDEX;
             break;
         }
 
@@ -337,21 +360,23 @@ Java_com_wheelphone_targetDebug_WheelphoneTargetDebug_getTrackInfo(JNIEnv *env, 
     QCAR::State state = QCAR::Renderer::getInstance().begin();
     
 	//QCAR::Vec2F markerSize;
-   	jint jx[4] = {0};
-	jint jy[4] = {0};            
-	jfloat distance[4] = {0};
-	jfloat cam_x[4] = {0}; 
-	jfloat cam_y[4] = {0}; 
-	jfloat cam_z[4] = {0}; 
-	jfloat target_pose_x[4] = {0};	// x, y, z coordinates of the targets with respect to the camera frame
-	jfloat target_pose_y[4] = {0};
-	jfloat target_pose_z[4] = {0};
+   	jint jx[NUM_TARGETS] = {0};
+	jint jy[NUM_TARGETS] = {0};            
+	jfloat distance[NUM_TARGETS] = {0};
+	jfloat cam_x[NUM_TARGETS] = {0}; 
+	jfloat cam_y[NUM_TARGETS] = {0}; 
+	jfloat cam_z[NUM_TARGETS] = {0}; 
+	jfloat target_pose_x[NUM_TARGETS] = {0};	// x, y, z coordinates of the targets with respect to the camera frame
+	jfloat target_pose_y[NUM_TARGETS] = {0};
+	jfloat target_pose_z[NUM_TARGETS] = {0};
 	
-	jboolean detected[4] = {false};
-	jclass javaClass = env->GetObjectClass(obj);	// obj is the java class object calling the "renderFrame" method, that is an FrameMarkersRenderer object
+	jboolean detected[NUM_TARGETS] = {false};
+	jclass javaClass = env->GetObjectClass(obj);	// obj is the java class object calling the "getTrackInfo" method, that is an WheelphoneTargetDebug object
     //jclass javaClass = env->FindClass("Lcom/wheelphone/targetDocking/WheelphoneTargetDocking;"); // doesn't work!
 	jmethodID method = env->GetMethodID(javaClass, "updateMarkersInfo", "(IZIIFFFF)V");
         
+	//LOG("num tracked = %d\n", state.getNumTrackableResults());
+
     // Did we find any trackables this frame?
     for(int tIdx = 0; tIdx < state.getNumTrackableResults(); tIdx++)
     {
@@ -430,7 +455,7 @@ Java_com_wheelphone_targetDebug_WheelphoneTargetDebug_getTrackInfo(JNIEnv *env, 
     }
     
     // put outside the previous loop because we want to warn the java object of the state of the detection in all cases (both when detected and when not detected)
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<NUM_TARGETS; i++) {
     	// obj, method, marker id, detected, x screen coord, y screen coord, distance, robot orientation component, robot to target angle component y, robot to target angle component z);
 		env->CallVoidMethod(obj, method, i, detected[i], jx[i], jy[i], distance[i], cam_z[i], target_pose_y[i], target_pose_z[i]);
 	}	

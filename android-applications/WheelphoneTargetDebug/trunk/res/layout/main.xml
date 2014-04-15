@@ -302,8 +302,10 @@
 			        android:layout_height="wrap_content"
 			        android:text="@string/init_value" />
 
-			</LinearLayout>   		
-	   				
+			</LinearLayout>   		    		
+	   		
+	    </LinearLayout>
+
 		    <LinearLayout
 		    android:orientation="horizontal"
 		    android:layout_width="wrap_content"
@@ -313,31 +315,165 @@
 			    <TextView  
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			    android:text="@string/orient"
+			    android:text="@string/robotOrient"
+			    android:paddingRight="1sp"
+			    />
+
+			    <TextView
+			        android:id="@+id/robotOrient"
+			        android:layout_width="55dp"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>  	    
+	    
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/robotTargetAngle"
+			    android:paddingRight="1sp"
+			    />
+
+			    <TextView
+			        android:id="@+id/robotTargetAngle"
+			        android:layout_width="55dp"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>  		    
+		    
+   	 <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/currTime"
 			    android:paddingRight="1sp"
 			    />
 	    	</LinearLayout>
 	    	
 	   		<LinearLayout
 		    android:orientation="horizontal"
-		    android:layout_width="wrap_content"
+		    android:layout_width="55dp"
 		    android:layout_height="wrap_content"
 		    >
 
 			    <TextView
-			        android:id="@+id/orient0"
-			        android:layout_width="55dp"
+			        android:id="@+id/currTime"
+			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:text="@string/init_value" />
 
-			</LinearLayout>      		
-	   		
-	    </LinearLayout>
-	    
+			</LinearLayout>	    
+
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/avgTime"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/avgTime"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>		   		
+	   </LinearLayout>	    
+	    	    
+   	 <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/minTime"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/minTime"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>	    
+
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/maxTime"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/maxTime"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>		   		
+	   </LinearLayout>
 
 
-
-	    <!-- Creation of general status -->    
+	    <!-- Creation of robot status -->    
 
 	    <LinearLayout
 	    android:orientation="horizontal"
@@ -348,7 +484,7 @@
 			<TextView  
 		    android:layout_width="fill_parent" 
 		    android:layout_height="wrap_content" 
-		    android:text="@string/status_header"
+		    android:text="@string/robot_status_header"
 		    android:id="@+id/text_view"
 		    />
 	    </LinearLayout>
@@ -413,6 +549,22 @@
 	    
 
 	
+	    <!-- Creation of phone status -->    
+
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/phone_status_header"
+		    android:id="@+id/text_view"
+		    />
+	    </LinearLayout>
+	   		
    	 <LinearLayout
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
@@ -427,7 +579,7 @@
 			    <TextView  
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			    android:text="@string/minTime"
+			    android:text="@string/cpuUsage"
 			    android:paddingRight="1sp"
 			    />
 	    	</LinearLayout>
@@ -439,7 +591,7 @@
 		    >
 
 			    <TextView
-			        android:id="@+id/minTime"
+			        android:id="@+id/cpuUsage"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:text="@string/init_value" />
@@ -455,7 +607,7 @@
 			    <TextView  
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			    android:text="@string/maxTime"
+			    android:text="@string/ramUsage"
 			    android:paddingRight="1sp"
 			    />
 	    	</LinearLayout>
@@ -467,42 +619,15 @@
 		    >
 
 			    <TextView
-			        android:id="@+id/maxTime"
+			        android:id="@+id/ramUsage"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:text="@string/init_value" />
 
 			</LinearLayout>		   		
-	   </LinearLayout>
-	   		
-<!--  Creation of camera offset -->   
-   	<LinearLayout
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:background='@color/title_bar'
-	    >
-			<TextView  
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content" 
-		    android:text="@string/camOffset_header"
-		    android:id="@+id/txtHeaderCamOffset"
-		    />
-	    </LinearLayout>
-	    
-        <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
+	   </LinearLayout>   	 
+   	 
 
-        <SeekBar
-            android:id="@+id/camOffset"
-            android:layout_width="fill_parent"
-            android:layout_height="25dp"
-            android:gravity="center_vertical|center_horizontal" />
-    </LinearLayout>	 
-    
     			<!-- Logo and site -->
 			    
 			    <LinearLayout

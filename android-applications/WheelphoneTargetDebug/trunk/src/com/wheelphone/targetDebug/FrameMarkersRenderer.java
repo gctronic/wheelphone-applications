@@ -25,17 +25,21 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import com.qualcomm.QCAR.QCAR;
+import com.wheelphone.wheelphonelibrary.USBAccessoryManagerMessageAndroidLib;
 
 
 /** The renderer class for the FrameMarkers sample. */
 public class FrameMarkersRenderer implements GLSurfaceView.Renderer
 {
 	public WheelphoneTargetDebug wheelphoneActivity;
+	private Handler handler;
     public boolean mIsActive = false;
     private int mViewWidth = 0;
     private int mViewHeight = 0;
@@ -105,10 +109,10 @@ public class FrameMarkersRenderer implements GLSurfaceView.Renderer
     	wheelphoneActivity = wtd;
     }
     
-    public void updateMarkersInfo(int markerId, boolean detected, int i1, int i2, float dist, float z, float tpx, float tpz) {
-    	wheelphoneActivity.updateMarkersInfo(markerId, detected, i1, i2, dist, z, tpx, tpz);
+    void setHandler(Handler h) {
+    	handler = h;
     }
-    
+       
     public void saveScreenShot() {
     	saveScreenShot(0, 0, mViewWidth, mViewHeight, "screenshot.png");
     }
