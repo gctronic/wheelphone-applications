@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<usb-accessory  manufacturer="GCtronic" model="Wheelphone"/>
+</resources><!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/xml/accessory_filter.xml -->

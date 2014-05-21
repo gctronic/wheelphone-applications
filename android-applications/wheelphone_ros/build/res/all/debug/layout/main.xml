@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >    
+    
+    <!-- 
+    <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    >    
+    
+        <org.ros.android.view.RosTextView
+        android:id="@+id/motorSpeed"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dip" /> 
+	
+     
+    </LinearLayout>
+	 -->
+	        
+            
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    >
+    
+        <TextView
+            android:id="@+id/txtConnection"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/robotDisconnected"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />       
+
+	</LinearLayout>      
+	 
+        <LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="240px"
+    android:layout_height="320px"
+    android:gravity="center_horizontal|center"
+    >    
+        <org.ros.android.view.camera.RosCameraPreviewView
+        android:id="@+id/ros_camera_preview_view"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+         
+      
+        
+    </LinearLayout>	   
+  	    
+ 
+            	
+	<!-- Logo and site -->
+    
+    <LinearLayout 
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal|bottom"
+    >
+        
+	    <ImageView
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:adjustViewBounds="true"
+	        android:contentDescription="wheelphone"
+	        android:maxWidth="200dp"
+	        android:src="@drawable/ic_launcher" />
+	    
+	    <TextView  
+	    android:layout_width="150dp" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/weblink"
+	    android:gravity="center"
+	    />
+    </LinearLayout>
+</LinearLayout><!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/layout/main.xml -->

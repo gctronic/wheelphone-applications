@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="0.1.3" >
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/debug/assets" />
+    </dataSet>
+
+</merger>

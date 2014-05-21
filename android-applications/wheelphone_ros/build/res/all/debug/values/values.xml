@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/colors.xml -->
+    <eat-comment />
+
+    <color name="button_pressed">#770000</color>
+    <color name="green">#00FF00</color>
+    <color name="red">#FF0000</color>
+    <color name="sub_title">@null</color>
+    <color name="title_bar">#0000FF</color>
+    <color name="white">#FFFFFF</color>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="app_name">Wheelphone ROS</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/values/values.xml -->
+    <eat-comment />
+
+    <string name="cancel">Cancel</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="init_value">0</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/values/values.xml -->
+    <eat-comment />
+
+    <string name="master_uri_hint">http://localhost:11311/</string>
+    <string name="new_master">New Public Master</string>
+    <string name="new_private_master">New Private Master</string>
+    <string name="qr_code">Read QRCode</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="robotDisconnected">Robot disconnected</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/values/values.xml -->
+    <eat-comment />
+
+    <string name="show_advanced">Show advanced options</string>
+    <string name="uri_text">Robot URI:</string>
+    <string name="use_master">Connect</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="weblink">www.wheelphone.com</string>
+    <!-- From: file:/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/values/values.xml -->
+    <eat-comment />
+
+    <style name="padded">
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+</resources>

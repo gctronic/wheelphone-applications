@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="0.1.3" >
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res" >
+            <file
+                name="master_chooser"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/layout/master_chooser.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="icon"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/drawable-mdpi/icon.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/values/values.xml"
+                qualifiers="" >
+                <string name="cancel" >Cancel
+                </string>
+                <string name="master_uri_hint" >http://localhost:11311/
+                </string>
+                <string name="qr_code" >Read QRCode
+                </string>
+
+                <style name="padded" >
+                    <item name="android:layout_marginTop">
+10dp
+                    </item>
+                </style>
+
+                <string name="use_master" >Connect
+                </string>
+                <string name="new_private_master" >New Private Master
+                </string>
+                <string name="app_name" >ROS for Android
+                </string>
+                <string name="new_master" >New Public Master
+                </string>
+                <string name="uri_text" >Robot URI:
+                </string>
+                <string name="show_advanced" >Show advanced options
+                </string>
+            </file>
+            <file
+                name="icon"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/drawable-ldpi/icon.png"
+                qualifiers="ldpi"
+                type="drawable" />
+            <file
+                name="icon"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/exploded-aar/org.ros.android_core/android_gingerbread_mr1/0.1.3/res/drawable-hdpi/icon.png"
+                qualifiers="hdpi"
+                type="drawable" />
+        </source>
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res" >
+            <file
+                name="accessory_filter"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/xml/accessory_filter.xml"
+                qualifiers=""
+                type="xml" />
+            <file
+                name="ic_launcher"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/drawable/ic_launcher.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="wheelphone_logo_ros"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/drawable/wheelphone_logo_ros.jpg"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="main"
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/layout/main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/strings.xml"
+                qualifiers="" >
+                <string name="init_value" >0
+                </string>
+                <string name="weblink" >www.wheelphone.com
+                </string>
+                <string name="robotDisconnected" >Robot disconnected
+                </string>
+                <string name="app_name" >Wheelphone ROS
+                </string>
+            </file>
+            <file
+                path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/main/res/values/colors.xml"
+                qualifiers="" >
+                <color name="green" >#00FF00
+                </color>
+                <color name="white" >#FFFFFF
+                </color>
+                <color name="red" >#FF0000
+                </color>
+                <color name="title_bar" >#0000FF
+                </color>
+                <color name="button_pressed" >#770000
+                </color>
+                <color name="sub_title" >@null
+                </color>
+            </file>
+        </source>
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/res/rs/debug" />
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/build/res/generated/debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/viki/hydro_workspace/android/src/android_core-hydro/wheelphone_ros/src/debug/res" />
+    </dataSet>
+
+</merger>
