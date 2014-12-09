@@ -1,0 +1,542 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7B1A0E1519EBC4C5000BE1EA /* wheelphone-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1A0E1419EBC4C5000BE1EA /* wheelphone-logo.png */; };
+		7BF820FB1A3194960091D087 /* ios-wheelphone-library.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7BF820F91A3194960091D087 /* ios-wheelphone-library.bundle */; };
+		7BF820FC1A3194960091D087 /* ios-wheelphone-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF820FA1A3194960091D087 /* ios-wheelphone-library.framework */; };
+		7BF821061A31A71A0091D087 /* wheelphone-logo-square-motion-58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF821031A31A71A0091D087 /* wheelphone-logo-square-motion-58x58.png */; };
+		7BF821071A31A71A0091D087 /* wheelphone-logo-square-motion-80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF821041A31A71A0091D087 /* wheelphone-logo-square-motion-80x80.png */; };
+		7BF821081A31A71A0091D087 /* wheelphone-logo-square-motion-120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF821051A31A71A0091D087 /* wheelphone-logo-square-motion-120x120.png */; };
+		7BF8210A1A31AB680091D087 /* wheelphone-logo-square-motion-57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF821091A31AB680091D087 /* wheelphone-logo-square-motion-57x57.png */; };
+		F31D763418B79C2C00BC62D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F31D763318B79C2C00BC62D1 /* Foundation.framework */; };
+		F31D763618B79C2D00BC62D1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F31D763518B79C2D00BC62D1 /* CoreGraphics.framework */; };
+		F31D763818B79C2D00BC62D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F31D763718B79C2D00BC62D1 /* UIKit.framework */; };
+		F31D763E18B79C2D00BC62D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F31D763C18B79C2D00BC62D1 /* InfoPlist.strings */; };
+		F31D764018B79C2D00BC62D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F31D763F18B79C2D00BC62D1 /* main.m */; };
+		F31D764418B79C2D00BC62D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F31D764318B79C2D00BC62D1 /* AppDelegate.m */; };
+		F31D764718B79C2E00BC62D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F31D764518B79C2E00BC62D1 /* Main.storyboard */; };
+		F31D764C18B79C2E00BC62D1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F31D764B18B79C2E00BC62D1 /* Images.xcassets */; };
+		F31D765318B79C2E00BC62D1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F31D765218B79C2E00BC62D1 /* XCTest.framework */; };
+		F31D765418B79C2E00BC62D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F31D763318B79C2C00BC62D1 /* Foundation.framework */; };
+		F31D765518B79C2E00BC62D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F31D763718B79C2D00BC62D1 /* UIKit.framework */; };
+		F31D765D18B79C2F00BC62D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F31D765B18B79C2F00BC62D1 /* InfoPlist.strings */; };
+		F31D765F18B79C2F00BC62D1 /* MoveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F31D765E18B79C2F00BC62D1 /* MoveTests.m */; };
+		F334821318BB878A00ED3F4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F334821218BB878A00ED3F4B /* CoreMotion.framework */; };
+		F3C0F2CB18B7A2CD0039163A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C0F2CA18B7A2CD0039163A /* AudioToolbox.framework */; };
+		F3C0F2CD18B7A2E50039163A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C0F2CC18B7A2E40039163A /* AVFoundation.framework */; };
+		F3C0F2D518B816AA0039163A /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F3C0F2D418B816AA0039163A /* ViewController.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F31D765618B79C2E00BC62D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F31D762818B79C2B00BC62D1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F31D762F18B79C2C00BC62D1;
+			remoteInfo = Move;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7B1A0E1419EBC4C5000BE1EA /* wheelphone-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo.png"; sourceTree = "<group>"; };
+		7BF820F91A3194960091D087 /* ios-wheelphone-library.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "ios-wheelphone-library.bundle"; sourceTree = "<group>"; };
+		7BF820FA1A3194960091D087 /* ios-wheelphone-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ios-wheelphone-library.framework"; sourceTree = "<group>"; };
+		7BF821031A31A71A0091D087 /* wheelphone-logo-square-motion-58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo-square-motion-58x58.png"; sourceTree = "<group>"; };
+		7BF821041A31A71A0091D087 /* wheelphone-logo-square-motion-80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo-square-motion-80x80.png"; sourceTree = "<group>"; };
+		7BF821051A31A71A0091D087 /* wheelphone-logo-square-motion-120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo-square-motion-120x120.png"; sourceTree = "<group>"; };
+		7BF821091A31AB680091D087 /* wheelphone-logo-square-motion-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wheelphone-logo-square-motion-57x57.png"; sourceTree = "<group>"; };
+		F31D763018B79C2C00BC62D1 /* WPSquareMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WPSquareMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F31D763318B79C2C00BC62D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F31D763518B79C2D00BC62D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F31D763718B79C2D00BC62D1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F31D763B18B79C2D00BC62D1 /* WPSquareMotion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WPSquareMotion-Info.plist"; sourceTree = "<group>"; };
+		F31D763D18B79C2D00BC62D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F31D763F18B79C2D00BC62D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F31D764118B79C2D00BC62D1 /* WPSquareMotion-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WPSquareMotion-Prefix.pch"; sourceTree = "<group>"; };
+		F31D764218B79C2D00BC62D1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F31D764318B79C2D00BC62D1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F31D764618B79C2E00BC62D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F31D764B18B79C2E00BC62D1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F31D765118B79C2E00BC62D1 /* WPSquareMotionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WPSquareMotionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F31D765218B79C2E00BC62D1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F31D765A18B79C2F00BC62D1 /* WPSquareMotionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WPSquareMotionTests-Info.plist"; sourceTree = "<group>"; };
+		F31D765C18B79C2F00BC62D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F31D765E18B79C2F00BC62D1 /* MoveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoveTests.m; sourceTree = "<group>"; };
+		F334821218BB878A00ED3F4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		F3C0F2CA18B7A2CD0039163A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F3C0F2CC18B7A2E40039163A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F3C0F2D118B813630039163A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		F3C0F2D318B816540039163A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F3C0F2D418B816AA0039163A /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F31D762D18B79C2C00BC62D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F334821318BB878A00ED3F4B /* CoreMotion.framework in Frameworks */,
+				F3C0F2CD18B7A2E50039163A /* AVFoundation.framework in Frameworks */,
+				F3C0F2CB18B7A2CD0039163A /* AudioToolbox.framework in Frameworks */,
+				F31D763618B79C2D00BC62D1 /* CoreGraphics.framework in Frameworks */,
+				F31D763818B79C2D00BC62D1 /* UIKit.framework in Frameworks */,
+				7BF820FC1A3194960091D087 /* ios-wheelphone-library.framework in Frameworks */,
+				F31D763418B79C2C00BC62D1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F31D764E18B79C2E00BC62D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F31D765318B79C2E00BC62D1 /* XCTest.framework in Frameworks */,
+				F31D765518B79C2E00BC62D1 /* UIKit.framework in Frameworks */,
+				F31D765418B79C2E00BC62D1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7B1A0E0D19EBC3A9000BE1EA /* images */ = {
+			isa = PBXGroup;
+			children = (
+				7BF821091A31AB680091D087 /* wheelphone-logo-square-motion-57x57.png */,
+				7BF821031A31A71A0091D087 /* wheelphone-logo-square-motion-58x58.png */,
+				7BF821051A31A71A0091D087 /* wheelphone-logo-square-motion-120x120.png */,
+				7BF821041A31A71A0091D087 /* wheelphone-logo-square-motion-80x80.png */,
+				7B1A0E1419EBC4C5000BE1EA /* wheelphone-logo.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		F31D762718B79C2B00BC62D1 = {
+			isa = PBXGroup;
+			children = (
+				7B1A0E0D19EBC3A9000BE1EA /* images */,
+				F31D763918B79C2D00BC62D1 /* WPSquareMotion */,
+				F31D765818B79C2F00BC62D1 /* WPSquareMotionTests */,
+				F31D763218B79C2C00BC62D1 /* Frameworks */,
+				F31D763118B79C2C00BC62D1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F31D763118B79C2C00BC62D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F31D763018B79C2C00BC62D1 /* WPSquareMotion.app */,
+				F31D765118B79C2E00BC62D1 /* WPSquareMotionTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F31D763218B79C2C00BC62D1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7BF820F91A3194960091D087 /* ios-wheelphone-library.bundle */,
+				7BF820FA1A3194960091D087 /* ios-wheelphone-library.framework */,
+				F334821218BB878A00ED3F4B /* CoreMotion.framework */,
+				F3C0F2CC18B7A2E40039163A /* AVFoundation.framework */,
+				F3C0F2CA18B7A2CD0039163A /* AudioToolbox.framework */,
+				F31D763318B79C2C00BC62D1 /* Foundation.framework */,
+				F31D763518B79C2D00BC62D1 /* CoreGraphics.framework */,
+				F31D763718B79C2D00BC62D1 /* UIKit.framework */,
+				F31D765218B79C2E00BC62D1 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F31D763918B79C2D00BC62D1 /* WPSquareMotion */ = {
+			isa = PBXGroup;
+			children = (
+				F31D764218B79C2D00BC62D1 /* AppDelegate.h */,
+				F31D764318B79C2D00BC62D1 /* AppDelegate.m */,
+				F31D764518B79C2E00BC62D1 /* Main.storyboard */,
+				F3C0F2D318B816540039163A /* ViewController.h */,
+				F3C0F2D418B816AA0039163A /* ViewController.mm */,
+				F31D764B18B79C2E00BC62D1 /* Images.xcassets */,
+				F31D763A18B79C2D00BC62D1 /* Supporting Files */,
+			);
+			name = WPSquareMotion;
+			path = Move;
+			sourceTree = "<group>";
+		};
+		F31D763A18B79C2D00BC62D1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F31D763B18B79C2D00BC62D1 /* WPSquareMotion-Info.plist */,
+				F31D763C18B79C2D00BC62D1 /* InfoPlist.strings */,
+				F31D763F18B79C2D00BC62D1 /* main.m */,
+				F31D764118B79C2D00BC62D1 /* WPSquareMotion-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F31D765818B79C2F00BC62D1 /* WPSquareMotionTests */ = {
+			isa = PBXGroup;
+			children = (
+				F31D765E18B79C2F00BC62D1 /* MoveTests.m */,
+				F31D765918B79C2F00BC62D1 /* Supporting Files */,
+			);
+			name = WPSquareMotionTests;
+			path = MoveTests;
+			sourceTree = "<group>";
+		};
+		F31D765918B79C2F00BC62D1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F31D765A18B79C2F00BC62D1 /* WPSquareMotionTests-Info.plist */,
+				F31D765B18B79C2F00BC62D1 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F31D762F18B79C2C00BC62D1 /* WPSquareMotion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F31D766218B79C2F00BC62D1 /* Build configuration list for PBXNativeTarget "WPSquareMotion" */;
+			buildPhases = (
+				F31D762C18B79C2C00BC62D1 /* Sources */,
+				F31D762D18B79C2C00BC62D1 /* Frameworks */,
+				F31D762E18B79C2C00BC62D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WPSquareMotion;
+			productName = Move;
+			productReference = F31D763018B79C2C00BC62D1 /* WPSquareMotion.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F31D765018B79C2E00BC62D1 /* WPSquareMotionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F31D766518B79C2F00BC62D1 /* Build configuration list for PBXNativeTarget "WPSquareMotionTests" */;
+			buildPhases = (
+				F31D764D18B79C2E00BC62D1 /* Sources */,
+				F31D764E18B79C2E00BC62D1 /* Frameworks */,
+				F31D764F18B79C2E00BC62D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F31D765718B79C2E00BC62D1 /* PBXTargetDependency */,
+			);
+			name = WPSquareMotionTests;
+			productName = MoveTests;
+			productReference = F31D765118B79C2E00BC62D1 /* WPSquareMotionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F31D762818B79C2B00BC62D1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Universita della Svizzera Italiana (ITC)";
+				TargetAttributes = {
+					F31D762F18B79C2C00BC62D1 = {
+						DevelopmentTeam = AUDUUYW869;
+					};
+					F31D765018B79C2E00BC62D1 = {
+						TestTargetID = F31D762F18B79C2C00BC62D1;
+					};
+				};
+			};
+			buildConfigurationList = F31D762B18B79C2C00BC62D1 /* Build configuration list for PBXProject "WPSquareMotion" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F31D762718B79C2B00BC62D1;
+			productRefGroup = F31D763118B79C2C00BC62D1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F31D762F18B79C2C00BC62D1 /* WPSquareMotion */,
+				F31D765018B79C2E00BC62D1 /* WPSquareMotionTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F31D762E18B79C2C00BC62D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F31D764C18B79C2E00BC62D1 /* Images.xcassets in Resources */,
+				7BF821061A31A71A0091D087 /* wheelphone-logo-square-motion-58x58.png in Resources */,
+				7BF821071A31A71A0091D087 /* wheelphone-logo-square-motion-80x80.png in Resources */,
+				7B1A0E1519EBC4C5000BE1EA /* wheelphone-logo.png in Resources */,
+				7BF8210A1A31AB680091D087 /* wheelphone-logo-square-motion-57x57.png in Resources */,
+				F31D763E18B79C2D00BC62D1 /* InfoPlist.strings in Resources */,
+				7BF821081A31A71A0091D087 /* wheelphone-logo-square-motion-120x120.png in Resources */,
+				7BF820FB1A3194960091D087 /* ios-wheelphone-library.bundle in Resources */,
+				F31D764718B79C2E00BC62D1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F31D764F18B79C2E00BC62D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F31D765D18B79C2F00BC62D1 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F31D762C18B79C2C00BC62D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3C0F2D518B816AA0039163A /* ViewController.mm in Sources */,
+				F31D764418B79C2D00BC62D1 /* AppDelegate.m in Sources */,
+				F31D764018B79C2D00BC62D1 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F31D764D18B79C2E00BC62D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F31D765F18B79C2F00BC62D1 /* MoveTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F31D765718B79C2E00BC62D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F31D762F18B79C2C00BC62D1 /* WPSquareMotion */;
+			targetProxy = F31D765618B79C2E00BC62D1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F31D763C18B79C2D00BC62D1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F31D763D18B79C2D00BC62D1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F31D764518B79C2E00BC62D1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F31D764618B79C2E00BC62D1 /* Base */,
+				F3C0F2D118B813630039163A /* en */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F31D765B18B79C2F00BC62D1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F31D765C18B79C2F00BC62D1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F31D766018B79C2F00BC62D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F31D766118B79C2F00BC62D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F31D766318B79C2F00BC62D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: GCtronic Sagl (AUDUUYW869)";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Move/WPSquareMotion-Prefix.pch";
+				INFOPLIST_FILE = "Move/WPSquareMotion-Info.plist";
+				PRODUCT_NAME = WPSquareMotion;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F31D766418B79C2F00BC62D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: GCtronic Sagl (AUDUUYW869)";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Move/WPSquareMotion-Prefix.pch";
+				INFOPLIST_FILE = "Move/WPSquareMotion-Info.plist";
+				PRODUCT_NAME = WPSquareMotion;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		F31D766618B79C2F00BC62D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Move.app/Move";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Move/Move-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MoveTests/WPSquareMotionTests-Info.plist";
+				PRODUCT_NAME = WPSquareMotionTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		F31D766718B79C2F00BC62D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Move.app/Move";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Move/Move-Prefix.pch";
+				INFOPLIST_FILE = "MoveTests/WPSquareMotionTests-Info.plist";
+				PRODUCT_NAME = WPSquareMotionTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F31D762B18B79C2C00BC62D1 /* Build configuration list for PBXProject "WPSquareMotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F31D766018B79C2F00BC62D1 /* Debug */,
+				F31D766118B79C2F00BC62D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F31D766218B79C2F00BC62D1 /* Build configuration list for PBXNativeTarget "WPSquareMotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F31D766318B79C2F00BC62D1 /* Debug */,
+				F31D766418B79C2F00BC62D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F31D766518B79C2F00BC62D1 /* Build configuration list for PBXNativeTarget "WPSquareMotionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F31D766618B79C2F00BC62D1 /* Debug */,
+				F31D766718B79C2F00BC62D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F31D762818B79C2B00BC62D1 /* Project object */;
+}
