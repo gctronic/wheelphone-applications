@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1519B6E8160344E500364066 /* app_icon_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1519B6E7160344E500364066 /* app_icon_iPhone.png */; };
+		1519B6EB160344E800364066 /* app_icon_iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1519B6EA160344E800364066 /* app_icon_iPhone@2x.png */; };
+		1519B6ED160344ED00364066 /* app_icon_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1519B6EC160344ED00364066 /* app_icon_iPad.png */; };
+		1519B6EF160344EF00364066 /* app_icon_iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1519B6EE160344EF00364066 /* app_icon_iPad@2x.png */; };
+		1519B6F11603451800364066 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1519B6F01603451800364066 /* Default-Portrait@2x~ipad.png */; };
+		1588319713605ABF0082B874 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1588319613605ABF0082B874 /* EAGLView.mm */; };
+		15899802132907BC004C3F7B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15899801132907BC004C3F7B /* AVFoundation.framework */; };
+		15899804132907BC004C3F7B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15899803132907BC004C3F7B /* CoreMedia.framework */; };
+		15899806132907BC004C3F7B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15899805132907BC004C3F7B /* CoreVideo.framework */; };
+		1589985313290C40004C3F7B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589985213290C40004C3F7B /* CoreGraphics.framework */; };
+		1599F811134360DE0073DAB2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599F810134360DE0073DAB2 /* Security.framework */; };
+		15A1585D135C9CF800C6B482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A15852135C9CF800C6B482 /* main.m */; };
+		15A6BFBB1641DB3500E6FE60 /* DomOverlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A6BFBA1641DB3500E6FE60 /* DomOverlayViewController.mm */; };
+		15BE5EA01353659900ABDA09 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15BE5E9F1353659900ABDA09 /* SystemConfiguration.framework */; };
+		15E5254C13B206A7007E8DCA /* DominoesAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15E5254B13B206A7007E8DCA /* DominoesAppDelegate.mm */; };
+		15E927A8161F426700D24BBE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15E927A7161F426700D24BBE /* Default-568h@2x.png */; };
+		1872576818075772009DE250 /* libQCAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1872576718075772009DE250 /* libQCAR.a */; };
+		1872577D18075852009DE250 /* AR_EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1872576B18075852009DE250 /* AR_EAGLView.mm */; };
+		1872577E18075852009DE250 /* ARParentViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1872576D18075852009DE250 /* ARParentViewController.mm */; };
+		1872577F18075852009DE250 /* ARViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1872576F18075852009DE250 /* ARViewController.mm */; };
+		1872578018075852009DE250 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1872577118075852009DE250 /* OverlayView.m */; };
+		1872578118075852009DE250 /* OverlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1872577318075852009DE250 /* OverlayViewController.mm */; };
+		1872578218075852009DE250 /* QCARutils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1872577518075852009DE250 /* QCARutils.mm */; };
+		1872578318075852009DE250 /* Shader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 1872577718075852009DE250 /* Shader.fsh */; };
+		1872578418075852009DE250 /* Shader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 1872577818075852009DE250 /* Shader.vsh */; };
+		1872578518075852009DE250 /* ShaderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1872577918075852009DE250 /* ShaderUtils.cpp */; };
+		1872578618075852009DE250 /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1872577C18075852009DE250 /* Texture.mm */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
+		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		766C04C01468258400BE15F9 /* DomParentViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 766C04BF1468258400BE15F9 /* DomParentViewController.mm */; };
+		7672749214DACD87005A0EAF /* texture_domino.png in Resources */ = {isa = PBXBuildFile; fileRef = 7672749114DACD87005A0EAF /* texture_domino.png */; };
+		76CEC855146D55B2009E8098 /* Stones.dat in Resources */ = {isa = PBXBuildFile; fileRef = 76CEC853146D55B2009E8098 /* Stones.dat */; };
+		76CEC856146D55B2009E8098 /* Stones.xml in Resources */ = {isa = PBXBuildFile; fileRef = 76CEC854146D55B2009E8098 /* Stones.xml */; };
+		76D674F714D05C21003D8330 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D674F614D05C21003D8330 /* Default.png */; };
+		76D674F914D05C28003D8330 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D674F814D05C28003D8330 /* Default@2x.png */; };
+		76D674FB14D05C59003D8330 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D674FA14D05C59003D8330 /* Default-Portrait~ipad.png */; };
+		AAC2824E15067A2A00D9A36B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC2824D15067A2A00D9A36B /* CoreMotion.framework */; };
+		F732BF83136B009B00037249 /* ButtonOverlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F732BF80136B009B00037249 /* ButtonOverlayViewController.mm */; };
+		F767EE0E1369AC25006A1C6B /* SampleMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F767EE091369AC25006A1C6B /* SampleMath.cpp */; };
+		F767EE141369AC53006A1C6B /* green_glow.png in Resources */ = {isa = PBXBuildFile; fileRef = F767EE111369AC53006A1C6B /* green_glow.png */; };
+		F767EE151369AC53006A1C6B /* blue_glow.png in Resources */ = {isa = PBXBuildFile; fileRef = F767EE121369AC53006A1C6B /* blue_glow.png */; };
+		F767EE511369BB15006A1C6B /* Dominoes.mm in Sources */ = {isa = PBXBuildFile; fileRef = F767EE501369BB15006A1C6B /* Dominoes.mm */; };
+		F7A3A08D1378DF6100C69DDD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A3A08C1378DF6100C69DDD /* AudioToolbox.framework */; };
+		F7E957A01378DD7000810B8A /* domino_tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = F7E9579F1378DD7000810B8A /* domino_tap.wav */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1519B6E7160344E500364066 /* app_icon_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_iPhone.png; sourceTree = "<group>"; };
+		1519B6EA160344E800364066 /* app_icon_iPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon_iPhone@2x.png"; sourceTree = "<group>"; };
+		1519B6EC160344ED00364066 /* app_icon_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_iPad.png; sourceTree = "<group>"; };
+		1519B6EE160344EF00364066 /* app_icon_iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon_iPad@2x.png"; sourceTree = "<group>"; };
+		1519B6F01603451800364066 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		1588319613605ABF0082B874 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EAGLView.mm; path = Dominoes/EAGLView.mm; sourceTree = "<group>"; };
+		15899801132907BC004C3F7B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		15899803132907BC004C3F7B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		15899805132907BC004C3F7B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		1589985213290C40004C3F7B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1599F810134360DE0073DAB2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		15A1584C135C9CF800C6B482 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Dominoes/EAGLView.h; sourceTree = "<group>"; };
+		15A1584E135C9CF800C6B482 /* Dominoes_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dominoes_Prefix.pch; path = Dominoes/Dominoes_Prefix.pch; sourceTree = "<group>"; };
+		15A1584F135C9CF800C6B482 /* Dominoes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Dominoes-Info.plist"; path = "Dominoes/Dominoes-Info.plist"; sourceTree = "<group>"; };
+		15A15850135C9CF800C6B482 /* DominoesAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DominoesAppDelegate.h; path = Dominoes/DominoesAppDelegate.h; sourceTree = "<group>"; };
+		15A15852135C9CF800C6B482 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Dominoes/main.m; sourceTree = "<group>"; };
+		15A6BFB91641DB3500E6FE60 /* DomOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DomOverlayViewController.h; path = Dominoes/DomOverlayViewController.h; sourceTree = "<group>"; };
+		15A6BFBA1641DB3500E6FE60 /* DomOverlayViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DomOverlayViewController.mm; path = Dominoes/DomOverlayViewController.mm; sourceTree = "<group>"; };
+		15BE5E9F1353659900ABDA09 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		15E5254B13B206A7007E8DCA /* DominoesAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DominoesAppDelegate.mm; path = Dominoes/DominoesAppDelegate.mm; sourceTree = "<group>"; };
+		15E927A7161F426700D24BBE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		1872576718075772009DE250 /* libQCAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQCAR.a; path = ../../build/lib/arm/libQCAR.a; sourceTree = "<group>"; };
+		1872576A18075852009DE250 /* AR_EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AR_EAGLView.h; sourceTree = "<group>"; };
+		1872576B18075852009DE250 /* AR_EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AR_EAGLView.mm; sourceTree = "<group>"; };
+		1872576C18075852009DE250 /* ARParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARParentViewController.h; sourceTree = "<group>"; };
+		1872576D18075852009DE250 /* ARParentViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ARParentViewController.mm; sourceTree = "<group>"; };
+		1872576E18075852009DE250 /* ARViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewController.h; sourceTree = "<group>"; };
+		1872576F18075852009DE250 /* ARViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ARViewController.mm; sourceTree = "<group>"; };
+		1872577018075852009DE250 /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		1872577118075852009DE250 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		1872577218075852009DE250 /* OverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayViewController.h; sourceTree = "<group>"; };
+		1872577318075852009DE250 /* OverlayViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OverlayViewController.mm; sourceTree = "<group>"; };
+		1872577418075852009DE250 /* QCARutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCARutils.h; sourceTree = "<group>"; };
+		1872577518075852009DE250 /* QCARutils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QCARutils.mm; sourceTree = "<group>"; };
+		1872577718075852009DE250 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
+		1872577818075852009DE250 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		1872577918075852009DE250 /* ShaderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderUtils.cpp; sourceTree = "<group>"; };
+		1872577A18075852009DE250 /* ShaderUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtils.h; sourceTree = "<group>"; };
+		1872577B18075852009DE250 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		1872577C18075852009DE250 /* Texture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture.mm; sourceTree = "<group>"; };
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* Dominoes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dominoes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		766C04BE1468258400BE15F9 /* DomParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DomParentViewController.h; path = Dominoes/DomParentViewController.h; sourceTree = "<group>"; };
+		766C04BF1468258400BE15F9 /* DomParentViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DomParentViewController.mm; path = Dominoes/DomParentViewController.mm; sourceTree = "<group>"; };
+		7672749114DACD87005A0EAF /* texture_domino.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture_domino.png; path = Dominoes/assets/texture_domino.png; sourceTree = "<group>"; };
+		76CEC853146D55B2009E8098 /* Stones.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = Stones.dat; path = Dominoes/assets/Stones.dat; sourceTree = "<group>"; };
+		76CEC854146D55B2009E8098 /* Stones.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Stones.xml; path = Dominoes/assets/Stones.xml; sourceTree = "<group>"; };
+		76D674F614D05C21003D8330 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		76D674F814D05C28003D8330 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		76D674FA14D05C59003D8330 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		AAC2824D15067A2A00D9A36B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		F732BF80136B009B00037249 /* ButtonOverlayViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ButtonOverlayViewController.mm; path = Dominoes/ButtonOverlayViewController.mm; sourceTree = "<group>"; };
+		F732BF81136B009B00037249 /* ButtonOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonOverlayViewController.h; path = Dominoes/ButtonOverlayViewController.h; sourceTree = "<group>"; };
+		F767EE081369AC25006A1C6B /* SampleMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleMath.h; path = Dominoes/SampleMath.h; sourceTree = "<group>"; };
+		F767EE091369AC25006A1C6B /* SampleMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SampleMath.cpp; path = Dominoes/SampleMath.cpp; sourceTree = "<group>"; };
+		F767EE0D1369AC25006A1C6B /* Cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cube.h; path = Dominoes/Cube.h; sourceTree = "<group>"; };
+		F767EE111369AC53006A1C6B /* green_glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = green_glow.png; path = Dominoes/assets/green_glow.png; sourceTree = "<group>"; };
+		F767EE121369AC53006A1C6B /* blue_glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blue_glow.png; path = Dominoes/assets/blue_glow.png; sourceTree = "<group>"; };
+		F767EE4F1369BB15006A1C6B /* Dominoes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dominoes.h; path = Dominoes/Dominoes.h; sourceTree = "<group>"; };
+		F767EE501369BB15006A1C6B /* Dominoes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Dominoes.mm; path = Dominoes/Dominoes.mm; sourceTree = "<group>"; };
+		F7A3A08C1378DF6100C69DDD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F7E9579F1378DD7000810B8A /* domino_tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = domino_tap.wav; path = Dominoes/assets/domino_tap.wav; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAC2824E15067A2A00D9A36B /* CoreMotion.framework in Frameworks */,
+				1599F811134360DE0073DAB2 /* Security.framework in Frameworks */,
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */,
+				28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */,
+				15899802132907BC004C3F7B /* AVFoundation.framework in Frameworks */,
+				1872576818075772009DE250 /* libQCAR.a in Frameworks */,
+				15899804132907BC004C3F7B /* CoreMedia.framework in Frameworks */,
+				15899806132907BC004C3F7B /* CoreVideo.framework in Frameworks */,
+				1589985313290C40004C3F7B /* CoreGraphics.framework in Frameworks */,
+				15BE5EA01353659900ABDA09 /* SystemConfiguration.framework in Frameworks */,
+				F7A3A08D1378DF6100C69DDD /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		150E05871374414B0085C598 /* Resources-iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Resources-iPad";
+			sourceTree = "<group>";
+		};
+		158997C613290423004C3F7B /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				7672749114DACD87005A0EAF /* texture_domino.png */,
+				76CEC853146D55B2009E8098 /* Stones.dat */,
+				76CEC854146D55B2009E8098 /* Stones.xml */,
+				F7E9579F1378DD7000810B8A /* domino_tap.wav */,
+				F767EE111369AC53006A1C6B /* green_glow.png */,
+				F767EE121369AC53006A1C6B /* blue_glow.png */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		15A15847135C9CD700C6B482 /* Dominoes */ = {
+			isa = PBXGroup;
+			children = (
+				1872576918075852009DE250 /* ARCommon */,
+				15A6BFB91641DB3500E6FE60 /* DomOverlayViewController.h */,
+				15A6BFBA1641DB3500E6FE60 /* DomOverlayViewController.mm */,
+				F767EE4F1369BB15006A1C6B /* Dominoes.h */,
+				F767EE501369BB15006A1C6B /* Dominoes.mm */,
+				F767EE081369AC25006A1C6B /* SampleMath.h */,
+				F767EE091369AC25006A1C6B /* SampleMath.cpp */,
+				15A1584C135C9CF800C6B482 /* EAGLView.h */,
+				1588319613605ABF0082B874 /* EAGLView.mm */,
+				15A15850135C9CF800C6B482 /* DominoesAppDelegate.h */,
+				15E5254B13B206A7007E8DCA /* DominoesAppDelegate.mm */,
+				766C04BE1468258400BE15F9 /* DomParentViewController.h */,
+				766C04BF1468258400BE15F9 /* DomParentViewController.mm */,
+				F732BF81136B009B00037249 /* ButtonOverlayViewController.h */,
+				F732BF80136B009B00037249 /* ButtonOverlayViewController.mm */,
+				15A15860135C9D0700C6B482 /* Supporting Files */,
+			);
+			name = Dominoes;
+			sourceTree = "<group>";
+		};
+		15A15860135C9D0700C6B482 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F767EE0D1369AC25006A1C6B /* Cube.h */,
+				15A1584F135C9CF800C6B482 /* Dominoes-Info.plist */,
+				15A1584E135C9CF800C6B482 /* Dominoes_Prefix.pch */,
+				15A15852135C9CF800C6B482 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1872576918075852009DE250 /* ARCommon */ = {
+			isa = PBXGroup;
+			children = (
+				1872576A18075852009DE250 /* AR_EAGLView.h */,
+				1872576B18075852009DE250 /* AR_EAGLView.mm */,
+				1872576C18075852009DE250 /* ARParentViewController.h */,
+				1872576D18075852009DE250 /* ARParentViewController.mm */,
+				1872576E18075852009DE250 /* ARViewController.h */,
+				1872576F18075852009DE250 /* ARViewController.mm */,
+				1872577018075852009DE250 /* OverlayView.h */,
+				1872577118075852009DE250 /* OverlayView.m */,
+				1872577218075852009DE250 /* OverlayViewController.h */,
+				1872577318075852009DE250 /* OverlayViewController.mm */,
+				1872577418075852009DE250 /* QCARutils.h */,
+				1872577518075852009DE250 /* QCARutils.mm */,
+				1872577618075852009DE250 /* Shaders */,
+				1872577918075852009DE250 /* ShaderUtils.cpp */,
+				1872577A18075852009DE250 /* ShaderUtils.h */,
+				1872577B18075852009DE250 /* Texture.h */,
+				1872577C18075852009DE250 /* Texture.mm */,
+			);
+			name = ARCommon;
+			path = Dominoes/ARCommon;
+			sourceTree = "<group>";
+		};
+		1872577618075852009DE250 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				1872577718075852009DE250 /* Shader.fsh */,
+				1872577818075852009DE250 /* Shader.vsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* Dominoes.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				15E927A7161F426700D24BBE /* Default-568h@2x.png */,
+				1519B6EE160344EF00364066 /* app_icon_iPad@2x.png */,
+				1519B6EC160344ED00364066 /* app_icon_iPad.png */,
+				1519B6EA160344E800364066 /* app_icon_iPhone@2x.png */,
+				1519B6E7160344E500364066 /* app_icon_iPhone.png */,
+				1519B6F01603451800364066 /* Default-Portrait@2x~ipad.png */,
+				76D674FA14D05C59003D8330 /* Default-Portrait~ipad.png */,
+				76D674F814D05C28003D8330 /* Default@2x.png */,
+				76D674F614D05C21003D8330 /* Default.png */,
+				15A15847135C9CD700C6B482 /* Dominoes */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				150E05871374414B0085C598 /* Resources-iPad */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				158997C613290423004C3F7B /* assets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1872576718075772009DE250 /* libQCAR.a */,
+				AAC2824D15067A2A00D9A36B /* CoreMotion.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				1589985213290C40004C3F7B /* CoreGraphics.framework */,
+				28FD15070DC6FC5B0079059D /* QuartzCore.framework */,
+				28FD14FF0DC6FC520079059D /* OpenGLES.framework */,
+				15899803132907BC004C3F7B /* CoreMedia.framework */,
+				15BE5E9F1353659900ABDA09 /* SystemConfiguration.framework */,
+				15899801132907BC004C3F7B /* AVFoundation.framework */,
+				15899805132907BC004C3F7B /* CoreVideo.framework */,
+				1599F810134360DE0073DAB2 /* Security.framework */,
+				F7A3A08C1378DF6100C69DDD /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* Dominoes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Dominoes" */;
+			buildPhases = (
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dominoes;
+			productName = Dominoes;
+			productReference = 1D6058910D05DD3D006BFB54 /* Dominoes.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Dominoes" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* Dominoes */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F767EE141369AC53006A1C6B /* green_glow.png in Resources */,
+				F767EE151369AC53006A1C6B /* blue_glow.png in Resources */,
+				F7E957A01378DD7000810B8A /* domino_tap.wav in Resources */,
+				76CEC855146D55B2009E8098 /* Stones.dat in Resources */,
+				76CEC856146D55B2009E8098 /* Stones.xml in Resources */,
+				76D674F714D05C21003D8330 /* Default.png in Resources */,
+				76D674F914D05C28003D8330 /* Default@2x.png in Resources */,
+				76D674FB14D05C59003D8330 /* Default-Portrait~ipad.png in Resources */,
+				1519B6F11603451800364066 /* Default-Portrait@2x~ipad.png in Resources */,
+				7672749214DACD87005A0EAF /* texture_domino.png in Resources */,
+				1519B6E8160344E500364066 /* app_icon_iPhone.png in Resources */,
+				1519B6EB160344E800364066 /* app_icon_iPhone@2x.png in Resources */,
+				1519B6ED160344ED00364066 /* app_icon_iPad.png in Resources */,
+				1519B6EF160344EF00364066 /* app_icon_iPad@2x.png in Resources */,
+				15E927A8161F426700D24BBE /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1872578418075852009DE250 /* Shader.vsh in Sources */,
+				15A1585D135C9CF800C6B482 /* main.m in Sources */,
+				1872578118075852009DE250 /* OverlayViewController.mm in Sources */,
+				1872578018075852009DE250 /* OverlayView.m in Sources */,
+				1588319713605ABF0082B874 /* EAGLView.mm in Sources */,
+				F767EE0E1369AC25006A1C6B /* SampleMath.cpp in Sources */,
+				F767EE511369BB15006A1C6B /* Dominoes.mm in Sources */,
+				F732BF83136B009B00037249 /* ButtonOverlayViewController.mm in Sources */,
+				15E5254C13B206A7007E8DCA /* DominoesAppDelegate.mm in Sources */,
+				1872577D18075852009DE250 /* AR_EAGLView.mm in Sources */,
+				1872578318075852009DE250 /* Shader.fsh in Sources */,
+				766C04C01468258400BE15F9 /* DomParentViewController.mm in Sources */,
+				15A6BFBB1641DB3500E6FE60 /* DomOverlayViewController.mm in Sources */,
+				1872577E18075852009DE250 /* ARParentViewController.mm in Sources */,
+				1872578218075852009DE250 /* QCARutils.mm in Sources */,
+				1872577F18075852009DE250 /* ARViewController.mm in Sources */,
+				1872578518075852009DE250 /* ShaderUtils.cpp in Sources */,
+				1872578618075852009DE250 /* Texture.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		15868FDC135EE3F40040DCA7 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 7;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Distribution;
+		};
+		15868FDD135EE3F40040DCA7 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Qualcomm Cambridge Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Qualcomm Cambridge Ltd";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Dominoes/Dominoes_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					NS_BLOCK_ASSERTIONS,
+					"$(CONFIGURATION_FLAGS_DEFINE)",
+				);
+				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				HEADER_SEARCH_PATHS = (
+					../../build/include,
+					../../../../OpenAR/QCAR/include,
+				);
+				INFOPLIST_FILE = "Dominoes/Dominoes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					../../build/lib/arm,
+					"../../../build/Release-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Dominoes/Dominoes_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"$(CONFIGURATION_FLAGS_DEFINE)",
+				);
+				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				HEADER_SEARCH_PATHS = (
+					../../build/include,
+					../../../../OpenAR/QCAR/include,
+				);
+				INFOPLIST_FILE = "Dominoes/Dominoes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					../../build/lib/arm,
+					"../../../build/$(CONFIGURATION)-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Dominoes/Dominoes_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					NS_BLOCK_ASSERTIONS,
+					"$(CONFIGURATION_FLAGS_DEFINE)",
+				);
+				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				HEADER_SEARCH_PATHS = (
+					../../build/include,
+					../../../../OpenAR/QCAR/include,
+				);
+				INFOPLIST_FILE = "Dominoes/Dominoes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					../../build/lib/arm,
+					"../../../build/$(CONFIGURATION)-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
+				ONLY_ACTIVE_ARCH = YES;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Dominoes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+				15868FDD135EE3F40040DCA7 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Dominoes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+				15868FDC135EE3F40040DCA7 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

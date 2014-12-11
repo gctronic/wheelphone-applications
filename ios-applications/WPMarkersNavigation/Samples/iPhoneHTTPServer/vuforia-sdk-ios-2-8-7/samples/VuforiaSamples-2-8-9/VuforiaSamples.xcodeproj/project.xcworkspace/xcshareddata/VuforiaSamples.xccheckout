@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3EA448CC-3491-4F39-83E4-C1D0E301B718</string>
+	<key>IDESourceControlProjectName</key>
+	<string>VuforiaSamples</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AAE3213C-CEE4-42C0-A5C3-93C8FE4BD55F</key>
+		<string>ssh://github.com/margaritaG/wheelphone.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>projects/TagNavigation/TagNavigation/vuforia-sdk-ios-2-8-7/samples/VuforiaSamples-2-8-9/VuforiaSamples.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AAE3213C-CEE4-42C0-A5C3-93C8FE4BD55F</key>
+		<string>../../../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/margaritaG/wheelphone.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AAE3213C-CEE4-42C0-A5C3-93C8FE4BD55F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AAE3213C-CEE4-42C0-A5C3-93C8FE4BD55F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>wheelphone</string>
+		</dict>
+	</array>
+</dict>
+</plist>

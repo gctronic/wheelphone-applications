@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>31276D95-779E-460C-945E-9DC12AA3673F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>iPhoneHTTPServer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9230A5B7-413C-4E2F-AE5D-6CA5977DC87D</key>
+		<string>ssh://github.com/margaritaG/wheelphone.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>projects/CocoaHTTPServer-master/Samples/iPhoneHTTPServer/iPhoneHTTPServer.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9230A5B7-413C-4E2F-AE5D-6CA5977DC87D</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/margaritaG/wheelphone.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9230A5B7-413C-4E2F-AE5D-6CA5977DC87D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9230A5B7-413C-4E2F-AE5D-6CA5977DC87D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>wheelphone</string>
+		</dict>
+	</array>
+</dict>
+</plist>

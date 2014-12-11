@@ -1,0 +1,27 @@
+/*==============================================================================
+ Copyright (c) 2012-2013 Qualcomm Connected Experiences, Inc.
+ All Rights Reserved.
+ ==============================================================================*/
+
+precision mediump float;
+varying vec2 texCoord;
+uniform sampler2D texSamplerMask;
+uniform sampler2D texSamplerVideo;
+uniform vec2 viewportOrigin;
+uniform vec2 viewportSize;
+uniform vec2 textureRatio;
+
+void main ()
+{
+    vec2 screenCoord;
+#ifdef REFLECT
+    screenCoord.x = (gl_FragCoord.x-viewportOrigin.x)/viewportSize.x *   textureRatio.x;
+    screenCoord.y = ((gl_FragCoord.y-viewportOrigin.y)/viewportSize.y) * textureRatio.y;
+#else
+    screenCoord.x = (gl_FragCoord.x-viewportOrigin.x)/viewportSize.x *   textureRatio.x;
+    screenCoord.y = ((1.0 - ((gl_FragCoord.y-viewportOrigin.y)/viewportSize.y)) * textureRatio.y);
+#endif
+    vec3 videoColor = texture2D(texSamplerVideo, screenCoord.xy).rgb;
+    float maskColor  = texture2D(texSamplerMask, texCoord.xy).x;
+    gl_FragColor.rgba = vec4(videoColor.r, videoColor.g, videoColor.b, maskColor);
+}
