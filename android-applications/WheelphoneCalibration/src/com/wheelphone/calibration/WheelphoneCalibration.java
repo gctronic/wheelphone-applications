@@ -12,11 +12,15 @@ import android.os.Bundle;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,9 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 	private boolean getCalibrationData = false;
 	private int calibrationDataIndex = 0;
 	private final int CALIBRATION_SAMPLES = 10;
+	private final int NO_IMAGE = 0;
+	private final int IMAGE_CALIB_LEFT = 1;
+	private final int IMAGE_CALIB_RIGHT = 2;
 	
 	// Robot state
 	WheelphoneRobot wheelphone;
@@ -126,7 +133,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 		
         wheelphone = new WheelphoneRobot(getApplicationContext(), getIntent());
                
-        msgbox("calibration", "Place the robot with the right wheel next to the black line and press the calibrate button. Wait until the process is terminated.");
+        msgbox("calibration", "Place the robot with the right wheel parallel to the black line on the sheet center and press the calibrate button. Wait until the process is terminated.", IMAGE_CALIB_LEFT);
  
 	}
 
@@ -172,7 +179,7 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 						//msgbox("Firmware version "+firmwareVersion+".0", "Firmware is fully compatible.");
 					} else {
 						//Toast.makeText(WheelphoneActivity.this, "Firmware version "+firmwareVersion+".0, NOT fully compatible. Update robot firmware.", Toast.LENGTH_LONG).show();
-						msgbox("Firmware version "+firmwareVersion+".0", "Firmware is NOT fully compatible. Update robot firmware.");
+						msgbox("Firmware version "+firmwareVersion+".0", "Firmware is NOT fully compatible. Update robot firmware.", NO_IMAGE);
 					}
 			}
 		}
@@ -192,11 +199,11 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 				calibState = 1;
 				btnStartCalib.setEnabled(true);
 				btnStartCalib.setText("Calibrate right wheel");
-				msgbox("calibration", "Left wheel calibrated, now place the robot with the left wheel next to the black line and press the calibrate button. Wait until the process is terminated.");
+				msgbox("calibration", "Left wheel calibrated, now place the robot with the left wheel parallel to the black line on the sheet center and press the calibrate button. Wait until the process is terminated.", IMAGE_CALIB_RIGHT);
 			} else if(calibState == 1) {
 				btnStartCalib.setEnabled(true);
 				btnStartCalib.setText("Calibrate left wheel");
-				msgbox("calibration", "Calibration terminated!");
+				msgbox("calibration", "Calibration terminated!", NO_IMAGE);
 				calibState = 0;
 				getCalibrationData = true;		
 				calibrationDataIndex = 0;
@@ -247,23 +254,39 @@ public class WheelphoneCalibration extends Activity implements WheelPhoneRobotLi
 			if(calibrationDataIndex >= CALIBRATION_SAMPLES) {
 				getCalibrationData = false;
 				writeCalibrationDataToFile();
-				msgbox("calibration", "Calibration data saved to sdcard/calibData.csv");
+				msgbox("calibration", "Calibration data saved to sdcard/calibData.csv", NO_IMAGE);
 			}
 		}
 		
 	}
     
-    public void msgbox(String title,String msg) {
-        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
-        dlgAlert.setTitle(title); 
-        dlgAlert.setMessage(msg); 
-        dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                 //finish(); 
-            }
-       });
-        dlgAlert.setCancelable(true);
-        dlgAlert.create().show();
+    public void msgbox(String title, String msg, int image) {	
+    	    	
+      AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(WheelphoneCalibration.this);
+      if(image == IMAGE_CALIB_LEFT) {
+    	  LayoutInflater factory = LayoutInflater.from(WheelphoneCalibration.this);
+    	  final View view = factory.inflate(R.layout.dialog, null);
+    	  ImageView img = (ImageView) view.findViewById(R.id.ImageView01);
+    	  img.setImageResource(R.drawable.wp_calibration_left);
+    	  dlgAlert.setView(view);
+      } else if(image == IMAGE_CALIB_RIGHT) {
+    	  LayoutInflater factory = LayoutInflater.from(WheelphoneCalibration.this);
+    	  final View view = factory.inflate(R.layout.dialog, null);
+    	  ImageView img = (ImageView) view.findViewById(R.id.ImageView01);
+    	  img.setImageResource(R.drawable.wp_calibration_right);
+    	  dlgAlert.setView(view);
+      }
+      dlgAlert.setTitle(title);
+      dlgAlert.setMessage(msg); 
+      dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+               //finish(); 
+          }
+      });
+      dlgAlert.setCancelable(true);
+      dlgAlert.create().show();    	
+
+
     }
     
 	public void writeCalibrationDataToFile() {       
