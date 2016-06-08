@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    
+    <TabHost   xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tabHost"
+    >
+    <TabWidget
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@android:id/tabs"
+    />
+    
+
+
+    
+     <FrameLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@android:id/tabcontent"
+     >
+    
+
+             
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:id="@+id/tab1"
+	    >	    
+	    
+      	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="70dp"
+	    android:id="@+id/spacingLayout"
+	    >
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    >	
+		</LinearLayout>  
+		    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    >		
+		</LinearLayout>    
+
+	    <LinearLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center"
+			        android:orientation="horizontal"
+			        android:background="@color/white" >
+			        
+			        <TextView
+			            android:id="@+id/txtConnection"
+			            android:layout_width="0dp"
+			            android:layout_height="25dp"
+			            android:layout_weight="0.41"
+			            android:gravity="center_vertical|center_horizontal"
+			            android:text="@string/robotDisconnected"
+			            android:textColor="@color/red"
+			            android:textSize="18sp"
+			            android:textStyle="bold" />
+			        
+		</LinearLayout>
+	    
+	    <!-- Sensors status -->	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/sensors_header"
+		    android:id="@+id/text_view"
+		    />
+	    </LinearLayout>	    
+		
+	    <!-- Creation of battery -->
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/battery_level"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/batteryLevel"
+			    android:paddingRight="24sp"
+			    />
+			</LinearLayout>
+
+	   	<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/left_speed_txt"
+			    android:paddingRight="4sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="40dp"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/leftSpeedTxt"
+			    />
+			</LinearLayout>
+	        
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/right_speed_txt"
+			    android:paddingRight="8sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="40dp"
+		    android:layout_height="wrap_content"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/rightSpeedTxt"
+			    />
+			</LinearLayout>
+
+	    </LinearLayout>      
+	    
+	   	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>
+			        <Button
+			            android:id="@+id/btnCalibrate"
+			            android:layout_width="0dp"
+			            android:layout_height="35dp"
+			            android:layout_weight="0.41"
+			            android:onClick="calibrateSensors"
+			            android:text="@string/calibration" />
+			        
+		</LinearLayout>   	    
+	    
+	    
+	    <!-- Targets status -->
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/targets_header"
+		    android:id="@+id/text_view3"
+		    />
+	    </LinearLayout>
+	 
+	 	<!-- Creation of target0 info -->
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/xLabel"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/X0"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>
+			
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/yLabel"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="55dp"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/Y0"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>   
+			
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/distLabel"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/d0"
+			        android:layout_width="55dp"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>   		
+	   				
+		    <LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@color/sub_title"
+		    >
+			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/orientLabel"
+			    android:paddingRight="1sp"
+			    />
+	    	</LinearLayout>
+	    	
+	   		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    >
+
+			    <TextView
+			        android:id="@+id/orient0"
+			        android:layout_width="55dp"
+			        android:layout_height="wrap_content"
+			        android:text="@string/init_value" />
+
+			</LinearLayout>      		
+	   		
+	    </LinearLayout>
+	    
+
+	    <!-- Creation of general status -->    
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/status_header"
+		    android:id="@+id/text_view1"
+		    />
+	    </LinearLayout>
+	    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtGeneralStatus"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text = "@string/robotDockingSearch"
+            android:textColor = "@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>	    
+	
+	    
+   	    <!-- Creation of http status -->    
+	    
+	    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/http_header"
+		    android:id="@+id/text_view2"
+		    />
+	    </LinearLayout>
+	    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtHttpStatus"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.41"
+            android:gravity="center_vertical|center_horizontal"
+            android:text = "@string/emptyString"
+            android:textColor = "@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>	  
+   
+   	<LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background='@color/title_bar'
+	    >
+			<TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/params_header"
+		    android:id="@+id/txtHeaderParams"
+		    />
+	    </LinearLayout>
+
+    
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/chargeTimeLabel" />
+		    <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/stopDistanceLabel" />  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/k1" />	  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/k2" />	                       
+		</LinearLayout>	 
+	    
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >	        
+
+		        <EditText
+	            android:id="@+id/chargeTime"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="60" >
+
+	            <requestFocus android:layout_width="wrap_content" />
+
+	        </EditText>	 
+	        <EditText
+	            android:id="@+id/stopDistance"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="120" >
+	            <requestFocus />
+	        </EditText>	  	  
+	        <EditText
+	            android:id="@+id/k1"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="numberDecimal"
+	            android:text="0.07" >
+	            <requestFocus />
+	        </EditText>	  	
+	        <EditText
+	            android:id="@+id/k2"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="numberDecimal"
+	            android:text="0.36" >
+	            <requestFocus />
+	        </EditText>	 	        
+     	</LinearLayout>	        
+        
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/tagLinearCoeffLabel" />
+		    <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/tagRotationCoeffLabel" />  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/dockBaseSpeedLabel" />	  
+	        <TextView
+	            android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/searchAngleLabel" />	                       
+		</LinearLayout>	 
+	    
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >	        
+
+		        <EditText
+	            android:id="@+id/tagLinearCoeff"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="100" >
+
+	            <requestFocus android:layout_width="wrap_content" />
+
+	        </EditText>	 
+	        <EditText
+	            android:id="@+id/tagRotationCoeff"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="16" >
+	            <requestFocus />
+	        </EditText>	  	  
+	        <EditText
+	            android:id="@+id/dockBaseSpeed"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="80" >
+	            <requestFocus />
+	        </EditText>	  	
+	        <EditText
+	            android:id="@+id/searchAngle"
+	            android:layout_width="80dp"
+	            android:layout_height="37dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="20" >
+	            <requestFocus />
+	        </EditText>	 	        
+     	</LinearLayout>	 	    
+	    
+	    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >	        
+
+			        <Button
+			            android:id="@+id/btnResetBehavior"
+	            		android:layout_width="fill_parent"
+	            		android:layout_height="35dp"			            
+			            android:onClick="resetBehavior"
+			            android:text="@string/resetBehavior" />		        
+	        
+		</LinearLayout> 
+
+
+			            
+    			<!-- Logo and site -->
+			    
+			    <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:gravity="center_horizontal|bottom"
+			    >
+			        
+				    <ImageView
+				        android:layout_width="100dp"
+				        android:layout_height="wrap_content"
+				        android:adjustViewBounds="true"
+				        android:contentDescription="wheelphone"
+				        android:maxWidth="200dp"
+				        android:src="@drawable/ic_launcher" />
+			
+				    <TextView  
+				    android:layout_width="150dp" 
+				    android:layout_height="wrap_content" 
+				    android:text="@string/weblink"
+				    android:gravity="center"
+				    />
+			    </LinearLayout>
+    
+	</LinearLayout>
+	
+	  
+	<LinearLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tab2"
+    android:orientation="vertical"
+    android:paddingTop="60px"
+    android:gravity="center"
+     >
+	    <com.wheelphone.targetNavigation.QCARSampleGLView
+	        android:id="@+id/glView"
+			android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:adjustViewBounds="true" />
+ 	    				    
+	    <ImageView
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:adjustViewBounds="true"
+				        android:contentDescription="wheelphone"
+				        android:src="@drawable/ic_launcher"
+	    				android:scaleType="fitXY" 
+	    				android:gravity="center"/>
+
+	    <TextView  
+				    android:layout_width="fill_parent" 
+				    android:layout_height="wrap_content" 
+				    android:text="www.wheelphone.com"
+				    android:gravity="center"
+				    android:textColor = "@color/white"
+            		android:textSize="24sp"
+            		android:textStyle="bold"
+				    />
+	    	    
+	    <ImageView
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:adjustViewBounds="true"
+				        android:contentDescription="wheelphone"
+				        android:src="@drawable/gclogo2" 
+				        android:scaleType="fitXY" 
+				        android:gravity="center" />
+	    
+	    <TextView  
+				    android:layout_width="fill_parent" 
+				    android:layout_height="wrap_content" 
+				    android:text="www.gctronic.com"
+				    android:gravity="center"
+				    android:textColor = "@color/white"
+            		android:textSize="24sp"
+            		android:textStyle="bold"
+				    />
+    
+	    <!-- 
+        <com.wheelphone.blobDocking.ColorBlobDetectionView
+        android:id="@+id/blobdetect"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/> 	    
+              
+              
+            
+       			    <TextView  
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/init_value"
+			    android:id="@+id/leftSpeedTxt"
+			    /> 
+			     
+        -->
+     </LinearLayout>
+
+<!-- 	
+	<LinearLayout
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/tab3"
+    android:orientation="vertical"
+    android:paddingTop="60px"
+     >
+
+	    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="@string/roomWidth" />
+	
+	        <EditText
+	            android:id="@+id/txtRoomWidth"
+	            android:layout_width="80dp"
+	            android:layout_height="40dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="200" >
+	            <requestFocus />
+	        </EditText>	    
+
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="@string/roomLength" />
+	
+	        <EditText
+	            android:id="@+id/txtRoomLength"
+	            android:layout_width="80dp"
+	            android:layout_height="40dp"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:imeOptions="actionDone|normal"
+	            android:inputType="number"
+	            android:text="200" >
+	            <requestFocus />
+	        </EditText>	  	        	        				    
+     	</LinearLayout>	
+     	
+	   	<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="Target info..." />
+		        	        				    
+     	</LinearLayout>		    
+     	
+	   	<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="Robot info (x,y,theta):" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="0" 
+	            android:id="@+id/robotX" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="0" 
+	            android:id="@+id/robotY" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingRight="20sp"
+	            android:text="0" 
+	            android:id="@+id/robotTheta" />	        	        		        	        				    
+     	</LinearLayout>		   	
+	    
+	    <com.wheelphone.targetNavigation.FloorPlanView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/floorPlanView" />    
+	    
+	 </LinearLayout>	
+-->
+     </FrameLayout>
+    
+    </TabHost>	
+
+	
